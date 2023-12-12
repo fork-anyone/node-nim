@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-nim",
-  "version": "9.13.0",
+  "version": "9.13.1",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "keywords": [
     "netease",
@@ -77,5 +77,8 @@
   "optionalDependencies": {
     "commander": "^8.3.0",
     "hawk-web": "latest"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
