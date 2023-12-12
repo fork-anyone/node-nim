@@ -1,0 +1,9 @@
+{
+    "verbose": true,
+    "watch": [
+      "ts"
+    ],
+    "ext": ".ts",
+    "exec": "yarn run build_ts"
+  }
+  

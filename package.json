@@ -1,74 +1,81 @@
 {
-    "name": "node-nim",
-    "version": "9.13.0",
-    "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
-    "main": "dist/node-nim.js",
-    "bin": {
-        "node-nim-tester": "node-nim-tester.js"
-    },
-    "types": "types/node-nim.d.ts",
-    "author": "Netease",
-    "license": "ISC",
-    "homepage": "https://github.com/netease-im/node-nim",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/netease-im/node-nim.git"
-    },
-    "scripts": {
-        "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
-        "build_ts": "rimraf ./dist && rimraf ./types && tsc",
-        "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --theme github-wiki --out wiki_doc",
-        "build_markdown_doc": "typedoc --plugin typedoc-plugin-markdown --theme markdown --out markdown_doc",
-        "prepublishOnly": "npm run build_ts",
-        "install": "npm run download_sdk",
-        "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
-        "publish_to_netease_npm": "node script/publish-to-netease-npm.js"
-    },
-    "nyc": {
-        "cache": false,
-        "reporter": [
-            "lcov"
-        ]
-    },
-    "dependencies": {
-        "compare-versions": "^4.1.4",
-        "download": "^8.0.0",
-        "eventemitter3": "^4.0.7",
-        "node-fetch": "^2.6.9"
-    },
-    "optionalDependencies": {
-        "commander": "^8.3.0",
-        "hawk-web": "latest"
-    },
-    "devDependencies": {
-        "@types/node": "^16.18.23",
-        "@typescript-eslint/eslint-plugin": "^5.58.0",
-        "@typescript-eslint/parser": "^5.58.0",
-        "bluebird": "^3.7.2",
-        "cmake-js": "^6.3.2",
-        "eslint": "^7.32.0",
-        "git-describe": "^4.1.1",
-        "mocha": "^9.2.2",
-        "node-addon-api": "^4.3.0",
-        "nyc": "^15.1.0",
-        "typedoc": "^0.24.1",
-        "typedoc-github-wiki-theme": "^1.1.0",
-        "typedoc-plugin-markdown": "^3.15.1",
-        "typescript": "^4.9.5"
-    },
-    "keywords": [
-        "netease",
-        "nim",
-        "im sdk",
-        "nim sdk",
-        "nim node",
-        "nim electron"
-    ],
-    "files": [
-        "dist/",
-        "types/",
-        "package.json",
-        "script/",
-        "node-nim-tester.js"
+  "name": "@fork-anyone/node-nim",
+  "version": "9.13.0",
+  "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
+  "keywords": [
+    "netease",
+    "nim",
+    "im sdk",
+    "nim sdk",
+    "nim node",
+    "nim electron",
+    "fslinker"
+  ],
+  "homepage": "https://github.com/netease-im/node-nim",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/netease-im/node-nim.git"
+  },
+  "license": "ISC",
+  "author": "Netease",
+  "main": "dist/node-nim.js",
+  "types": "types/node-nim.d.ts",
+  "bin": {
+    "node-nim-tester": "node-nim-tester.js"
+  },
+  "files": [
+    "dist/",
+    "types/",
+    "package.json",
+    "script/",
+    "node-nim-tester.js"
+  ],
+  "scripts": {
+    "build_markdown_doc": "typedoc --plugin typedoc-plugin-markdown --theme markdown --out markdown_doc",
+    "build_ts": "rimraf ./dist && rimraf ./types && tsc",
+    "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --theme github-wiki --out wiki_doc",
+    "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
+    "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
+    "install": "npm run download_sdk",
+    "prepublishOnly": "npm run build_ts",
+    "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
+    "watch": "nodemon"
+  },
+  "nyc": {
+    "cache": false,
+    "reporter": [
+      "lcov"
     ]
+  },
+  "dependencies": {
+    "@electron/remote": "^2.1.0",
+    "compare-versions": "^4.1.4",
+    "download": "^8.0.0",
+    "electron": "22.3.13",
+    "eventemitter3": "^4.0.7",
+    "node-fetch": "^2.6.9",
+    "nodemon": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.18.23",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "bluebird": "^3.7.2",
+    "cmake-js": "^6.3.2",
+    "eslint": "^7.32.0",
+    "git-describe": "^4.1.1",
+    "glob": "^10.3.10",
+    "jscodeshift": "^0.15.1",
+    "mocha": "^9.2.2",
+    "node-addon-api": "^4.3.0",
+    "nyc": "^15.1.0",
+    "typedoc": "^0.24.1",
+    "typedoc-github-wiki-theme": "^1.1.0",
+    "typedoc-plugin-markdown": "^3.15.1",
+    "typescript": "^4.9.5"
+  },
+  "optionalDependencies": {
+    "commander": "^8.3.0",
+    "hawk-web": "latest"
+  }
 }

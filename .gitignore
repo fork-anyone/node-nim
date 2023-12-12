@@ -131,3 +131,5 @@ doc/
 coverage/
 .nyc_output/
 package-lock.json
+wiki_doc
+markdown_doc
