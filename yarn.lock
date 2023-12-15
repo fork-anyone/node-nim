@@ -2116,6 +2116,15 @@ fs-constants@^1.0.0:
   resolved "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha1-a+Dem+mYzhavivwkSXue6bfM2a0=
 
+fs-extra@^11.2.0:
+  version "11.2.0"
+  resolved "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/fs-extra/-/fs-extra-11.2.0.tgz#e70e17dfad64232287d01929399e0ea7c86b0e5b"
+  integrity sha1-5w4X361kIyKH0BkpOZ4Op8hrDls=
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^5.0.0:
   version "5.0.0"
   resolved "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
@@ -2978,6 +2987,15 @@ jsonfile@^4.0.0:
   version "4.0.0"
   resolved "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/jsonfile/-/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
   integrity sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
+jsonfile@^6.0.1:
+  version "6.1.0"
+  resolved "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/jsonfile/-/jsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
+  integrity sha1-vFWyY0eTxnnsZAMJTrE2mKbsCq4=
+  dependencies:
+    universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
 
@@ -4722,6 +4740,11 @@ universalify@^0.1.0:
   version "0.1.2"
   resolved "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha1-tkb2m+OULavOzJ1mOcgNwQXvqmY=
+
+universalify@^2.0.0:
+  version "2.0.1"
+  resolved "https://artifactory.sf-express.com:443/artifactory/api/npm/npm/universalify/-/universalify-2.0.1.tgz#168efc2180964e6386d061e094df61afe239b18d"
+  integrity sha1-Fo78IYCWTmOG0GHglN9hr+I5sY0=
 
 unzipper@^0.8.13:
   version "0.8.14"
