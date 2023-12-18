@@ -38,6 +38,8 @@
     "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
     "prepublishOnly": "yarn run build_ts",
     "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
+    "publish_to_npm": "yarn publish --registry=https://registry.npmjs.org/",
+    "publish_to_sfnpm": "yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
     "watch": "nodemon"
   },
   "config": {
@@ -80,8 +82,5 @@
   "optionalDependencies": {
     "commander": "^8.3.0",
     "hawk-web": "latest"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
   }
 }
