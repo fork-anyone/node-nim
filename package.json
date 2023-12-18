@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-nim",
-  "version": "9.13.4",
+  "version": "9.13.5",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "keywords": [
     "netease",
@@ -34,10 +34,8 @@
     "build_markdown_doc": "typedoc --plugin typedoc-plugin-markdown --theme markdown --out markdown_doc",
     "build_ts": "rimraf ./dist && rimraf ./types && tsc",
     "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --theme github-wiki --out wiki_doc",
-    "copy_files": "node -e \"require('./script/copy-files-toelectron.js').copy()\"",
     "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
     "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
-    "install": "yarn run download_sdk && yarn run copy_files",
     "prepublishOnly": "yarn run build_ts",
     "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
     "watch": "nodemon"
