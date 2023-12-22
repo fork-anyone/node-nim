@@ -13,6 +13,7 @@ import {
     QuerySuperTeamInfoCallback,
     SuperTeamEvent
 } from '../nim_def/super_team_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMSuperTeamEvents {
     /** 超大群事件 */
@@ -806,6 +807,41 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
                 },
                 jsonExtension
             )
+        })
+    }
+
+     /** 获取群禁言成员列表
+     * @param tid	群组id
+     * @param cb		回调函数
+     * @param jsonExtension json扩展参数（备用，目前不需要）
+     * @return boolean 检查参数如果不符合要求则返回失败
+     * @note
+     * <pre>
+     * 200:成功
+     * 802:没有权限
+     * 803:群不存在
+     * </pre>
+     */
+     queryMuteListAsync(
+        tid: string,
+        cb: QuerySuperTeamMembersCallback | null,
+        jsonExtension: string
+    ): Promise<[NIMResCode, string, number, Array<SuperTeamMemberProperty>] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.QueryMuteListAsync(
+                    tid,
+                    (rescode, tid, count, result) => {
+                        if (cb) {
+                            cb(rescode, tid, count, result)
+                        }
+                        resolve([rescode, tid,  count, result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
         })
     }
 }

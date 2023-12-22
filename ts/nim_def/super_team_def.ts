@@ -181,4 +181,6 @@ export interface NIMSuperTeamAPI {
     MuteAsync(tid: string, set_mute: boolean, cb: SuperTeamEventCallback | null, jsonExtension: string): boolean
 
     QuerySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback | null, jsonExtension: string): void
+
+    QueryMuteListAsync(tid: string, cb: QuerySuperTeamMembersCallback | null, jsonExtension: string): boolean
 }
