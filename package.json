@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-nim",
-  "version": "9.14.4",
+  "version": "9.14.8",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "keywords": [
     "netease",
@@ -38,8 +38,8 @@
     "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
     "prepublishOnly": "yarn run build_ts",
     "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
-    "publish_to_npm": "yarn publish --registry=https://registry.npmjs.org/",
-    "publish_to_sfnpm": "yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
+    "publish_to_npm": "yarn build_ts && yarn publish --registry=https://registry.npmjs.org/",
+    "publish_to_sfnpm": "yarn build_ts && yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
     "watch": "nodemon"
   },
   "config": {
@@ -82,5 +82,8 @@
   "optionalDependencies": {
     "commander": "^8.3.0",
     "hawk-web": "latest"
+  },
+  "volta": {
+    "node": "18.0.0"
   }
 }

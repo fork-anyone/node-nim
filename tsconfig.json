@@ -15,7 +15,8 @@
         "declaration": true,
         "declarationDir": "types",
         "sourceMap": true,
-        "stripInternal": true
+        "stripInternal": true,
+        "suppressImplicitAnyIndexErrors": true
     },
     "typedocOptions": {
         "entryPoints": [
