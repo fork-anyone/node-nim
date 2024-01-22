@@ -11,7 +11,10 @@ import {
     QuerySuperTeamMembersCallback,
     QuerySuperTeamMemberCallback,
     QuerySuperTeamInfoCallback,
-    SuperTeamEvent
+    SuperTeamEvent,
+    SuperTeamMemberKeywordSearchOption,
+    SuperTeamMemberSerachResult,
+    SuperTeamMemberRoleTypeSearchOption
 } from '../nim_def/super_team_def'
 import { NIMResCode } from 'ts/nim_def/client_def'
 
@@ -810,6 +813,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
         })
     }
 
+
      /** 获取群禁言成员列表
      * @param tid	群组id
      * @param cb		回调函数
@@ -842,6 +846,31 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             ) {
                 resolve(null)
             }
+        })
+    }
+
+    /** 搜索群成员
+     * @param option 搜索群成员选项
+     * @return boolean 检查参数如果不符合要求则返回失败
+     */
+    searchTeamMembers(option: SuperTeamMemberKeywordSearchOption): Promise<[SuperTeamMemberSerachResult]> {
+        return new Promise((resolve) => {
+            this.team.SearchTeamMembers(option, (result) => {
+                resolve([result])
+            })
+        })
+    }
+
+    /** 根据成员类型获取群成员
+     * @param tid		群组id
+     * @param option 获取群成员选项
+     * @return boolean 检查参数如果不符合要求则返回失败
+     */
+    getTeamMemberList(tid: string, option: SuperTeamMemberRoleTypeSearchOption): Promise<[SuperTeamMemberSerachResult]> {
+        return new Promise((resolve) => {
+            this.team.GetTeamMemberList(tid, option, (result) => {
+                resolve([result])
+            })
         })
     }
 }
