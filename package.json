@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-nim",
-  "version": "9.14.9",
+  "version": "9.14.10",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "keywords": [
     "netease",
@@ -84,6 +84,7 @@
     "hawk-web": "latest"
   },
   "volta": {
-    "node": "18.0.0"
+    "node": "18.0.0",
+    "yarn": "1.22.21"
   }
 }
