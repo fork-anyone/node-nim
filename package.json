@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-nim",
-  "version": "9.14.10",
+  "version": "9.14.13",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "keywords": [
     "netease",
@@ -43,7 +43,7 @@
     "watch": "nodemon"
   },
   "config": {
-    "nimsdkversion": "9.13.0"
+    "nimsdkversion": "9.14.3"
   },
   "nyc": {
     "cache": false,
@@ -52,7 +52,6 @@
     ]
   },
   "dependencies": {
-    "@electron/remote": "^2.1.0",
     "compare-versions": "^4.1.4",
     "download": "^8.0.0",
     "eventemitter3": "^4.0.7",
