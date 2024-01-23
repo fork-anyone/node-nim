@@ -100,6 +100,7 @@ export interface SuperTeamInfoJsonValue {
     announcement?: string
     join_mode?: NIMSuperTeamJoinMode
     custom?: string
+    readonly server_custom: string
     icon?: string
     be_invite_mode?: NIMSuperTeamBeInviteMode
     invite_mode?: NIMSuperTeamInviteMode
