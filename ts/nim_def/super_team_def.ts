@@ -227,4 +227,7 @@ export interface NIMSuperTeamAPI {
 
     GetTeamMemberList(tid: string, option: SuperTeamMemberRoleTypeSearchOption, cb: SuperTeamGetMemberListCallback | null): void
 
+    AddTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback | null): boolean
+
+    RemoveTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback | null): boolean
 }
