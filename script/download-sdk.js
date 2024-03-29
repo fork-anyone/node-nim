@@ -76,3 +76,6 @@ async function downloadSDK(custom_sdk_url) {
     }
 }
 exports.downloadSDK = downloadSDK
+
+
+downloadSDK()
