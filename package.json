@@ -43,7 +43,7 @@
     "watch": "nodemon"
   },
   "config": {
-    "nimsdkversion": "9.15.3"
+    "nimsdkversion": "9.15.4"
   },
   "nyc": {
     "cache": false,
