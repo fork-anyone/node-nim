@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-nim",
-  "version": "9.16.1",
+  "version": "9.16.2",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "keywords": [
     "netease",
@@ -42,9 +42,6 @@
     "publish_to_npm": "yarn build_ts && yarn publish --registry=https://registry.npmjs.org/",
     "publish_to_sfnpm": "yarn build_ts && yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
     "watch": "nodemon"
-  },
-  "config": {
-    "nimsdkversion": "9.15.5"
   },
   "nyc": {
     "cache": false,
