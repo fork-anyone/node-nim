@@ -1,88 +1,90 @@
 {
-  "name": "@fork-anyone/node-nim",
-  "version": "9.16.3",
-  "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
-  "keywords": [
-    "netease",
-    "nim",
-    "im sdk",
-    "nim sdk",
-    "nim node",
-    "nim electron",
-    "fslinker"
-  ],
-  "homepage": "https://github.com/netease-im/node-nim",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/netease-im/node-nim.git"
-  },
-  "license": "ISC",
-  "author": "Netease",
-  "main": "dist/node-nim.js",
-  "types": "types/node-nim.d.ts",
-  "bin": {
-    "node-nim-tester": "node-nim-tester.js"
-  },
-  "files": [
-    "dist/",
-    "types/",
-    "package.json",
-    "script/",
-    "node-nim-tester.js"
-  ],
-  "scripts": {
-    "build_markdown_doc": "typedoc --plugin typedoc-plugin-markdown --theme markdown --out markdown_doc",
-    "build_ts": "rimraf ./dist && rimraf ./types && tsc",
-    "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --theme github-wiki --out wiki_doc",
-    "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
-    "download_sdk_mac": "cross-env npm_config_arch=x64 npm_config_platform=darwin node ./script/download-sdk.js",
-    "download_sdk_win": "cross-env npm_config_arch=ia32 npm_config_platform=win32 node ./script/download-sdk.js",
-    "prepublishOnly": "yarn run build_ts",
-    "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
-    "publish_to_npm": "yarn build_ts && yarn publish --registry=https://registry.npmjs.org/",
-    "publish_to_sfnpm": "yarn build_ts && yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
-    "watch": "nodemon"
-  },
-  "nyc": {
-    "cache": false,
-    "reporter": [
-      "lcov"
-    ]
-  },
-  "dependencies": {
-    "compare-versions": "^4.1.4",
-    "download": "^8.0.0",
-    "eventemitter3": "^4.0.7",
-    "fs-extra": "^11.2.0",
-    "node-fetch": "^2.6.9",
-    "nodemon": "^3.0.2"
-  },
-  "devDependencies": {
-    "@types/node": "^16.18.23",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.58.0",
-    "bluebird": "^3.7.2",
-    "cmake-js": "^6.3.2",
-    "cross-env": "^7.0.3",
-    "electron": "22.3.13",
-    "eslint": "^7.32.0",
-    "git-describe": "^4.1.1",
-    "glob": "^10.3.10",
-    "jscodeshift": "^0.15.1",
-    "mocha": "^9.2.2",
-    "node-addon-api": "^4.3.0",
-    "nyc": "^15.1.0",
-    "typedoc": "^0.24.1",
-    "typedoc-github-wiki-theme": "^1.1.0",
-    "typedoc-plugin-markdown": "^3.15.1",
-    "typescript": "^4.9.5"
-  },
-  "optionalDependencies": {
-    "commander": "^8.3.0",
-    "hawk-web": "latest"
-  },
-  "volta": {
-    "node": "18.0.0",
-    "yarn": "1.22.21"
-  }
+    "name": "@fork-anyone/node-nim",
+    "version": "9.16.4",
+    "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
+    "keywords": [
+        "netease",
+        "nim",
+        "im sdk",
+        "nim sdk",
+        "nim node",
+        "nim electron"
+    ],
+    "homepage": "https://github.com/fork-anyone/node-nim/tree/master",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:fork-anyone/node-nim.git"
+    },
+    "license": "ISC",
+    "author": "Netease",
+    "main": "dist/node-nim.js",
+    "types": "types/node-nim.d.ts",
+    "bin": {
+        "node-nim-tester": "node-nim-tester.js"
+    },
+    "files": [
+        "dist/",
+        "types/",
+        "package.json",
+        "script/",
+        "node-nim-tester.js"
+    ],
+    "scripts": {
+        "build_markdown_doc": "typedoc --plugin typedoc-plugin-markdown --theme markdown --out markdown_doc",
+        "build_ts": "rimraf ./dist && rimraf ./types && tsc",
+        "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --theme github-wiki --out wiki_doc",
+        "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
+        "download_sdk_mac": "cross-env npm_config_arch=x64 npm_config_platform=darwin node ./script/download-sdk.js",
+        "download_sdk_win": "cross-env npm_config_arch=ia32 npm_config_platform=win32 node ./script/download-sdk.js",
+        "prepublishOnly": "yarn run build_ts",
+        "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
+        "publish_to_npm": "yarn build_ts && yarn publish --registry=https://registry.npmjs.org/",
+        "publish_to_sfnpm": "yarn build_ts && yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
+        "watch": "nodemon"
+    },
+    "mocha": {
+        "require": "test/hooks.js"
+    },
+    "nyc": {
+        "cache": false,
+        "reporter": [
+            "lcov"
+        ]
+    },
+    "dependencies": {
+        "compare-versions": "^4.1.4",
+        "download": "^8.0.0",
+        "eventemitter3": "^4.0.7",
+        "fs-extra": "^11.2.0",
+        "node-fetch": "^2.6.9",
+        "nodemon": "^3.0.2"
+    },
+    "devDependencies": {
+        "@types/node": "^16.18.23",
+        "@typescript-eslint/eslint-plugin": "^5.58.0",
+        "@typescript-eslint/parser": "^5.58.0",
+        "bluebird": "^3.7.2",
+        "cmake-js": "^6.3.2",
+        "cross-env": "^7.0.3",
+        "electron": "22.3.13",
+        "eslint": "^7.32.0",
+        "git-describe": "^4.1.1",
+        "glob": "^10.3.10",
+        "jscodeshift": "^0.15.1",
+        "mocha": "^9.2.2",
+        "node-addon-api": "^4.3.0",
+        "nyc": "^15.1.0",
+        "typedoc": "^0.24.1",
+        "typedoc-github-wiki-theme": "^1.1.0",
+        "typedoc-plugin-markdown": "^3.15.1",
+        "typescript": "^4.9.5"
+    },
+    "optionalDependencies": {
+        "commander": "^8.3.0",
+        "hawk-web": "latest"
+    },
+    "volta": {
+        "node": "18.0.0",
+        "yarn": "1.22.21"
+    }
 }
