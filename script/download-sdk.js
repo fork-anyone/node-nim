@@ -6,7 +6,8 @@ const arch = process.env.npm_package_config_arch  || process.env.npm_config_arch
 const platform = process.env.npm_package_config_platform || process.env.npm_config_platform || process.platform
 const sdk_group = 'message'
 const sdk_name = 'nim'
-const sdk_path = `${__dirname}/../sdk`
+
+const sdk_path = process.argv[2] || `${__dirname}/../sdk`
 if (process.env.npm_config_ignoredownloadsdk) {
     console.log('ignore download sdk')
     process.exit(0)
