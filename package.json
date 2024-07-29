@@ -1,6 +1,7 @@
 {
     "name": "@fork-anyone/node-nim",
-    "version": "9.16.7",
+    "name": "node-nim",
+    "version": "9.16.9",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "keywords": [
         "netease",
