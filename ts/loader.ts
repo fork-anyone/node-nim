@@ -24,7 +24,13 @@ if(!nodePath) {
     }
 }
 
-const mod = moduleRequire(nodePath);
+let mod = null;
+
+try {
+    mod = moduleRequire(nodePath);
+} catch (e) {
+    console.error('load node-nim.node error', e);
+}
 
 
 if(!mod) throw new Error(`can not find node-nim.node in ${nodePath}`);
