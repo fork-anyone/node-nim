@@ -35,4 +35,4 @@ try {
 
 if(!mod) throw new Error(`can not find node-nim.node in ${nodePath}`);
 
-export default mod;
+export default mod as any;
