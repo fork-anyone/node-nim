@@ -1,6 +1,6 @@
 {
     "name": "@fork-anyone/node-nim",
-    "version": "9.16.12",
+    "version": "9.16.13",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "keywords": [
         "netease",
@@ -41,7 +41,8 @@
         "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
         "publish_to_npm": "yarn build_ts && yarn publish --registry=https://registry.npmjs.org/",
         "publish_to_sfnpm": "yarn build_ts && yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
-        "watch": "nodemon"
+        "watch": "nodemon",
+        "postinstall": "node ./script/download-sdk.js"
     },
     "mocha": {
         "require": "test/hooks.js"

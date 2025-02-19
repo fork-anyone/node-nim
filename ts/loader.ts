@@ -17,11 +17,16 @@ if(!moduleRequire) {
 let nodePath = process.env.NODE_NIM_PATH;
 
 if(!nodePath) {
-    if(process.platform === 'darwin') {
-        nodePath =  path.join(path.join(process.execPath, '../../../../../'), 'MacOS/node-nim.node')
+    if(process.env.NODE_ENV === 'development') { // 开发环境下
+        nodePath = path.join(__dirname, '../sdk/bin/node-nim.node');
     } else {
-        nodePath =  path.join(path.join(process.execPath, '../'), 'node-nim.node')
+        if(process.platform === 'darwin') {
+            nodePath =  path.join(path.join(process.execPath, '../../../../../'), 'MacOS/node-nim.node')
+        } else {
+            nodePath =  path.join(path.join(process.execPath, '../'), 'node-nim.node')
+        }
     }
+    
 }
 
 let mod = null;
