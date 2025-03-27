@@ -1,4 +1,5 @@
 
+
 import path from 'path';
 
 let moduleRequire = null;
@@ -41,3 +42,4 @@ try {
 if(!mod) throw new Error(`can not find node-nim.node in ${nodePath}`);
 
 export default mod as any;
+

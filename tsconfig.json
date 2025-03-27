@@ -8,10 +8,7 @@
         "esModuleInterop": true,
         "allowJs": true,
         "moduleResolution": "node",
-        "lib": [
-            "es6",
-            "dom"
-        ],
+        "lib": ["es6", "dom"],
         "declaration": true,
         "declarationDir": "types",
         "sourceMap": true,
@@ -19,24 +16,14 @@
         "suppressImplicitAnyIndexErrors": true
     },
     "typedocOptions": {
-        "entryPoints": [
-            "ts/node-nim.ts",
-            "ts/chatroom",
-            "ts/chatroom_def",
-            "ts/nim",
-            "ts/nim_def",
-            "ts/qchat",
-            "ts/qchat_def"
-        ],
+        "entryPoints": ["ts/node-nim.ts", "ts/nim", "ts/nim_def", "ts/qchat", "ts/qchat_def", "ts/v2", "ts/v2_def"],
         "entryPointStrategy": "expand",
-        "readme": "none",
+        "readme": "README_CN.md",
         "out": "doc",
         "sort": "source-order",
         "excludeProtected": "true",
         "hideGenerator": "true",
         "excludeInternal": "true"
     },
-    "include": [
-        "ts/**/*"
-    ]
+    "include": ["ts/**/*"]
 }
