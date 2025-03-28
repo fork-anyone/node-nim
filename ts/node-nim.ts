@@ -1,3 +1,4 @@
+
 import { NIMClient } from './nim/client'
 import { NIMDataSync } from './nim/data_sync'
 import { NIMFriend } from './nim/friend'
@@ -17,7 +18,7 @@ import { NIMUser } from './nim/user'
 import { NIMPlugin } from './nim/plugin'
 import { NIMTalkEx } from './nim/talkex'
 import { NIMAI } from './nim/ai'
-import { ChatRoomModule} from './chatroom/chatroom'
+import { ChatRoomModule } from './chatroom/chatroom'
 import { QChatInstanceModule } from './qchat/instance'
 import { QChatServerModule } from './qchat/server'
 import { QChatChannelModule } from './qchat/channel'
@@ -26,8 +27,7 @@ import { QChatMessageModule } from './qchat/message'
 import { QChatSystemNotificationModule } from './qchat/system_notification'
 import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
-import { V2NIMClient } from './v2/v2_nim_client'
-import { V2NIMChatroomClient } from './v2/v2_nim_chatroom_client'
+import { V2NIMClient as _V2NIMClient } from './v2/v2_nim_client'
 import {
   V2NIMMessageCreator,
   V2NIMMessageConverter,
@@ -66,7 +66,6 @@ export {
   QChatSystemNotificationModule,
   QChatAttachmentModule,
   QChatRoleModule,
-  V2NIMChatroomClient,
   V2NIMMessageCreator,
   V2NIMMessageConverter,
   V2NIMClientAntispamUtil,
@@ -105,46 +104,96 @@ export * from './v2_def/v2_nim_enum_def'
 
 export class NIM {
   /** 客户端模块 */
-  client: NIMClient = new NIMClient()
+  client: NIMClient
   /** 数据同步模块 */
-  dataSync: NIMDataSync = new NIMDataSync()
+  dataSync: NIMDataSync
   /** 好友模块 */
-  friend: NIMFriend = new NIMFriend()
+  friend: NIMFriend
   /** 全局模块 */
-  global: NIMGlobal = new NIMGlobal()
+  global: NIMGlobal
   /** 消息历史模块 */
-  msgLog: NIMMsgLog = new NIMMsgLog()
+  msgLog: NIMMsgLog
   /** 云存储模块 */
-  nos: NIMNOS = new NIMNOS()
+  nos: NIMNOS
   /** 云端会话模块 */
-  onlineSession: NIMOnlineSession = new NIMOnlineSession()
+  onlineSession: NIMOnlineSession
   /** 透传代理模块 */
-  passThroughProxy: NIMPassThroughProxy = new NIMPassThroughProxy()
+  passThroughProxy: NIMPassThroughProxy
   /** 本地会话模块 */
-  session: NIMSession = new NIMSession()
+  session: NIMSession
   /** 订阅事件模块 */
-  subscribeEvent: NIMSubscribeEvent = new NIMSubscribeEvent()
+  subscribeEvent: NIMSubscribeEvent
   /** 超大群模块 */
-  superTeam: NIMSuperTeam = new NIMSuperTeam()
+  superTeam: NIMSuperTeam
   /** 系统通知模块 */
-  sysMsg: NIMSysMsg = new NIMSysMsg()
+  sysMsg: NIMSysMsg
   /** 聊天模块 */
-  talk: NIMTalk = new NIMTalk()
+  talk: NIMTalk
   /** 群组模块 */
-  team: NIMTeam = new NIMTeam()
+  team: NIMTeam
   /** 工具模块 */
-  tool: NIMTool = new NIMTool()
+  tool: NIMTool
   /** 用户模块 */
-  user: NIMUser = new NIMUser()
+  user: NIMUser
   /** 插件模块 */
-  plugin: NIMPlugin = new NIMPlugin()
+  plugin: NIMPlugin
   /** 聊天扩展模块 */
-  talkEx: NIMTalkEx = new NIMTalkEx()
+  talkEx: NIMTalkEx
   /** AI 数字人模块 */
-  ai: NIMAI = new NIMAI()
+  ai: NIMAI
+
+  private sdk: any;
+
+  private loadSdk(binaryPath: string | any) {
+    if (typeof binaryPath === 'string') {
+      return require('binary')
+    }
+    return binaryPath
+  }
+
+  constructor(private options: { binary: string | any }) {
+
+    this.sdk = this.loadSdk(options.binary);
+
+    this.client = new NIMClient(this.sdk)
+    this.dataSync = new NIMDataSync(this.sdk)
+    this.friend = new NIMFriend(this.sdk)
+
+    this.global = new NIMGlobal(this.sdk)
+
+    this.msgLog = new NIMMsgLog(this.sdk)
+
+    this.nos = new NIMNOS(this.sdk)
+
+    this.onlineSession = new NIMOnlineSession(this.sdk)
+
+    this.passThroughProxy = new NIMPassThroughProxy(this.sdk)
+
+    this.session = new NIMSession(this.sdk)
+
+    this.subscribeEvent = new NIMSubscribeEvent(this.sdk)
+
+    this.superTeam = new NIMSuperTeam(this.sdk)
+
+    this.sysMsg = new NIMSysMsg(this.sdk)
+
+    this.talk = new NIMTalk(this.sdk)
+
+    this.team = new NIMTeam(this.sdk)
+
+    this.tool = new NIMTool(this.sdk)
+
+    this.user = new NIMUser(this.sdk)
+
+    this.plugin = new NIMPlugin(this.sdk)
+
+    this.talkEx = new NIMTalkEx(this.sdk)
+
+    this.ai = new NIMAI(this.sdk)
+  }
 
   /** 初始化事件处理 */
-  initEventHandlers (): void {
+  initEventHandlers(): void {
     this.client.initEventHandlers()
     this.dataSync.initEventHandlers()
     this.friend.initEventHandlers()
@@ -167,31 +216,4 @@ export class NIM {
   }
 }
 
-export class ChatRoom extends ChatRoomModule {}
-
-export class QChat {
-  instance: QChatInstanceModule = new QChatInstanceModule()
-  server: QChatServerModule = new QChatServerModule()
-  channel: QChatChannelModule = new QChatChannelModule()
-  channelCategory: QChatChannelCategoryModule = new QChatChannelCategoryModule()
-  message: QChatMessageModule = new QChatMessageModule()
-  systemNotification: QChatSystemNotificationModule = new QChatSystemNotificationModule()
-  attachment: QChatAttachmentModule = new QChatAttachmentModule()
-  role: QChatRoleModule = new QChatRoleModule()
-
-  initEventHandlers (): void {
-    this.instance.initEventHandlers()
-    this.server.initEventHandlers()
-    this.channel.initEventHandlers()
-    this.channelCategory.initEventHandlers()
-    this.message.initEventHandlers()
-    this.systemNotification.initEventHandlers()
-    this.attachment.initEventHandlers()
-    this.role.initEventHandlers()
-  }
-}
-
-export const nim = new NIM()
-export const chatroom = new ChatRoom()
-export const qchat = new QChat()
-export const v2 = new V2NIMClient()
+export const V2NIMClient = _V2NIMClient;

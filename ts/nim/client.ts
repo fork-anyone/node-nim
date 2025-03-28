@@ -14,7 +14,6 @@ import {
   NIMResCode,
   NIMLoginStep
 } from '../nim_def/client_def'
-import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface NIMClientEvents {
@@ -35,7 +34,7 @@ export declare interface NIMClientEvents {
 export class NIMClient extends EventEmitter<NIMClientEvents> {
   client: NIMClientAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.client = new sdk.NIMClient({ emit: this.emit.bind(this) })
   }
@@ -75,7 +74,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * 422:账号被禁用
    * </pre>
    */
-  login (appKey: string, account: string, password: string, cb: LoginCallback | null, jsonExtension: string): Promise<[LoginRes]> {
+  login (appKey: string, account: string, password: string, cb?: LoginCallback | null, jsonExtension?: string): Promise<[LoginRes]> {
     return new Promise((resolve) => {
       this.client.Login(
         appKey,
@@ -89,7 +88,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
             resolve([res])
           }
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -105,7 +104,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * 500:未知错误
    * </pre>
    */
-  logout (logoutType: NIMLogoutType, cb: LogoutCallback | null, jsonExtension: string): Promise<[NIMResCode]> {
+  logout (logoutType: NIMLogoutType, cb?: LogoutCallback | null, jsonExtension?: string): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.client.Logout(
         logoutType,
@@ -115,7 +114,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
           }
           resolve([res])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -124,8 +123,8 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * @param jsonExtension json扩展参数（备用，目前不需要）
    * @return void 无返回值
    */
-  cleanup (jsonExtension: string): void {
-    return this.client.Cleanup(jsonExtension)
+  cleanup (jsonExtension?: string): void {
+    return this.client.Cleanup(jsonExtension ?? '')
   }
 
   /** 获取SDK配置
@@ -139,16 +138,16 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * @param jsonExtension json扩展参数（备用，目前不需要）
    * @return NIMLoginState 登录状态
    */
-  getLoginState (jsonExtension: string): NIMLoginState {
-    return this.client.GetLoginState(jsonExtension)
+  getLoginState (jsonExtension?: string): NIMLoginState {
+    return this.client.GetLoginState(jsonExtension ?? '')
   }
 
   /** NIM客户端手动重连（注意 APP需要统一处理自动重连/手动重连的回调，因为如果处于某次自动重连的过程中调用手动重连接口，不起作用！）
    * @param jsonExtension json扩展参数（备用，目前不需要）
    * @return void 无返回值
    */
-  relogin (jsonExtension: string): void {
-    return this.client.Relogin(jsonExtension)
+  relogin (jsonExtension?: string): void {
+    return this.client.Relogin(jsonExtension ?? '')
   }
 
   /** 将本帐号的其他端踢下线
@@ -169,7 +168,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * 200:成功
    * </pre>
    */
-  setMultiportPushConfigAsync (switch_on: boolean, cb: MultiportPushConfigCallback | null, jsonExtension: string): Promise<[NIMResCode, boolean]> {
+  setMultiportPushConfigAsync (switch_on: boolean, cb?: MultiportPushConfigCallback | null, jsonExtension?: string): Promise<[NIMResCode, boolean]> {
     return new Promise((resolve) => {
       this.client.SetMultiportPushConfigAsync(
         switch_on,
@@ -179,7 +178,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
           }
           resolve([res, open])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -189,14 +188,14 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * @param jsonExtension json扩展参数（备用，目前不需要）
    * @return void
    */
-  getMultiportPushConfigAsync (cb: MultiportPushConfigCallback | null, jsonExtension: string): Promise<[NIMResCode, boolean]> {
+  getMultiportPushConfigAsync (cb?: MultiportPushConfigCallback | null, jsonExtension?: string): Promise<[NIMResCode, boolean]> {
     return new Promise((resolve) => {
       this.client.GetMultiportPushConfigAsync((res, open) => {
         if (cb) {
           cb(res, open)
         }
         resolve([res, open])
-      }, jsonExtension)
+      }, jsonExtension ?? '')
     })
   }
 
@@ -218,7 +217,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * 时的方案以减少服务端的压力，并会在回调中指明返回的时间是由本地计算的。 如果返回 code != 200,同样会返回一个本地计算结果
    * </pre>
    */
-  getServerCurrentTime (cb: GetCurrentServerTimeCallback | null, calcLocal: boolean): Promise<[number, boolean, number]> {
+  getServerCurrentTime (cb?: GetCurrentServerTimeCallback | null, calcLocal: boolean): Promise<[number, boolean, number]> {
     return new Promise((resolve) => {
       this.client.GetServerCurrentTime((rescode, calcLocal, time) => {
         if (cb) {

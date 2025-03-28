@@ -1,5 +1,5 @@
 import { V2NIMInitOption, V2NIMError } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMLoginService } from './v2_nim_login_service'
 import { V2NIMConversationGroupService } from './v2_nim_conversation_group_service'
@@ -51,7 +51,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
   subscriptionService: V2NIMSubscriptionService | null
   passthroughService: V2NIMPassthroughService | null
 
-  constructor () {
+  constructor (private sdk: any) {
     super()
     try {
       this.instance = new sdk.V2NIMClient({ emit: this.emit.bind(this) })
@@ -81,6 +81,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.passthroughService = null
   }
 
+
   /**
    * @brief 初始化
    * @param option - 初始化选项
@@ -100,28 +101,28 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     if (error) {
       return error
     }
-    this.conversationIdUtil = new V2NIMConversationIdUtil()
-    this.messageCreator = new V2NIMMessageCreator()
-    this.messageConverter = new V2NIMMessageConverter()
-    this.messageAttachmentCreator = new V2NIMMessageAttachmentCreator()
-    this.clientAntispamUtil = new V2NIMClientAntispamUtil()
-    this.storageUtil = new V2NIMStorageUtil()
-    this.loginService = new V2NIMLoginService()
-    this.localConversationService = new V2NIMLocalConversationService()
-    this.messageService = new V2NIMMessageService()
-    this.notificationService = new V2NIMNotificationService()
-    this.storageService = new V2NIMStorageService()
-    this.teamService = new V2NIMTeamService()
-    this.settingService = new V2NIMSettingService()
-    this.userService = new V2NIMUserService()
-    this.friendService = new V2NIMFriendService()
-    this.aiService = new V2NIMAIService()
-    this.signallingService = new V2NIMSignallingService()
-    this.subscriptionService = new V2NIMSubscriptionService()
-    this.passthroughService = new V2NIMPassthroughService()
+    this.conversationIdUtil = new V2NIMConversationIdUtil(this.sdk)
+    this.messageCreator = new V2NIMMessageCreator(this.sdk)
+    this.messageConverter = new V2NIMMessageConverter(this.sdk)
+    this.messageAttachmentCreator = new V2NIMMessageAttachmentCreator(this.sdk)
+    this.clientAntispamUtil = new V2NIMClientAntispamUtil(this.sdk)
+    this.storageUtil = new V2NIMStorageUtil(this.sdk)
+    this.loginService = new V2NIMLoginService(this.sdk)
+    this.localConversationService = new V2NIMLocalConversationService(this.sdk)
+    this.messageService = new V2NIMMessageService(this.sdk)
+    this.notificationService = new V2NIMNotificationService(this.sdk)
+    this.storageService = new V2NIMStorageService(this.sdk)
+    this.teamService = new V2NIMTeamService(this.sdk)
+    this.settingService = new V2NIMSettingService(this.sdk)
+    this.userService = new V2NIMUserService(this.sdk)
+    this.friendService = new V2NIMFriendService(this.sdk)
+    this.aiService = new V2NIMAIService(this.sdk)
+    this.signallingService = new V2NIMSignallingService(this.sdk)
+    this.subscriptionService = new V2NIMSubscriptionService(this.sdk)
+    this.passthroughService = new V2NIMPassthroughService(this.sdk)
     try {
-      this.conversationService = new V2NIMConversationService()
-      this.conversationGroupService = new V2NIMConversationGroupService()
+      this.conversationService = new V2NIMConversationService(this.sdk)
+      this.conversationGroupService = new V2NIMConversationGroupService(this.sdk)
     } catch (e) {}
     return null
   }

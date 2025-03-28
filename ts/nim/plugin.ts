@@ -1,6 +1,6 @@
 import { NIMPluginAPI, ChatRoomRequestEnterCallback, QChatRequestLinkAddressCallback } from '../nim_def/plugin_def'
 import { EventEmitter } from 'eventemitter3'
-import sdk from '../loader'
+
 import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMPluginEvents {}
@@ -8,7 +8,7 @@ export declare interface NIMPluginEvents {}
 export class NIMPlugin extends EventEmitter<NIMPluginEvents> {
   plugin: NIMPluginAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.plugin = new sdk.NIMPluginIn({ emit: this.emit.bind(this) })
   }
@@ -33,7 +33,7 @@ export class NIMPlugin extends EventEmitter<NIMPluginEvents> {
    * 13003:在黑名单中
    * </pre>
    */
-  chatRoomRequestEnterAsync (roomId: number, cb: ChatRoomRequestEnterCallback | null, ext: string): Promise<[NIMResCode, string]> {
+  chatRoomRequestEnterAsync (roomId: number, cb?: ChatRoomRequestEnterCallback | null, ext?: string): Promise<[NIMResCode, string]> {
     return new Promise((resolve) => {
       this.plugin.ChatRoomRequestEnterAsync(
         roomId,
@@ -43,7 +43,7 @@ export class NIMPlugin extends EventEmitter<NIMPluginEvents> {
           }
           resolve([rescode, result])
         },
-        ext
+        ext ?? ''
       )
     })
   }
@@ -59,7 +59,7 @@ export class NIMPlugin extends EventEmitter<NIMPluginEvents> {
    * 414:参数错误
    * </pre>
    */
-  qchatRequestLinkAddress (ip_version: number, cb: QChatRequestLinkAddressCallback | null, ext: string): Promise<[NIMResCode, Array<string>]> {
+  qchatRequestLinkAddress (ip_version: number, cb?: QChatRequestLinkAddressCallback | null, ext?: string): Promise<[NIMResCode, Array<string>]> {
     return new Promise((resolve) => {
       this.plugin.QChatRequestLinkAddress(
         ip_version,
@@ -69,7 +69,7 @@ export class NIMPlugin extends EventEmitter<NIMPluginEvents> {
           }
           resolve([rescode, result])
         },
-        ext
+        ext ?? ''
       )
     })
   }

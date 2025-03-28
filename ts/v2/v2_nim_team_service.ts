@@ -15,7 +15,7 @@ import {
   V2NIMTeamJoinActionInfoQueryOption,
   V2NIMTeamMemberSearchOption
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMTeamChatBannedMode, V2NIMTeamMemberRole, V2NIMTeamType } from 'ts/v2_def/v2_nim_enum_def'
 
@@ -52,7 +52,7 @@ export declare interface V2NIMTeamListener {
 export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMTeamService({ emit: this.emit.bind(this) })
   }

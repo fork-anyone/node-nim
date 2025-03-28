@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   QChatAttachmentUploadParam,
@@ -22,7 +22,7 @@ export declare interface QChatAttachmentEvents {
 export class QChatAttachmentModule extends EventEmitter<QChatAttachmentEvents> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.QChatAttachment({ emit: this.emit.bind(this) })
   }

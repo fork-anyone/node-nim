@@ -4,7 +4,7 @@ import {
   V2NIMError,
   V2NIMSendCustomNotificationParams
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface V2NIMNotificationListener {
@@ -18,7 +18,7 @@ export declare interface V2NIMNotificationListener {
 export class V2NIMNotificationService extends EventEmitter<V2NIMNotificationListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMNotificationService({ emit: this.emit.bind(this) })
   }

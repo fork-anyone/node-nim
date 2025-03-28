@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   NIMUserAPI,
@@ -23,7 +23,7 @@ export declare interface NIMUserEvents {
 export class NIMUser extends EventEmitter<NIMUserEvents> {
   user: NIMUserAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.user = new sdk.NIMUser({ emit: this.emit.bind(this) })
   }
@@ -45,7 +45,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * 419:黑名单数量超过上限
    * </pre>
    */
-  setBlack (accid: string, setBlack: boolean, cb: SetRelationCallback | null, jsonExtension: string): Promise<[NIMResCode, string, boolean] | null> {
+  setBlack (accid: string, setBlack: boolean, cb?: SetRelationCallback | null, jsonExtension?: string): Promise<[NIMResCode, string, boolean] | null> {
     return new Promise((resolve) => {
       if (
         !this.user.SetBlack(
@@ -57,7 +57,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
             }
             resolve([rescode, accid, setOpt])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -77,7 +77,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * 419:静音列表数量超过上限
    * </pre>
    */
-  setMute (accid: string, set_mute: boolean, cb: SetRelationCallback | null, jsonExtension: string): Promise<[NIMResCode, string, boolean] | null> {
+  setMute (accid: string, set_mute: boolean, cb?: SetRelationCallback | null, jsonExtension?: string): Promise<[NIMResCode, string, boolean] | null> {
     return new Promise((resolve) => {
       if (
         !this.user.SetMute(
@@ -89,7 +89,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
             }
             resolve([rescode, accid, setOpt])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -106,14 +106,14 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * 200:成功
    * </pre>
    */
-  getMutelist (cb: GetSpecialListCallback | null, jsonExtension: string): Promise<[NIMResCode, Array<BlackMuteListInfo>]> {
+  getMutelist (cb?: GetSpecialListCallback | null, jsonExtension?: string): Promise<[NIMResCode, Array<BlackMuteListInfo>]> {
     return new Promise((resolve) => {
       this.user.GetMutelist((rescode, mutelist) => {
         if (cb) {
           cb(rescode, mutelist)
         }
         resolve([rescode, mutelist])
-      }, jsonExtension)
+      }, jsonExtension ?? '')
     })
   }
 
@@ -122,14 +122,14 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * @param cb
    * @return void 无返回值
    */
-  getBlacklist (cb: GetSpecialListCallback | null, jsonExtension: string): Promise<[NIMResCode, Array<BlackMuteListInfo>]> {
+  getBlacklist (cb?: GetSpecialListCallback | null, jsonExtension?: string): Promise<[NIMResCode, Array<BlackMuteListInfo>]> {
     return new Promise((resolve) => {
       this.user.GetBlacklist((rescode, blacklist) => {
         if (cb) {
           cb(rescode, blacklist)
         }
         resolve([rescode, blacklist])
-      }, jsonExtension)
+      }, jsonExtension ?? '')
     })
   }
 
@@ -146,7 +146,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * 20001:还未登陆或登录未完成
    * </pre>
    */
-  getUserNameCard (accids: Array<string>, cb: GetUserNameCardCallback | null, jsonExtension: string): Promise<[Array<UserNameCard>] | null> {
+  getUserNameCard (accids: Array<string>, cb?: GetUserNameCardCallback | null, jsonExtension?: string): Promise<[Array<UserNameCard>] | null> {
     return new Promise((resolve) => {
       if (
         !this.user.GetUserNameCard(
@@ -157,7 +157,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
             }
             resolve([userNameCard])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -178,7 +178,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * 20001:还未登陆或登录未完成
    * </pre>
    */
-  getUserNameCardOnline (accids: Array<string>, cb: GetUserNameCardCallback | null, jsonExtension: string): Promise<[Array<UserNameCard>] | null> {
+  getUserNameCardOnline (accids: Array<string>, cb?: GetUserNameCardCallback | null, jsonExtension?: string): Promise<[Array<UserNameCard>] | null> {
     return new Promise((resolve) => {
       if (
         !this.user.GetUserNameCardOnline(
@@ -189,7 +189,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
             }
             resolve([userNameCard])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -208,7 +208,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * 400:非法参数
    * </pre>
    */
-  updateMyUserNameCard (nameCard: UserNameCard, cb: UpdateMyUserNameCardCallback | null, jsonExtension: string): Promise<[NIMResCode] | null> {
+  updateMyUserNameCard (nameCard: UserNameCard, cb?: UpdateMyUserNameCardCallback | null, jsonExtension?: string): Promise<[NIMResCode] | null> {
     return new Promise((resolve) => {
       if (
         !this.user.UpdateMyUserNameCard(
@@ -219,7 +219,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
             }
             resolve([rescode])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -233,7 +233,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
    * @param jsonExtension json扩展参数（备用，目前不需要）
    * @return boolean 检查参数如果不符合要求则返回失败
    */
-  queryUserListByKeyword (keyword: string, cb: GetUserNameCardCallback | null, jsonExtension: string): Promise<[Array<UserNameCard>] | null> {
+  queryUserListByKeyword (keyword: string, cb?: GetUserNameCardCallback | null, jsonExtension?: string): Promise<[Array<UserNameCard>] | null> {
     return new Promise((resolve) => {
       if (
         !this.user.QueryUserListByKeyword(
@@ -244,7 +244,7 @@ export class NIMUser extends EventEmitter<NIMUserEvents> {
             }
             resolve([userNameCard])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)

@@ -5,7 +5,7 @@ import {
   V2NIMError
 } from 'ts/v2_def/v2_nim_struct_def'
 import { EventEmitter } from 'eventemitter3'
-import sdk from '../loader'
+
 
 export declare interface V2NIMAIListener {
   /** 数字人请求回调 */
@@ -15,7 +15,7 @@ export declare interface V2NIMAIListener {
 export class V2NIMAIService extends EventEmitter<V2NIMAIListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMAIService({ emit: this.emit.bind(this) })
   }

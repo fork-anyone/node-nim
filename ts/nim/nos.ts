@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   DownloadMediaCallback,
@@ -31,7 +31,7 @@ export declare interface NIMNOSEvents {
 export class NIMNOS extends EventEmitter<NIMNOSEvents> {
   nos: NIMNOSAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.nos = new sdk.NIMNOS({ emit: this.emit.bind(this) })
   }
@@ -46,7 +46,7 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
    * @param cb 结果回调函数
    * @return void 无返回值
    */
-  initConfig (param: InitNosConfigParam, cb: InitNosResultCallback | null): Promise<[InitNosResult]> {
+  initConfig (param: InitNosConfigParam, cb?: InitNosResultCallback | null): Promise<[InitNosResult]> {
     return new Promise((resolve) => {
       this.nos.InitConfig(param, (result) => {
         if (cb) {
@@ -75,17 +75,17 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
    */
   fetchMedia (
     msg: IMMessage,
-    jsonExtension: string,
-    res_cb: DownloadMediaCallback | null,
-    prg_cb: ProgressCallback | null,
-    speed_cb: SpeedCallback | null,
-    transfer_cb: TransferInfoCallback | null
+    jsonExtension?: string,
+    res_cb?: DownloadMediaCallback | null,
+    prg_cb?: ProgressCallback | null,
+    speed_cb?: SpeedCallback | null,
+    transfer_cb?: TransferInfoCallback | null
   ): Promise<[NIMResCode, string, string, string] | null> {
     return new Promise((resolve) => {
       if (
         !this.nos.FetchMedia(
           msg,
-          jsonExtension,
+          jsonExtension ?? '',
           (code, file_url, file_size, file_md5) => {
             if (res_cb) {
               res_cb(code, file_url, file_size, file_md5)
@@ -193,8 +193,8 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
    * 10200:成功
    * </pre>
    */
-  stopUploadResource (task_id: string, jsonExtension: string): boolean {
-    return this.nos.StopUploadResource(task_id, jsonExtension)
+  stopUploadResource (task_id: string, jsonExtension?: string): boolean {
+    return this.nos.StopUploadResource(task_id, jsonExtension ?? '')
   }
 
   /** 下载资源
@@ -263,8 +263,8 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
    * 10206:成功
    * </pre>
    */
-  stopDownloadResource (task_id: string, jsonExtension: string): boolean {
-    return this.nos.StopUploadResource(task_id, jsonExtension)
+  stopDownloadResource (task_id: string, jsonExtension?: string): boolean {
+    return this.nos.StopUploadResource(task_id, jsonExtension ?? '')
   }
 
   /** 根据安全链接(短链)换取源链接
@@ -278,7 +278,7 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
    * 414 不存在该短链或 safe_url 不是一个有效的短链
    * </pre>
    */
-  safeURLToOriginURL (safe_url: string, cb: SafeURLToOriginURLCallback | null, jsonExtension: string): Promise<[NIMResCode, string]> {
+  safeURLToOriginURL (safe_url: string, cb?: SafeURLToOriginURLCallback | null, jsonExtension?: string): Promise<[NIMResCode, string]> {
     return new Promise((resolve) => {
       this.nos.SafeURLToOriginURL(
         safe_url,
@@ -288,7 +288,7 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
           }
           resolve([code, url])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }

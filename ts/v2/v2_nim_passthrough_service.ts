@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMProxyRequest, V2NIMProxyResponse, V2NIMError, V2NIMProxyNotify } from '../v2_def/v2_nim_struct_def'
 
@@ -10,7 +10,7 @@ export declare interface V2NIMPassthroughListener {
 export class V2NIMPassthroughService extends EventEmitter<V2NIMPassthroughListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMPassthroughService({ emit: this.emit.bind(this) })
   }

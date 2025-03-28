@@ -7,7 +7,7 @@ import {
   V2NIMUserStatusSubscribeResult,
   V2NIMUserStatus,
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface V2NIMSubscriptionListener {
@@ -18,7 +18,7 @@ export declare interface V2NIMSubscriptionListener {
 export class V2NIMSubscriptionService extends EventEmitter<V2NIMSubscriptionListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMSubscriptionService({ emit: this.emit.bind(this) })
   }

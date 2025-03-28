@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   NIMSubscribeEventAPI,
@@ -24,7 +24,7 @@ export declare interface NIMSubscribeEventEvents {
 export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
   subscribeEvent: NIMSubscribeEventAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.subscribeEvent = new sdk.NIMSubscribeEvent({ emit: this.emit.bind(this) })
   }
@@ -48,7 +48,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
    * 500:未知错误
    * </pre>
    */
-  publish (data: EventData, cb: PublishEventCallback | null, jsonExtension: string): Promise<[NIMResCode, number, EventData] | null> {
+  publish (data: EventData, cb?: PublishEventCallback | null, jsonExtension?: string): Promise<[NIMResCode, number, EventData] | null> {
     return new Promise((resolve) => {
       this.subscribeEvent.Publish(
         data,
@@ -58,7 +58,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
           }
           resolve([rescode, eventType, data])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -83,8 +83,8 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
     ttl: number,
     syncType: NIMEventSubscribeSyncEventType,
     accids: Array<string>,
-    cb: SubscribeEventCallback | null,
-    jsonExtension: string
+    cb?: SubscribeEventCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, number, Array<string>] | null> {
     return new Promise((resolve) => {
       if (
@@ -99,7 +99,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
             }
             resolve([rescode, eventType, failedList])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -123,8 +123,8 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
   unSubscribe (
     eventType: NIMEventType,
     accids: Array<string>,
-    cb: UnSubscribeEventCallback | null,
-    jsonExtension: string
+    cb?: UnSubscribeEventCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, number, Array<string>] | null> {
     return new Promise((resolve) => {
       if (
@@ -137,7 +137,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
             }
             resolve([rescode, eventType, failedList])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -157,7 +157,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
    * 500:未知错误
    * </pre>
    */
-  batchUnSubscribe (eventType: NIMEventType, cb: BatchUnSubscribeEventCallback | null, jsonExtension: string): Promise<[NIMResCode, number] | null> {
+  batchUnSubscribe (eventType: NIMEventType, cb?: BatchUnSubscribeEventCallback | null, jsonExtension?: string): Promise<[NIMResCode, number] | null> {
     return new Promise((resolve) => {
       if (
         !this.subscribeEvent.BatchUnSubscribe(
@@ -168,7 +168,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
             }
             resolve([rescode, eventType])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -192,8 +192,8 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
   querySubscribe (
     eventType: NIMEventType,
     accids: Array<string>,
-    cb: QuerySubscribeEventCallback | null,
-    jsonExtension: string
+    cb?: QuerySubscribeEventCallback,
+    jsonExtension?: string
   ): Promise<[NIMResCode, number, Array<EventSubscribeData>]> {
     return new Promise((resolve) => {
       this.subscribeEvent.QuerySubscribe(
@@ -205,7 +205,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
           }
           resolve([rescode, eventType, datas])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }

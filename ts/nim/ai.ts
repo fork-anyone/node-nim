@@ -3,7 +3,7 @@ import {
   NIMProxyAIModelCallParams,
   NIMAIModelCallResult, AIUserNameCard
 } from '../nim_def/ai_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { NIMResCode } from '../nim_def/client_def'
 
@@ -15,7 +15,7 @@ export declare interface NIMAIEvents {
 export class NIMAI extends EventEmitter<NIMAIEvents> {
   ai: NIMAIAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.ai = new sdk.NIMAI({ emit: this.emit.bind(this) })
   }

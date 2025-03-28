@@ -6,7 +6,7 @@ import {
   V2NIMLocalConversationResult,
   V2NIMLocalConversationOption,
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMConversationType } from 'ts/v2_def/v2_nim_enum_def'
 
@@ -34,7 +34,7 @@ export declare interface V2NIMLocalConversationListener {
 export class V2NIMLocalConversationService extends EventEmitter<V2NIMLocalConversationListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMLocalConversationService({ emit: this.emit.bind(this) })
   }

@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { NIMSessionType } from '../nim_def/session_def'
 import {
@@ -58,7 +58,7 @@ export declare interface NIMMsgLogEvents {
 export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
   msglog: NIMMsgLogAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.msglog = new sdk.NIMMsgLog({ emit: this.emit.bind(this) })
   }
@@ -78,7 +78,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  queryMsgByIDAysnc (clientMsgId: string, cb: QuerySingleMsgCallback | null, jsonExtension: string): Promise<[NIMResCode, string, IMMessage] | null> {
+  queryMsgByIDAysnc (clientMsgId: string, cb?: QuerySingleMsgCallback | null, jsonExtension?: string): Promise<[NIMResCode, string, IMMessage] | null> {
     return new Promise((resolve) => {
       if (
         !this.msglog.QueryMsgByIDAysnc(
@@ -89,7 +89,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, id, msg])
           },
-          jsonExtension
+          jsonExtension ?? '' ?? ''
         )
       ) {
         resolve(null)
@@ -116,8 +116,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     to_type: NIMSessionType,
     limit_count: number,
     anchor_msg_time: number,
-    cb: QueryMsgCallback | null,
-    jsonExtension: string
+    cb?: QueryMsgCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
     return new Promise((resolve) => {
       if (
@@ -132,7 +132,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, id, to_type, result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -163,8 +163,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     anchor_client_msg_id: string,
     anchor_server_msg_id: string,
     direction: NIMMsglogSearchDirection,
-    cb: GetMessagesDynamicallyCallback | null,
-    jsonExtension: string
+    cb?: GetMessagesDynamicallyCallback | null,
+    jsonExtension?: string
   ): Promise<[GetMessagesResult] | null> {
     return new Promise((resolve) => {
       this.msglog.GetMessagesDynamically(
@@ -182,7 +182,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
           }
           resolve([result])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -198,7 +198,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 414:参数错误
    * </pre>
    */
-  queryMsgOnlineAsync (param: QueryMsgOnlineAsyncParam, cb: QueryMsgCallback | null): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
+  queryMsgOnlineAsync (param: QueryMsgOnlineAsyncParam, cb?: QueryMsgCallback | null): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
     return new Promise((resolve) => {
       if (
         !this.msglog.QueryMsgOnlineAsync(param, (rescode, id, to_type, result) => {
@@ -226,7 +226,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    */
   queryMsgByKeywordOnlineAsync (
     param: QueryMsgByKeywordOnlineParam,
-    cb: QueryMsgCallback | null
+    cb?: QueryMsgCallback | null
   ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
     return new Promise((resolve) => {
       if (
@@ -268,8 +268,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     endClientMsgId: string,
     reverse: boolean,
     msgType: Array<NIMMessageType>,
-    cb: QueryMsgCallback | null,
-    jsonExtension: string
+    cb?: QueryMsgCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
     return new Promise((resolve) => {
       if (
@@ -288,7 +288,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, id, to_type, result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -307,7 +307,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    */
   queryMsgByOptionsAsync (
     param: QueryMsgByOptionsAsyncParam,
-    cb: QueryMsgCallback | null
+    cb?: QueryMsgCallback | null
   ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
     return new Promise((resolve) => {
       if (
@@ -337,8 +337,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
   batchStatusReadAsync (
     accid: string,
     to_type: NIMSessionType,
-    cb: ModifyMultipleMsglogCallback | null,
-    jsonExtension: string
+    cb?: ModifyMultipleMsglogCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string, NIMSessionType] | null> {
     return new Promise((resolve) => {
       if (
@@ -351,7 +351,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, uid, to_type])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -375,8 +375,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     accid: string,
     to_type: NIMSessionType,
     revert_by_query_online: boolean,
-    cb: ModifyMultipleMsglogCallback | null,
-    jsonExtension: string
+    cb?: ModifyMultipleMsglogCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string, NIMSessionType] | null> {
     return new Promise((resolve) => {
       if (
@@ -390,7 +390,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, uid, to_type])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -412,8 +412,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
   setStatusAsync (
     msg_id: string,
     status: NIMMsgLogStatus,
-    cb: ModifySingleMsglogCallback | null,
-    jsonExtension: string
+    cb?: ModifySingleMsglogCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string] | null> {
     return new Promise((resolve) => {
       if (
@@ -426,7 +426,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, msg_id])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -448,8 +448,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
   setSubStatusAsync (
     msg_id: string,
     status: NIMMsgLogSubStatus,
-    cb: ModifySingleMsglogCallback | null,
-    jsonExtension: string
+    cb?: ModifySingleMsglogCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string] | null> {
     return new Promise((resolve) => {
       if (
@@ -462,7 +462,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, msg_id])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -489,7 +489,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     needUpdateSession: boolean,
     composeLastMsg: boolean,
     excludeMsgType: Array<number>,
-    cb: ModifySingleMsglogCallback | null
+    cb?: ModifySingleMsglogCallback | null
   ): Promise<[NIMResCode, string] | null> {
     return new Promise((resolve) => {
       if (
@@ -521,8 +521,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     delSessions: boolean,
     to_type: NIMSessionType,
     revert_by_query_online: boolean,
-    cb: ModifyMultipleMsglogCallback | null,
-    jsonExtension: string
+    cb?: ModifyMultipleMsglogCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string, NIMSessionType] | null> {
     return new Promise((resolve) => {
       if (
@@ -536,7 +536,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, msg_id, to_type])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -560,8 +560,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     session_id: string,
     to_type: NIMSessionType,
     msg_id: string,
-    cb: ModifySingleMsglogCallback | null,
-    jsonExtension: string
+    cb?: ModifySingleMsglogCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode, string] | null> {
     return new Promise((resolve) => {
       if (
@@ -575,7 +575,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode, msg_id])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -597,7 +597,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  deleteAllAsync (del_session: boolean, revert_by_query_online: boolean, cb: DBFunctionCallback | null, jsonExtension: string): Promise<[NIMResCode] | null> {
+  deleteAllAsync (del_session: boolean, revert_by_query_online: boolean, cb?: DBFunctionCallback | null, jsonExtension?: string): Promise<[NIMResCode] | null> {
     return new Promise((resolve) => {
       if (
         !this.msglog.DeleteAllAsync(
@@ -609,7 +609,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -637,8 +637,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     revert_by_query_online: boolean,
     timestamp1: number,
     timestamp2: number,
-    cb: DBFunctionCallback | null,
-    jsonExtension: string
+    cb?: DBFunctionCallback | null,
+    jsonExtension?: string
   ): Promise<[NIMResCode] | null> {
     return new Promise((resolve) => {
       if (
@@ -654,7 +654,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
             }
             resolve([rescode])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -672,7 +672,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  exportDbAsync (dst_path: string, cb: DBFunctionCallback | null, jsonExtension: string): Promise<[NIMResCode]> {
+  exportDbAsync (dst_path: string, cb?: DBFunctionCallback | null, jsonExtension?: string): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.msglog.ExportDbAsync(
         dst_path,
@@ -682,7 +682,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
           }
           resolve([rescode])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -700,7 +700,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 10601:导入消息历史时写记录失败
    * </pre>
    */
-  importDbAsync (src_path: string, cb: DBFunctionCallback, prg_cb: ImportDbPrgCallback | null, jsonExtension: string): Promise<[NIMResCode]> {
+  importDbAsync (src_path: string, cb?: DBFunctionCallback, prg_cb?: ImportDbPrgCallback | null, jsonExtension?: string): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.msglog.ImportDbAsync(
         src_path,
@@ -710,8 +710,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
           }
           resolve([rescode])
         },
-        prg_cb,
-        jsonExtension
+        prg_cb ?? null,
+        jsonExtension ?? ''
       )
     })
   }
@@ -728,7 +728,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 10414:本地错误码，参数错误
    * </pre>
    */
-  sendReceiptAsync (msg: IMMessage, cb: MessageStatusChangedCallback | null): Promise<[MessageStatusChangedResult]> {
+  sendReceiptAsync (msg: IMMessage, cb?: MessageStatusChangedCallback | null): Promise<[MessageStatusChangedResult]> {
     return new Promise((resolve) => {
       this.msglog.SendReceiptAsync(msg, (result) => {
         if (cb) {
@@ -766,7 +766,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  updateLocalExtAsync (msg_id: string, local_ext: string, cb: ModifySingleMsglogCallback | null, jsonExtension: string): Promise<[NIMResCode, string]> {
+  updateLocalExtAsync (msg_id: string, local_ext: string, cb?: ModifySingleMsglogCallback | null, jsonExtension?: string): Promise<[NIMResCode, string]> {
     return new Promise((resolve) => {
       this.msglog.UpdateLocalExtAsync(
         msg_id,
@@ -777,7 +777,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
           }
           resolve([rescode, local_ext])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -791,14 +791,14 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  readAllAsync (cb: DBFunctionCallback | null, jsonExtension: string): Promise<[NIMResCode]> {
+  readAllAsync (cb?: DBFunctionCallback | null, jsonExtension?: string): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.msglog.ReadAllAsync((rescode) => {
         if (cb) {
           cb(rescode)
         }
         resolve([rescode])
-      }, jsonExtension)
+      }, jsonExtension ?? '')
     })
   }
 
@@ -846,11 +846,11 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
   deleteHistoryOnlineAsync (
     accid: string,
     del_remote: boolean,
-    jsonExtension: string,
-    cb: DeleteHistoryOnLineAsyncCallback | null
+    jsonExtension?: string,
+    cb?: DeleteHistoryOnLineAsyncCallback | null
   ): Promise<[NIMResCode, string]> {
     return new Promise((resolve) => {
-      this.msglog.DeleteHistoryOnlineAsync(accid, del_remote, jsonExtension, (rescode, accid) => {
+      this.msglog.DeleteHistoryOnlineAsync(accid, del_remote, jsonExtension ?? '', (rescode, accid) => {
         if (cb) {
           cb(rescode, accid)
         }
@@ -872,13 +872,13 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     accid: string,
     to_type: number,
     needs_notify_self: boolean,
-    jsonExtension: string,
-    cb: DeleteHistoryOnLineAsyncExCallback | null
+    jsonExtension?: string,
+    cb?: DeleteHistoryOnLineAsyncExCallback | null
   ): Promise<[NIMResCode, string, number, number, string]> {
     return new Promise((resolve) => {
-      this.msglog.DeleteHistoryOnlineAsyncEx(accid, to_type, needs_notify_self, jsonExtension, (rescode, accid, to_type, timestamp, jsonExtension) => {
+      this.msglog.DeleteHistoryOnlineAsyncEx(accid, to_type, needs_notify_self, jsonExtension ?? '', (rescode, accid, to_type, timestamp, jsonExtension) => {
         if (cb) {
-          cb(rescode, accid, to_type, timestamp, jsonExtension)
+          cb(rescode, accid, to_type, timestamp, jsonExtension ?? '')
         }
         resolve([rescode, accid, to_type, timestamp, jsonExtension])
       })
@@ -895,7 +895,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  deleteMessageSelfAsync (msg: IMMessage, ext: string, cb: DeleteMessageSelfAsyncCallback | null): Promise<[NIMResCode]> {
+  deleteMessageSelfAsync (msg: IMMessage, ext: string, cb?: DeleteMessageSelfAsyncCallback | null): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.msglog.DeleteMessageSelfAsync(msg, ext, (rescode) => {
         if (cb) {
@@ -915,7 +915,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  queryMessageIsThreadRoot (client_id: string, cb: QueryMessageIsThreadRootCallback | null): Promise<[NIMResCode, string, boolean, number]> {
+  queryMessageIsThreadRoot (client_id: string, cb?: QueryMessageIsThreadRootCallback | null): Promise<[NIMResCode, string, boolean, number]> {
     return new Promise((resolve) => {
       this.msglog.QueryMessageIsThreadRoot(client_id, (rescode, client_id, is_thread_root, reply_count) => {
         if (cb) {
@@ -935,7 +935,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  queryMessageOnline (param: QueryMsgAsyncParam, cb: QueryMessageOnlineCallback | null): Promise<[NIMResCode, string, IMMessage]> {
+  queryMessageOnline (param: QueryMsgAsyncParam, cb?: QueryMessageOnlineCallback | null): Promise<[NIMResCode, string, IMMessage]> {
     return new Promise((resolve) => {
       this.msglog.QueryMessageOnline(param, (rescode, param, msg) => {
         if (cb) {
@@ -959,7 +959,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
   queryThreadHistoryMsg (
     msg: IMMessage,
     param: QueryThreadHistoryMsgAsyncParam,
-    cb: QueryThreadHistoryMsgCallback | null
+    cb?: QueryThreadHistoryMsgCallback | null
   ): Promise<[NIMResCode, IMMessage, number, number, Array<IMMessage>]> {
     return new Promise((resolve) => {
       this.msglog.QueryThreadHistoryMsg(msg, param, (rescode, root_msg, total, last_msg_time, msg_array) => {
@@ -983,7 +983,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    */
   queryLocalThreadHistoryMsg (
     msg: IMMessage,
-    cb: QueryMsgCallback | null
+    cb?: QueryMsgCallback | null
   ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult]> {
     return new Promise((resolve) => {
       this.msglog.QueryLocalThreadHistoryMsg(msg, (rescode, id, type, result) => {
@@ -1004,7 +1004,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * 200:成功
    * </pre>
    */
-  fullTextSearchOnlineAsync (param: FullTextSearchOnlineAsyncParam, cb: FullTextSearchOnlineAsyncCallback | null): Promise<[NIMResCode, QueryMsglogResult]> {
+  fullTextSearchOnlineAsync (param: FullTextSearchOnlineAsyncParam, cb?: FullTextSearchOnlineAsyncCallback | null): Promise<[NIMResCode, QueryMsglogResult]> {
     return new Promise((resolve) => {
       this.msglog.FullTextSearchOnlineAsync(param, (rescode, result) => {
         if (cb) {
@@ -1028,7 +1028,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    *     414:参数错误
    *     </pre>
    */
-  queryMessagesByKeywordAsync (param: QueryMsgByKeywordParam, cb: QueryMsgCallback | null): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult]> {
+  queryMessagesByKeywordAsync (param: QueryMsgByKeywordParam, cb?: QueryMsgCallback | null): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult]> {
     return new Promise((resolve) => {
       this.msglog.QueryMessagesByKeywordAsync(param, (rescode: NIMResCode, id: string, to_type: NIMSessionType, result: QueryMsglogResult) => {
         if (cb) {
@@ -1044,7 +1044,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    * @param cb 是否已经建立完成的回调函数
    * @return void
    */
-  isMessageIndexEstablished (cb: IsMessageIndexEstablishedCallback): Promise<boolean> {
+  isMessageIndexEstablished (cb?: IsMessageIndexEstablishedCallback): Promise<boolean> {
     return new Promise((resolve) => {
       this.msglog.IsMessageIndexEstablished((res) => {
         if (cb) {

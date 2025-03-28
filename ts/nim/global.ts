@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   CachedFileInfo,
@@ -25,7 +25,7 @@ export declare interface NIMGlobalEvents {
 export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
   global: NIMGlobalAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.global = new sdk.NIMGlobal({ emit: this.emit.bind(this) })
   }
@@ -40,9 +40,9 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb
    * @return void 无返回值
    */
-  setExceptionReportCallback (jsonExtension: string, cb: ExceptionCallback | null): Promise<[NIMSDKException, string]> {
+  setExceptionReportCallback (jsonExtension?: string, cb?: ExceptionCallback | null): Promise<[NIMSDKException, string]> {
     return new Promise((resolve) => {
-      this.global.SetExceptionReportCallback(jsonExtension, (exception, log) => {
+      this.global.SetExceptionReportCallback(jsonExtension ?? '', (exception, log) => {
         if (cb) {
           cb(exception, log)
         }
@@ -78,12 +78,12 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
     port: number,
     user: string,
     password: string,
-    cb: DetectProxyCallback | null
+    cb?: DetectProxyCallback | null
   ): Promise<[boolean, NIMProxyDetectStep, string]> {
     return new Promise((resolve) => {
-      this.global.DetectProxy(type, host, port, user, password, (connect, step, jsonExtension) => {
+      this.global.DetectProxy(type, host, port, user, password, (connect, step, jsonExtension ?? '') => {
         if (cb) {
-          cb(connect, step, jsonExtension)
+          cb(connect, step, jsonExtension ?? '')
         }
         resolve([connect, step, jsonExtension])
       })
@@ -102,11 +102,11 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
     loginId: string,
     fileType: NIMCachedFileType,
     endTimestamp: number,
-    jsonExtension: string,
-    cb: GetCachedFileInfoCallback | null
+    jsonExtension?: string,
+    cb?: GetCachedFileInfoCallback | null
   ): Promise<[NIMResCode, CachedFileInfo]> {
     return new Promise((resolve) => {
-      this.global.GetSDKCachedFileInfoAsync(loginId, fileType, endTimestamp, jsonExtension, (rescode, info) => {
+      this.global.GetSDKCachedFileInfoAsync(loginId, fileType, endTimestamp, jsonExtension ?? '', (rescode, info) => {
         if (cb) {
           cb(rescode, info)
         }
@@ -127,11 +127,11 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
     loginId: string,
     fileType: NIMCachedFileType,
     endTimestamp: number,
-    jsonExtension: string,
-    cb: DeleteCachedFileCallback | null
+    jsonExtension?: string,
+    cb?: DeleteCachedFileCallback | null
   ): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
-      this.global.DeleteSDKCachedFileAsync(loginId, fileType, endTimestamp, jsonExtension, (rescode) => {
+      this.global.DeleteSDKCachedFileAsync(loginId, fileType, endTimestamp, jsonExtension ?? '', (rescode) => {
         if (cb) {
           cb(rescode)
         }
@@ -146,9 +146,9 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb
    * @return void 无返回值
    */
-  sdkFeedbackAsync (url: string, jsonExtension: string, cb: SDKFeedbackCallback | null): Promise<[NIMResCode]> {
+  sdkFeedbackAsync (url: string, jsonExtension?: string, cb ?: SDKFeedbackCallback | null): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
-      this.global.SDKFeedbackAsync(url, jsonExtension, (rescode) => {
+      this.global.SDKFeedbackAsync(url, jsonExtension ?? '', (rescode) => {
         if (cb) {
           cb(rescode)
         }
@@ -162,7 +162,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb 操作结果的回调函数
    * @return void
    */
-  uploadSDKLog (feedbackStr: string, cb: UploadSDKLogCallback | null): Promise<[NIMResCode]> {
+  uploadSDKLog (feedbackStr: string, cb?: UploadSDKLogCallback | null): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.global.UploadSDKLog(feedbackStr, (rescode) => {
         if (cb) {

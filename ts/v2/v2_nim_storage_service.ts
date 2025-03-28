@@ -8,7 +8,7 @@ import {
   V2NIMGetMediaResourceInfoResult,
   V2NIMSize
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMProgressCallback } from '../v2_def/v2_nim_callback_def'
 
@@ -19,7 +19,7 @@ export declare interface V2NIMStorageListener {
 export class V2NIMStorageService extends EventEmitter<V2NIMStorageListener> {
   instance: any
 
-  constructor (instanceId?: number) {
+  constructor (private sdk: any, instanceId?: number) {
     super()
     this.instance = new sdk.V2NIMStorageService({ emit: this.emit.bind(this) }, instanceId)
   }

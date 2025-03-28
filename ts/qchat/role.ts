@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   QChatCreateServerRoleParam,
@@ -71,7 +71,7 @@ export declare interface QChatRoleEvents {}
 export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.QChatRole({ emit: this.emit.bind(this) })
   }

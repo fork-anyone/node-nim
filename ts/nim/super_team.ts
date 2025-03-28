@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   QuerySuperTeamMyAllMemberInfosCallback,
@@ -26,7 +26,7 @@ export declare interface NIMSuperTeamEvents {
 export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
   team: NIMSuperTeamAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.team = new sdk.NIMSuperTeam({ emit: this.emit.bind(this) })
   }
@@ -59,8 +59,8 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     ids: Array<string>,
     invitationPostscript: string,
     invitationAttachment: string,
-    cb: SuperTeamEventCallback | null,
-    jsonExtension: string
+    cb?: SuperTeamEventCallback | null,
+    jsonExtension?: string
   ): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
@@ -75,7 +75,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -99,7 +99,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 804:用户不在群里面
    * </pre>
    */
-  kickAsync (tid: string, ids: Array<string>, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  kickAsync (tid: string, ids: Array<string>, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.KickAsync(
@@ -111,7 +111,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -133,7 +133,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 804:用户不在群里
    * </pre>
    */
-  leaveAsync (tid: string, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  leaveAsync (tid: string, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.LeaveAsync(
@@ -144,7 +144,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -165,7 +165,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 803:群不存在
    * </pre>
    */
-  updateSuperTeamInfoAsync (tid: string, info: SuperTeamInfo, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  updateSuperTeamInfoAsync (tid: string, info: SuperTeamInfo, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.UpdateSuperTeamInfoAsync(
@@ -177,7 +177,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -202,7 +202,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 805:群类型不对
    * </pre>
    */
-  applyJoinAsync (tid: string, reason: string, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  applyJoinAsync (tid: string, reason: string, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.ApplyJoinAsync(
@@ -214,7 +214,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -239,7 +239,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 805:群类型不对
    * </pre>
    */
-  passJoinApplyAsync (tid: string, applicantId: string, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  passJoinApplyAsync (tid: string, applicantId: string, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.PassJoinApplyAsync(
@@ -251,7 +251,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -279,8 +279,8 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     tid: string,
     applicantId: string,
     reason: string,
-    cb: SuperTeamEventCallback | null,
-    jsonExtension: string
+    cb?: SuperTeamEventCallback | null,
+    jsonExtension?: string
   ): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
@@ -294,7 +294,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -316,7 +316,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 805:群类型不对
    * </pre>
    */
-  addManagersAsync (tid: string, ids: Array<string>, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  addManagersAsync (tid: string, ids: Array<string>, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.AddManagersAsync(
@@ -328,7 +328,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -350,7 +350,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 805:群类型不对
    * </pre>
    */
-  removeManagersAsync (tid: string, ids: Array<string>, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  removeManagersAsync (tid: string, ids: Array<string>, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.RemoveManagersAsync(
@@ -362,7 +362,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -390,8 +390,8 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     tid: string,
     newOwnerId: string,
     isLeave: boolean,
-    cb: SuperTeamEventCallback | null,
-    jsonExtension: string
+    cb?: SuperTeamEventCallback | null,
+    jsonExtension?: string
   ): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
@@ -405,7 +405,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -425,7 +425,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 805:群类型不对s
    * </pre>
    */
-  updateMyPropertyAsync (prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  updateMyPropertyAsync (prop: SuperTeamMemberProperty, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.UpdateMyPropertyAsync(
@@ -436,7 +436,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -444,13 +444,13 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     })
   }
 
-  /** @fn boolean addTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback)
+  /** @fn boolean addTeamMembersFollow(tid: string, account_ids: Array<string>, cb?: SuperTeamEventCallback)
    * 添加群成员特别通知
    * @param[in] tid    群组id
    * @param[in] account_ids    群成员id
    * @param[in] cb        添加群成员特别通知的回调函数
    */
-  addTeamMembersFollow (tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
+  addTeamMembersFollow (tid: string, account_ids: Array<string>, cb?: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.AddTeamMembersFollow(tid, account_ids, (event) => {
@@ -471,7 +471,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * @param[in] account_ids    群成员id
    * @param[in] cb        移除群成员特别通知的回调函数
    */
-  removeTeamMembersFollow (tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
+  removeTeamMembersFollow (tid: string, account_ids: Array<string>, cb?: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.RemoveTeamMembersFollow(tid, account_ids, (event) => {
@@ -500,7 +500,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 805:群类型不对
    * </pre>
    */
-  updateOtherNickAsync (prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  updateOtherNickAsync (prop: SuperTeamMemberProperty, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.UpdateOtherNickAsync(
@@ -511,7 +511,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -533,7 +533,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 805:群类型不对
    * </pre>
    */
-  acceptInvitationAsync (tid: string, inviterId: string, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  acceptInvitationAsync (tid: string, inviterId: string, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.AcceptInvitationAsync(
@@ -545,7 +545,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -572,8 +572,8 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     tid: string,
     inviterId: string,
     reason: string,
-    cb: SuperTeamEventCallback | null,
-    jsonExtension: string
+    cb?: SuperTeamEventCallback | null,
+    jsonExtension?: string
   ): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
@@ -587,7 +587,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([event])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -600,14 +600,14 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * @param cb    查询所有群的回调函数
    * @return void 无返回值
    */
-  queryAllMySuperTeamsAsync (cb: QueryAllMySuperTeamsCallback | null, jsonExtension: string): Promise<[number, Array<string>]> {
+  queryAllMySuperTeamsAsync (cb?: QueryAllMySuperTeamsCallback | null, jsonExtension?: string): Promise<[number, Array<string>]> {
     return new Promise((resolve) => {
       this.team.QueryAllMySuperTeamsAsync((count, result) => {
         if (cb) {
           cb(count, result)
         }
         resolve([count, result])
-      }, jsonExtension)
+      }, jsonExtension ?? '')
     })
   }
 
@@ -616,14 +616,14 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * @param cb    查询所有群信息的回调函数
    * @return void 无返回值
    */
-  queryAllMySuperTeamsInfoAsync (cb: QueryAllMySuperTeamsInfoCallback | null, jsonExtension: string): Promise<[number, Array<SuperTeamInfo>]> {
+  queryAllMySuperTeamsInfoAsync (cb?: QueryAllMySuperTeamsInfoCallback | null, jsonExtension?: string): Promise<[number, Array<SuperTeamInfo>]> {
     return new Promise((resolve) => {
       this.team.QueryAllMySuperTeamsInfoAsync((count, result) => {
         if (cb) {
           cb(count, result)
         }
         resolve([count, result])
-      }, jsonExtension)
+      }, jsonExtension ?? '')
     })
   }
 
@@ -632,14 +632,14 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * @param cb    查询所有群里我的成员信息的回调函数
    * @return void 无返回值
    */
-  queryMyAllMemberInfosAsync (cb: QuerySuperTeamMyAllMemberInfosCallback | null, jsonExtension: string): Promise<[number, Array<SuperTeamMemberProperty>]> {
+  queryMyAllMemberInfosAsync (cb?: QuerySuperTeamMyAllMemberInfosCallback | null, jsonExtension?: string): Promise<[number, Array<SuperTeamMemberProperty>]> {
     return new Promise((resolve) => {
       this.team.QueryMyAllMemberInfosAsync((count, result) => {
         if (cb) {
           cb(count, result)
         }
         resolve([count, result])
-      }, jsonExtension)
+      }, jsonExtension ?? '')
     })
   }
 
@@ -657,8 +657,8 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    */
   querySuperTeamMembersAsync (
     tid: string,
-    cb: QuerySuperTeamMembersCallback | null,
-    jsonExtension: string
+    cb?: QuerySuperTeamMembersCallback | null,
+    jsonExtension?: string
   ): Promise<[number, string, number, Array<SuperTeamMemberProperty>] | null> {
     return new Promise((resolve) => {
       if (
@@ -670,7 +670,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([rescode, tid, count, result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -685,7 +685,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * @param cb    查询群成员的回调函数
    * @return boolean 检查参数如果不符合要求则返回失败
    */
-  querySuperTeamMemberAsync (tid: string, id: string, cb: QuerySuperTeamMemberCallback | null, jsonExtension: string): Promise<[SuperTeamMemberProperty]> {
+  querySuperTeamMemberAsync (tid: string, id: string, cb?: QuerySuperTeamMemberCallback | null, jsonExtension?: string): Promise<[SuperTeamMemberProperty]> {
     return new Promise((resolve) => {
       this.team.QuerySuperTeamMemberAsync(
         tid,
@@ -696,7 +696,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
           }
           resolve([result])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }
@@ -707,7 +707,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * @param cb    查询群信息的回调函数
    * @return boolean 检查参数如果不符合要求则返回失败
    */
-  querySuperTeamInfoAsync (tid: string, cb: QuerySuperTeamInfoCallback | null, jsonExtension: string): Promise<[string, SuperTeamInfo] | null> {
+  querySuperTeamInfoAsync (tid: string, cb?: QuerySuperTeamInfoCallback | null, jsonExtension?: string): Promise<[string, SuperTeamInfo] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.QuerySuperTeamInfoAsync(
@@ -718,7 +718,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([tid, result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -737,7 +737,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 803:群不存在
    * </pre>
    */
-  querySuperTeamInfoOnlineAsync (tid: string, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  querySuperTeamInfoOnlineAsync (tid: string, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.QuerySuperTeamInfoOnlineAsync(
@@ -748,7 +748,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -776,8 +776,8 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     tid: string,
     member_id: string,
     set_mute: boolean,
-    cb: SuperTeamEventCallback | null,
-    jsonExtension: string
+    cb?: SuperTeamEventCallback | null,
+    jsonExtension?: string
   ): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
@@ -791,7 +791,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -811,7 +811,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    * 414:参数错误
    * </pre>
    */
-  muteAsync (tid: string, set_mute: boolean, cb: SuperTeamEventCallback | null, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+  muteAsync (tid: string, set_mute: boolean, cb?: SuperTeamEventCallback | null, jsonExtension?: string): Promise<[SuperTeamEvent] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.MuteAsync(
@@ -823,7 +823,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -839,8 +839,8 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    */
   querySuperTeamsInfoByKeywordAsync (
     keyword: string,
-    cb: QueryAllMySuperTeamsInfoCallback | null,
-    jsonExtension: string
+    cb?: QueryAllMySuperTeamsInfoCallback | null,
+    jsonExtension?: string
   ): Promise<[number, Array<SuperTeamInfo>]> {
     return new Promise((resolve) => {
       this.team.QuerySuperTeamsInfoByKeywordAsync(
@@ -851,7 +851,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
           }
           resolve([code, result])
         },
-        jsonExtension
+        jsonExtension ?? ''
       )
     })
   }

@@ -5,7 +5,7 @@ import {
   V2NIMError,
   V2NIMConversationOperationResult
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface V2NIMConversationGroupListener {
@@ -24,7 +24,7 @@ export declare interface V2NIMConversationGroupListener {
 export class V2NIMConversationGroupService extends EventEmitter<V2NIMConversationGroupListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMConversationGroupService({ emit: this.emit.bind(this) })
   }

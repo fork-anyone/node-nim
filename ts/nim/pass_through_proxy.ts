@@ -3,7 +3,7 @@ import {
   NIMSendHttpRequestMethods,
   SendHttpRequestCallback
 } from '../nim_def/pass_through_proxy_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { NIMResCode } from '../nim_def/client_def'
 
@@ -15,7 +15,7 @@ export declare interface NIMPassThroughProxyEvents {
 export class NIMPassThroughProxy extends EventEmitter<NIMPassThroughProxyEvents> {
   proxy: NIMPassThroughProxyAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.proxy = new sdk.NIMPassThroughProxy({ emit: this.emit.bind(this) })
   }
@@ -41,13 +41,13 @@ export class NIMPassThroughProxy extends EventEmitter<NIMPassThroughProxyEvents>
     method: NIMSendHttpRequestMethods,
     headers: string,
     body: string,
-    jsonExtension: string,
-    cb: SendHttpRequestCallback | null
+    jsonExtension?: string,
+    cb?: SendHttpRequestCallback | null
   ): Promise<[NIMResCode, string, string, string]> {
     return new Promise((resolve) => {
-      this.proxy.SendHttpRequest(host, path, method, headers, body, jsonExtension, (rescode, header, body, jsonExtension) => {
+      this.proxy.SendHttpRequest(host, path, method, headers, body, jsonExtension ?? '', (rescode, header, body, jsonExtension) => {
         if (cb) {
-          cb(rescode, header, body, jsonExtension)
+          cb(rescode, header, body, jsonExtension ?? '')
         }
         resolve([rescode, header, body, jsonExtension])
       })

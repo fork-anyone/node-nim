@@ -9,7 +9,7 @@ import {
   V2NIMFriendSearchOption,
   V2NIMFriendSetParams,
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMFriendDeletionType } from 'ts/v2_def/v2_nim_enum_def'
 
@@ -30,7 +30,7 @@ export declare interface V2NIMFriendListener {
 export class V2NIMFriendService extends EventEmitter<V2NIMFriendListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMFriendService({ emit: this.emit.bind(this) })
   }

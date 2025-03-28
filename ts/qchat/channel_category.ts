@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   QChatChannelCategoryCreateParam,
@@ -33,7 +33,7 @@ export declare interface QChatChannelCategoryEvents {}
 export class QChatChannelCategoryModule extends EventEmitter<QChatChannelCategoryEvents> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.QChatChannelCategory({ emit: this.emit.bind(this) })
   }

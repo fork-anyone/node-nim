@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   QChatSendSystemNotificationParam,
@@ -27,7 +27,7 @@ export declare interface QChatSystemNotificationEvents {
 export class QChatSystemNotificationModule extends EventEmitter<QChatSystemNotificationEvents> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.QChatSystemNotification({ emit: this.emit.bind(this) })
   }

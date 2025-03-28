@@ -5,7 +5,7 @@ import {
   V2NIMLoginClient,
   V2NIMLoginOption
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMReconnectDelayProvider } from 'ts/v2_def/v2_nim_callback_def'
 import {
@@ -38,7 +38,7 @@ export declare interface V2NIMLoginListener {
 export class V2NIMLoginService extends EventEmitter<V2NIMLoginListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMLoginService({ emit: this.emit.bind(this) })
   }

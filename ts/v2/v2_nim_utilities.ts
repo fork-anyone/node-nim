@@ -7,14 +7,16 @@ import {
   V2NIMMessageCallDuration,
   V2NIMMessageLocationAttachment
 } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMConversationType } from 'ts/v2_def/v2_nim_enum_def'
 
-let utilities: any = new sdk.V2NIMUtilities()
-
 /** @brief 消息创建器 */
 export class V2NIMMessageCreator {
+  utilities: any
+  constructor(private sdk: any) {
+    this.utilities = new sdk.V2NIMUtilities()
+  }
   /**
    * @brief 创建文本消息
    * @param text 文本内容
@@ -24,12 +26,8 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createTextMessage('Hello, world!')
    * ```
    */
-  static createTextMessage (text: string): V2NIMMessage | null {
-    return utilities.createTextMessage(text)
-  }
-
   createTextMessage (text: string): V2NIMMessage | null {
-    return utilities.createTextMessage(text)
+    return this.utilities.createTextMessage(text)
   }
 
   /**
@@ -45,13 +43,10 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createImageMessage(imagePath, name, sceneName, width, height)
    * ```
    */
-  static createImageMessage (imagePath: string, name: string, sceneName: string, width: number, height: number): V2NIMMessage | null {
-    return utilities.createImageMessage(imagePath, name, sceneName, width, height)
+  createImageMessage (imagePath: string, name: string, sceneName: string, width: number, height: number): V2NIMMessage | null {
+    return this.utilities.createImageMessage(imagePath, name, sceneName, width, height)
   }
 
-  createImageMessage (imagePath: string, name: string, sceneName: string, width: number, height: number): V2NIMMessage | null {
-    return utilities.createImageMessage(imagePath, name, sceneName, width, height)
-  }
 
   /**
    * @brief 创建音频消息
@@ -65,13 +60,10 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createAudioMessage(audioPath, name, sceneName, duration)
    * ```
    */
-  static createAudioMessage (audioPath: string, name: string, sceneName: string, duration: number): V2NIMMessage | null {
-    return utilities.createAudioMessage(audioPath, name, sceneName, duration)
+  createAudioMessage (audioPath: string, name: string, sceneName: string, duration: number): V2NIMMessage | null {
+    return this.utilities.createAudioMessage(audioPath, name, sceneName, duration)
   }
 
-  createAudioMessage (audioPath: string, name: string, sceneName: string, duration: number): V2NIMMessage | null {
-    return utilities.createAudioMessage(audioPath, name, sceneName, duration)
-  }
 
   /**
    * @brief 创建视频消息
@@ -87,13 +79,10 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createVideoMessage(videoPath, name, sceneName, duration, width, height)
    * ```
    */
-  static createVideoMessage (videoPath: string, name: string, sceneName: string, duration: number, width: number, height: number): V2NIMMessage | null {
-    return utilities.createVideoMessage(videoPath, name, sceneName, duration, width, height)
+  createVideoMessage (videoPath: string, name: string, sceneName: string, duration: number, width: number, height: number): V2NIMMessage | null {
+    return this.utilities.createVideoMessage(videoPath, name, sceneName, duration, width, height)
   }
 
-  createVideoMessage (videoPath: string, name: string, sceneName: string, duration: number, width: number, height: number): V2NIMMessage | null {
-    return utilities.createVideoMessage(videoPath, name, sceneName, duration, width, height)
-  }
 
   /**
    * @brief 创建文件消息
@@ -106,12 +95,8 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createFileMessage(filePath, name, sceneName)
    * ```
    */
-  static createFileMessage (filePath: string, name: string, sceneName: string): V2NIMMessage | null {
-    return utilities.createFileMessage(filePath, name, sceneName)
-  }
-
   createFileMessage (filePath: string, name: string, sceneName: string): V2NIMMessage | null {
-    return utilities.createFileMessage(filePath, name, sceneName)
+    return this.utilities.createFileMessage(filePath, name, sceneName)
   }
 
   /**
@@ -125,13 +110,10 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createLocationMessage(latitude, longitude, address)
    * ```
    */
-  static createLocationMessage (latitude: number, longitude: number, address: string): V2NIMMessage | null {
-    return utilities.createLocationMessage(latitude, longitude, address)
+  createLocationMessage (latitude: number, longitude: number, address: string): V2NIMMessage | null {
+    return this.utilities.createLocationMessage(latitude, longitude, address)
   }
 
-  createLocationMessage (latitude: number, longitude: number, address: string): V2NIMMessage | null {
-    return utilities.createLocationMessage(latitude, longitude, address)
-  }
 
   /**
    * @brief 创建自定义消息
@@ -143,13 +125,10 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createCustomMessage(text, rawAttachment)
    * ```
    */
-  static createCustomMessage (text: string, rawAttachment: string): V2NIMMessage | null {
-    return utilities.createCustomMessage(text, rawAttachment)
+  createCustomMessage (text: string, rawAttachment: string): V2NIMMessage | null {
+    return this.utilities.createCustomMessage(text, rawAttachment)
   }
 
-  createCustomMessage (text: string, rawAttachment: string): V2NIMMessage | null {
-    return utilities.createCustomMessage(text, rawAttachment)
-  }
 
   /**
    * @brief 创建提示消息
@@ -160,12 +139,8 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createTipsMessage(text)
    * ```
    */
-  static createTipsMessage (text: string): V2NIMMessage | null {
-    return utilities.createTipsMessage(text)
-  }
-
   createTipsMessage (text: string): V2NIMMessage | null {
-    return utilities.createTipsMessage(text)
+    return this.utilities.createTipsMessage(text)
   }
 
   /**
@@ -177,13 +152,10 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createForwardMessage(message)
    * ```
    */
-  static createForwardMessage (message: V2NIMMessage): V2NIMMessage | null {
-    return utilities.createForwardMessage(message)
+  createForwardMessage (message: V2NIMMessage): V2NIMMessage | null {
+    return this.utilities.createForwardMessage(message)
   }
 
-  createForwardMessage (message: V2NIMMessage): V2NIMMessage | null {
-    return utilities.createForwardMessage(message)
-  }
 
   /**
    * @brief 创建话单类消息
@@ -198,17 +170,18 @@ export class V2NIMMessageCreator {
    * const message = v2.messageCreator.createCallMessage(callType, channelId, status, durations, text)
    * ```
    */
-  static createCallMessage (callType: number, channelId: string, status: number, durations: Array<V2NIMMessageCallDuration>, text: string): V2NIMMessage | null {
-    return utilities.createCallMessage(callType, channelId, status, durations, text)
+  createCallMessage (callType: number, channelId: string, status: number, durations: Array<V2NIMMessageCallDuration>, text: string): V2NIMMessage | null {
+    return this.utilities.createCallMessage(callType, channelId, status, durations, text)
   }
 
-  createCallMessage (callType: number, channelId: string, status: number, durations: Array<V2NIMMessageCallDuration>, text: string): V2NIMMessage {
-    return utilities.createCallMessage(callType, channelId, status, durations, text)
-  }
 }
 
 /** @brief 消息序列化工具 */
 export class V2NIMMessageConverter {
+  utilities: any
+  constructor(private sdk: any) {
+    this.utilities = new sdk.V2NIMUtilities()
+  }
   /**
    * @brief 将消息序列化为 Json 字符串
    * @param message V2NIMMessage 消息对象
@@ -219,7 +192,7 @@ export class V2NIMMessageConverter {
    * ```
    */
   messageSerialization (message: V2NIMMessage): string | null {
-    return utilities.messageSerialization(message)
+    return this.utilities.messageSerialization(message)
   }
 
   /**
@@ -232,12 +205,16 @@ export class V2NIMMessageConverter {
    * ```
    */
   messageDeserialization (message: string): V2NIMMessage | null {
-    return utilities.messageDeserialization(message)
+    return this.utilities.messageDeserialization(message)
   }
 }
 
 /** @brief 会话ID工具 */
 export class V2NIMConversationIdUtil {
+  utilities: any
+  constructor(private sdk: any) {
+    this.utilities = new sdk.V2NIMUtilities()
+  }
   /**
    * @brief 获取点对点会话ID
    * @param accountId 账号ID
@@ -247,13 +224,10 @@ export class V2NIMConversationIdUtil {
    * const conversationId = v2.conversationIdUtil.p2pConversationId(accountId)
    * ```
    */
-  static p2pConversationId (accountId: string): string {
-    return utilities.p2pConversationId(accountId)
+  p2pConversationId (accountId: string): string {
+    return this.utilities.p2pConversationId(accountId)
   }
 
-  p2pConversationId (accountId: string): string {
-    return utilities.p2pConversationId(accountId)
-  }
 
   /**
    * @brief 获取群组会话ID
@@ -264,13 +238,10 @@ export class V2NIMConversationIdUtil {
    * const conversationId = v2.conversationIdUtil.teamConversationId(teamId)
    * ```
    */
-  static teamConversationId (teamId: string): string {
-    return utilities.teamConversationId(teamId)
+  teamConversationId (teamId: string): string {
+    return this.utilities.teamConversationId(teamId)
   }
 
-  teamConversationId (teamId: string): string {
-    return utilities.teamConversationId(teamId)
-  }
 
   /**
    * @brief 获取超级群会话ID
@@ -281,13 +252,10 @@ export class V2NIMConversationIdUtil {
    * const conversationId = v2.conversationIdUtil.superTeamConversationId(superTeamId)
    * ```
    */
-  static superTeamConversationId (superTeamId: string): string {
-    return utilities.superTeamConversationId(superTeamId)
+  superTeamConversationId (superTeamId: string): string {
+    return this.utilities.superTeamConversationId(superTeamId)
   }
 
-  superTeamConversationId (superTeamId: string): string {
-    return utilities.superTeamConversationId(superTeamId)
-  }
 
   /**
    * @brief 获取会话ID对应的会话类型
@@ -298,13 +266,10 @@ export class V2NIMConversationIdUtil {
    * const conversationType = v2.conversationIdUtil.parseConversationType(conversationId)
    * ```
    */
-  static parseConversationType (conversationId: string): V2NIMConversationType {
-    return utilities.parseConversationType(conversationId)
+  parseConversationType (conversationId: string): V2NIMConversationType {
+    return this.utilities.parseConversationType(conversationId)
   }
 
-  parseConversationType (conversationId: string): V2NIMConversationType {
-    return utilities.parseConversationType(conversationId)
-  }
 
   /**
    * @brief 获取会话ID对应的目标ID
@@ -315,17 +280,18 @@ export class V2NIMConversationIdUtil {
    * const targetId = v2.conversationIdUtil.parseConversationTargetId(conversationId)
    * ```
    */
-  static parseConversationTargetId (conversationId: string): string {
-    return utilities.parseConversationTargetId(conversationId)
+  parseConversationTargetId (conversationId: string): string {
+    return this.utilities.parseConversationTargetId(conversationId)
   }
 
-  parseConversationTargetId (conversationId: string): string {
-    return utilities.parseConversationTargetId(conversationId)
-  }
 }
 
 /** @brief 本地反垃圾工具 */
 export class V2NIMClientAntispamUtil {
+  utilities: any
+  constructor(private sdk: any) {
+    this.utilities = new sdk.V2NIMUtilities()
+  }
   /**
    * @brief 文本本地反垃圾
    * @param text 需要本地反垃圾check的文本
@@ -336,17 +302,19 @@ export class V2NIMClientAntispamUtil {
    * const result = v2.clientAntispamUtil.checkTextAntispam(text, replace)
    * ```
    */
-  static checkTextAntispam (text: string, replace: string): V2NIMClientAntispamResult {
-    return utilities.checkTextAntispam(text, replace)
+  checkTextAntispam (text: string, replace: string): V2NIMClientAntispamResult {
+    return this.utilities.checkTextAntispam(text, replace)
   }
 
-  checkTextAntispam (text: string, replace: string): V2NIMClientAntispamResult {
-    return utilities.checkTextAntispam(text, replace)
-  }
 }
 
 /** @brief 聊天室消息创建器 */
 export class V2NIMChatroomMessageCreator extends EventEmitter {
+  utilities: any
+  constructor(private sdk: any) {
+    super()
+    this.utilities = new sdk.V2NIMUtilities()
+  }
   /**
    * @brief 创建文本消息
    * @param text 文本内容
@@ -356,13 +324,10 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createTextMessage(text)
    * ```
    */
-  static createTextMessage (text: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateTextMessage(text)
+  createTextMessage (text: string): V2NIMChatroomMessage | null {
+    return this.utilities.chatroomCreateTextMessage(text)
   }
 
-  createTextMessage (text: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateTextMessage(text)
-  }
 
   /**
    * @brief 创建图片消息
@@ -377,13 +342,10 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createImageMessage(imagePath, name, sceneName, width, height)
    * ```
    */
-  static createImageMessage (imagePath: string, name: string, sceneName: string, width: number, height: number): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateImageMessage(imagePath, name, sceneName, width, height)
+  createImageMessage (imagePath: string, name: string, sceneName: string, width: number, height: number): V2NIMChatroomMessage | null {
+    return this.utilities.chatroomCreateImageMessage(imagePath, name, sceneName, width, height)
   }
 
-  createImageMessage (imagePath: string, name: string, sceneName: string, width: number, height: number): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateImageMessage(imagePath, name, sceneName, width, height)
-  }
 
   /**
    * @brief 创建音频消息
@@ -397,13 +359,10 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createAudioMessage(audioPath, name, sceneName, duration)
    * ```
    */
-  static createAudioMessage (audioPath: string, name: string, sceneName: string, duration: number): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateAudioMessage(audioPath, name, sceneName, duration)
+  createAudioMessage (audioPath: string, name: string, sceneName: string, duration: number): V2NIMChatroomMessage | null {
+    return this.utilities.chatroomCreateAudioMessage(audioPath, name, sceneName, duration)
   }
 
-  createAudioMessage (audioPath: string, name: string, sceneName: string, duration: number): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateAudioMessage(audioPath, name, sceneName, duration)
-  }
 
   /**
    * @brief 创建视频消息
@@ -419,7 +378,7 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createVideoMessage(videoPath, name, sceneName, duration, width, height)
    * ```
    */
-  static createVideoMessage (
+  createVideoMessage (
     videoPath: string,
     name: string,
     sceneName: string,
@@ -427,11 +386,7 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
     width: number,
     height: number
   ): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateVideoMessage(videoPath, name, sceneName, duration, width, height)
-  }
-
-  createVideoMessage (videoPath: string, name: string, sceneName: string, duration: number, width: number, height: number): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateVideoMessage(videoPath, name, sceneName, duration, width, height)
+    return this.utilities.chatroomCreateVideoMessage(videoPath, name, sceneName, duration, width, height)
   }
 
   /**
@@ -445,13 +400,10 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createFileMessage(filePath, name, sceneName)
    * ```
    */
-  static createFileMessage (filePath: string, name: string, sceneName: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateFileMessage(filePath, name, sceneName)
+  createFileMessage (filePath: string, name: string, sceneName: string): V2NIMChatroomMessage | null {
+    return this.utilities.chatroomCreateFileMessage(filePath, name, sceneName)
   }
 
-  createFileMessage (filePath: string, name: string, sceneName: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateFileMessage(filePath, name, sceneName)
-  }
 
   /**
    * @brief 创建位置消息
@@ -464,13 +416,10 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createLocationMessage(latitude, longitude, address)
    * ```
    */
-  static createLocationMessage (latitude: number, longitude: number, address: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateLocationMessage(latitude, longitude, address)
+  createLocationMessage (latitude: number, longitude: number, address: string): V2NIMChatroomMessage | null {
+    return this.utilities.chatroomCreateLocationMessage(latitude, longitude, address)
   }
 
-  createLocationMessage (latitude: number, longitude: number, address: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateLocationMessage(latitude, longitude, address)
-  }
 
   /**
    * @brief 创建自定义消息
@@ -481,12 +430,8 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createCustomMessage(rawAttachment)
    * ```
    */
-  static createCustomMessage (rawAttachment: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateCustomMessage(rawAttachment)
-  }
-
   createCustomMessage (rawAttachment: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateCustomMessage(rawAttachment)
+    return this.utilities.chatroomCreateCustomMessage(rawAttachment)
   }
 
   /**
@@ -498,13 +443,10 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createTipsMessage(text)
    * ```
    */
-  static createTipsMessage (text: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateTipsMessage(text)
+  createTipsMessage (text: string): V2NIMChatroomMessage | null {
+    return this.utilities.chatroomCreateTipsMessage(text)
   }
 
-  createTipsMessage (text: string): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateTipsMessage(text)
-  }
 
   /**
    * @brief 创建转发消息
@@ -515,16 +457,17 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
    * const message = v2.chatroomMessageCreator.createForwardMessage(message)
    * ```
    */
-  static createForwardMessage (message: V2NIMChatroomMessage): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateForwardMessage(message)
+  createForwardMessage (message: V2NIMChatroomMessage): V2NIMChatroomMessage | null {
+    return this.utilities.chatroomCreateForwardMessage(message)
   }
 
-  createForwardMessage (message: V2NIMChatroomMessage): V2NIMChatroomMessage | null {
-    return utilities.chatroomCreateForwardMessage(message)
-  }
 }
 
 export class V2NIMStorageUtil {
+  utilities: any
+  constructor(private sdk: any) {
+    this.utilities = new sdk.V2NIMUtilities()
+  }
   /**
    * @brief 生成图片缩略图链接
    * @param uri 图片原始链接
@@ -536,7 +479,7 @@ export class V2NIMStorageUtil {
    * ```
    */
   imageThumbUrl (uri: string, thumbSize: Number): string {
-    return utilities.imageThumUrl(uri, thumbSize)
+    return this.utilities.imageThumUrl(uri, thumbSize)
   }
 
   /**
@@ -552,11 +495,15 @@ export class V2NIMStorageUtil {
    * ```
    */
   videoCoverUrl (uri: string, offset: Number, thumbSize: Number, type: string): string {
-    return utilities.videoCoverUrl(uri, offset, thumbSize, type)
+    return this.utilities.videoCoverUrl(uri, offset, thumbSize, type)
   }
 }
 
 export class V2NIMMessageAttachmentCreator {
+  utilities: any
+  constructor(private sdk: any) {
+    this.utilities = new sdk.V2NIMUtilities()
+  }
   /**
    * @brief 构造地理位置消息附件
    * @param latitude 纬度
@@ -569,6 +516,6 @@ export class V2NIMMessageAttachmentCreator {
    * ```
    */
   createLocationMessageAttachment (latitude: number | null, longitude: number | null, address: string): V2NIMMessageLocationAttachment {
-    return utilities.createLocationMessageAttachment(latitude || 0, longitude || 0, address)
+    return this.utilities.createLocationMessageAttachment(latitude || 0, longitude || 0, address)
   }
 }

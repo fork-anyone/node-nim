@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { IMMessage, MessageSetting, NIMMessageType } from '../nim_def/msglog_def'
 import {
@@ -37,7 +37,7 @@ export declare interface NIMTalkEvents {
 export class NIMTalk extends EventEmitter<NIMTalkEvents> {
   talk: NIMTalkAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.talk = new sdk.NIMTalk({ emit: this.emit.bind(this) })
   }
@@ -53,8 +53,8 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
    * @param pcb    上传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
    * @return void 无返回值
    */
-  sendMsg (msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback | null): void {
-    return this.talk.SendMsg(msg, jsonExtension, progressCb)
+  sendMsg (msg: IMMessage, jsonExtension?: string, progressCb?: FileUpPrgCallback | null): void {
+    return this.talk.SendMsg(msg, jsonExtension ?? '', progressCb ?? null)
   }
 
   /**
@@ -74,8 +74,8 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
    * @param jsonExtension json扩展参数（备用,目前不需要）
    * @return void 无返回值
    */
-  stopSendMsg (clientMsgId: string, type: NIMMessageType, jsonExtension: string): void {
-    return this.talk.StopSendMsg(clientMsgId, type, jsonExtension)
+  stopSendMsg (clientMsgId: string, type: NIMMessageType, jsonExtension?: string): void {
+    return this.talk.StopSendMsg(clientMsgId, type, jsonExtension ?? '')
   }
 
   /** 撤回消息
@@ -95,10 +95,10 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
   recallMsg (
     msg: IMMessage,
     notify_msg: string,
-    cb: RecallMsgsCallback | null,
-    apnstext: string,
-    pushpayloadconst: string,
-    jsonExtension: string
+    cb?: RecallMsgsCallback | null,
+    apnstext?: string,
+    pushpayloadconst?: string,
+    jsonExtension?: string
   ): Promise<[NIMResCode, Array<RecallMsgNotify>]> {
     return new Promise((resolve) => {
       this.talk.RecallMsg(
@@ -110,9 +110,9 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
           }
           resolve([rescode, result])
         },
-        apnstext,
-        pushpayloadconst,
-        jsonExtension
+        apnstext ?? '',
+        pushpayloadconst ?? '',
+        jsonExtension ?? ''
       )
     })
   }
@@ -342,8 +342,8 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
    * @param[in] json_extension json扩展参数（备用,目前不需要）
    * @return void 无返回值
    */
-  regMessageFilter (cb: MessageFilterCallback | null, jsonExtension: string): void {
-    return this.talk.RegMessageFilter(cb, jsonExtension)
+  regMessageFilter (cb: MessageFilterCallback | null, jsonExtension?: string): void {
+    return this.talk.RegMessageFilter(cb, jsonExtension ?? '')
   }
 
   /** (全局回调)注册群通知过滤接口 （堵塞线程，谨慎使用，避免耗时行为）
@@ -351,7 +351,7 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
    * @param[in] filter    过滤接口
    * @return void 无返回值
    */
-  regTeamNotificationFilter (cb: TeamNotificationFilterCallback | null, jsonExtension: string): void {
-    return this.talk.RegTeamNotificationFilter(cb, jsonExtension)
+  regTeamNotificationFilter (cb: TeamNotificationFilterCallback | null, jsonExtension?: string): void {
+    return this.talk.RegTeamNotificationFilter(cb, jsonExtension ?? '')
   }
 }

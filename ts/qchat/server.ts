@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   QChatServerAcceptApplyParam,
@@ -75,7 +75,7 @@ export declare interface QChatServerEvents {
 export class QChatServerModule extends EventEmitter<QChatServerEvents> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.QChatServer({ emit: this.emit.bind(this) })
   }

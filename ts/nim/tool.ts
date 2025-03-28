@@ -1,4 +1,4 @@
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import {
   NIMToolAPI,
@@ -14,7 +14,7 @@ export declare interface NIMToolEvents {}
 export class NIMTool extends EventEmitter<NIMToolEvents> {
   tool: NIMToolAPI
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.tool = new sdk.NIMTool({ emit: this.emit.bind(this) })
   }
@@ -95,7 +95,7 @@ export class NIMTool extends EventEmitter<NIMToolEvents> {
    * 6104:audioUrl不合法
    * </pre>
    */
-  getAudioTextAsync (audioInfo: AudioInfo, cb: GetAudioTextCallback | null, jsonExtension: string): Promise<[NIMResCode, string] | null> {
+  getAudioTextAsync (audioInfo: AudioInfo, cb?: GetAudioTextCallback | null, jsonExtension?: string): Promise<[NIMResCode, string] | null> {
     return new Promise((resolve) => {
       if (
         !this.tool.GetAudioTextAsync(
@@ -106,7 +106,7 @@ export class NIMTool extends EventEmitter<NIMToolEvents> {
             }
             resolve([rescode, text])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
@@ -132,7 +132,7 @@ export class NIMTool extends EventEmitter<NIMToolEvents> {
     text: string,
     replaceString: string,
     libName: string,
-    cb: FilterClientAntispamCallback | null
+    cb?: FilterClientAntispamCallback | null
   ): Promise<[boolean, NIMResCode, string]> {
     return new Promise((resolve) => {
       this.tool.FilterClientAntispam(text, replaceString, libName, (ret, rescode, text) => {

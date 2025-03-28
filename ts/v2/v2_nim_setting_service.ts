@@ -1,5 +1,5 @@
 import { V2NIMDndConfig, V2NIMError } from 'ts/v2_def/v2_nim_struct_def'
-import sdk from '../loader'
+
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMP2PMessageMuteMode, V2NIMTeamMessageMuteMode, V2NIMTeamType } from 'ts/v2_def/v2_nim_enum_def'
 
@@ -14,7 +14,7 @@ export declare interface V2NIMSettingListener {
 export class V2NIMSettingService extends EventEmitter<V2NIMSettingListener> {
   instance: any
 
-  constructor () {
+  constructor (sdk: any) {
     super()
     this.instance = new sdk.V2NIMSettingService({ emit: this.emit.bind(this) })
   }
