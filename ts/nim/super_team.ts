@@ -659,7 +659,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     tid: string,
     cb?: QuerySuperTeamMembersCallback | null,
     jsonExtension?: string
-  ): Promise<[number, string, number, Array<SuperTeamMemberProperty>] | null> {
+  ): Promise<[NIMResCode, string, number, Array<SuperTeamMemberProperty>] | null> {
     return new Promise((resolve) => {
       if (
         !this.team.QuerySuperTeamMembersAsync(

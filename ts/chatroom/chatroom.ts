@@ -81,7 +81,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param app_install_dir Deprecated
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  init (app_install_dir: string, json_extension: string): boolean {
+  init (app_install_dir: string, json_extension?: string): boolean {
     return this.chatroom.Init(app_install_dir, json_extension)
   }
 
@@ -89,7 +89,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * 聊天室模块清理
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  cleanup (json_extension: string): void {
+  cleanup (json_extension?: string): void {
     return this.chatroom.Cleanup(json_extension)
   }
 
@@ -121,7 +121,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param info 聊天室进入信息
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  enter (room_id: number, request_login_data: string, info: ChatRoomEnterInfo, json_extension: string): boolean {
+  enter (room_id: number, request_login_data: string, info: ChatRoomEnterInfo, json_extension?: string): boolean {
     return this.chatroom.Enter(room_id, request_login_data, info, json_extension)
   }
 
@@ -130,7 +130,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param room_id 聊天室 ID
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  exit (room_id: number, json_extension: string): void {
+  exit (room_id: number, json_extension?: string): void {
     return this.chatroom.Exit(room_id, json_extension)
   }
 
@@ -139,7 +139,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param room_id 聊天室 ID
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  getLoginState (room_id: number, json_extension: string): NIMChatRoomLoginState {
+  getLoginState (room_id: number, json_extension?: string): NIMChatRoomLoginState {
     return this.chatroom.GetLoginState(room_id, json_extension)
   }
 
@@ -148,7 +148,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param set_batch 是否开启批量报告
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  setMsgsBatchReport (set_batch: boolean, json_extension: string): void {
+  setMsgsBatchReport (set_batch: boolean, json_extension?: string): void {
     return this.chatroom.SetMsgsBatchReport(set_batch, json_extension)
   }
 
@@ -158,7 +158,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param msg 消息
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  sendMsg (room_id: number, msg: ChatRoomMessage, json_extension: string): boolean {
+  sendMsg (room_id: number, msg: ChatRoomMessage, json_extension?: string): boolean {
     return this.chatroom.SendMsg(room_id, msg, json_extension)
   }
 
@@ -173,17 +173,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     parameters: ChatRoomGetMembersParameters,
     cb?: GetMembersCallback | null,
-    json_extension: string
-  ): Promise<[number, number, Array<ChatRoomMemberInfo>]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, Array<ChatRoomMemberInfo>]> {
     return new Promise((resolve) => {
       this.chatroom.GetMembersOnlineAsync(
         room_id,
         parameters,
         (room_id: number, rescode: NIMResCode, infos: Array<ChatRoomMemberInfo>) => {
           if (cb) {
-            cb(room_id, rescode, infos)
+            cb(rescode, room_id, infos)
           }
-          resolve([room_id, rescode, infos])
+          resolve([rescode, room_id,infos])
         },
         json_extension
       )
@@ -201,17 +201,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     parameters: ChatRoomGetMembersByTagParameters,
     cb?: GetMembersCallback | null,
-    json_extension: string
-  ): Promise<[number, number, Array<ChatRoomMemberInfo>]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, Array<ChatRoomMemberInfo>]> {
     return new Promise((resolve) => {
       this.chatroom.GetMembersByTagOnlineAsync(
         room_id,
         parameters,
         (room_id: number, rescode: NIMResCode, infos: Array<ChatRoomMemberInfo>) => {
           if (cb) {
-            cb(room_id, rescode, infos)
+            cb(rescode, room_id,  infos)
           }
-          resolve([room_id, rescode, infos])
+          resolve([rescode, room_id, infos])
         },
         json_extension
       )
@@ -229,17 +229,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     parameters: ChatRoomGetMembersParameters,
     cb?: GetMembersCountByTagCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode, number]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, NIMResCode, number]> {
     return new Promise((resolve) => {
       this.chatroom.GetMembersCountByTagOnlineAsync(
         room_id,
         parameters,
         (room_id: number, rescode: NIMResCode, count: number) => {
           if (cb) {
-            cb(room_id, rescode, count)
+            cb(rescode, room_id,  count)
           }
-          resolve([room_id, rescode, count])
+          resolve([rescode, room_id, count])
         },
         json_extension
       )
@@ -257,17 +257,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     parameters: ChatRoomGetMsgHistoryParameters,
     cb?: GetMsgHistoryCallback | null,
-    json_extension: string
-  ): Promise<[number, number, Array<ChatRoomMessage>]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, Array<ChatRoomMessage>]> {
     return new Promise((resolve) => {
       this.chatroom.GetMessageHistoryOnlineAsync(
         room_id,
         parameters,
         (room_id: number, rescode: NIMResCode, msgs: Array<ChatRoomMessage>) => {
           if (cb) {
-            cb(room_id, rescode, msgs)
+            cb(rescode, room_id,  msgs)
           }
-          resolve([room_id, rescode, msgs])
+          resolve([rescode, room_id, msgs])
         },
         json_extension
       )
@@ -285,17 +285,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     parameters: ChatRoomGetMsgHistoryByTagsParameters,
     cb?: GetMsgHistoryCallback | null,
-    json_extension: string
-  ): Promise<[number, number, Array<ChatRoomMessage>]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, Array<ChatRoomMessage>]> {
     return new Promise((resolve) => {
       this.chatroom.GetMessageHistoryByTagsOnlineAsync(
         room_id,
         parameters,
         (room_id: number, rescode: NIMResCode, msgs: Array<ChatRoomMessage>) => {
           if (cb) {
-            cb(room_id, rescode, msgs)
+            cb(rescode, room_id,  msgs)
           }
-          resolve([room_id, rescode, msgs])
+          resolve([rescode, room_id, msgs])
         },
         json_extension
       )
@@ -313,17 +313,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     parameters: ChatRoomSetMemberAttributeParameters,
     cb?: SetMemberAttributeCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode, ChatRoomMemberInfo]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, NIMResCode, ChatRoomMemberInfo]> {
     return new Promise((resolve) => {
       this.chatroom.SetMemberAttributeOnlineAsync(
         room_id,
         parameters,
         (room_id: number, rescode: NIMResCode, info: ChatRoomMemberInfo) => {
           if (cb) {
-            cb(room_id, rescode, info)
+            cb(rescode, room_id,  info)
           }
-          resolve([room_id, rescode, info])
+          resolve([rescode, room_id, info])
         },
         json_extension
       )
@@ -336,15 +336,15 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param cb 获取聊天室信息回调
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  getInfoAsync (room_id: number, cb?: GetChatRoomInfoCallback | null, json_extension: string): Promise<[number, NIMResCode, ChatRoomInfo]> {
+  getInfoAsync (room_id: number, cb?: GetChatRoomInfoCallback | null, json_extension?: string): Promise<[NIMResCode, number, ChatRoomInfo]> {
     return new Promise((resolve) => {
       this.chatroom.GetInfoAsync(
         room_id,
         (room_id: number, rescode: NIMResCode, info: ChatRoomInfo) => {
           if (cb) {
-            cb(room_id, rescode, info)
+            cb(rescode, room_id,  info)
           }
-          resolve([room_id, rescode, info])
+          resolve([rescode, room_id, info])
         },
         json_extension
       )
@@ -362,17 +362,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     ids: Array<string>,
     cb?: GetMembersCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode, Array<ChatRoomMemberInfo>]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, Array<ChatRoomMemberInfo>]> {
     return new Promise((resolve) => {
       this.chatroom.GetMemberInfoByIDsAsync(
         room_id,
         ids,
         (room_id: number, rescode: NIMResCode, infos: Array<ChatRoomMemberInfo>) => {
           if (cb) {
-            cb(room_id, rescode, infos)
+            cb(rescode, room_id,  infos)
           }
-          resolve([room_id, rescode, infos])
+          resolve([rescode, room_id, infos])
         },
         json_extension
       )
@@ -387,7 +387,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param cb 踢人回调
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  kickMemberAsync (room_id: number, id: string, notify_ext: string, cb?: KickMemberCallback | null, json_extension: string): Promise<[number, NIMResCode]> {
+  kickMemberAsync (room_id: number, id: string, notify_ext: string, cb?: KickMemberCallback | null, json_extension?: string): Promise<[NIMResCode, number,]> {
     return new Promise((resolve) => {
       this.chatroom.KickMemberAsync(
         room_id,
@@ -397,7 +397,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
           if (cb) {
             cb(room_id, rescode)
           }
-          resolve([room_id, rescode])
+          resolve([rescode, room_id])
         },
         json_extension
       )
@@ -433,8 +433,8 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     need_notify: boolean,
     notify_ext: string,
     cb?: TempMuteMemberCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode, ChatRoomMemberInfo]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, ChatRoomMemberInfo]> {
     return new Promise((resolve) => {
       this.chatroom.TempMuteMemberAsync(
         room_id,
@@ -444,9 +444,9 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         notify_ext,
         (room_id: number, rescode: NIMResCode, info: ChatRoomMemberInfo) => {
           if (cb) {
-            cb(room_id, rescode, info)
+            cb(rescode, room_id,  info)
           }
-          resolve([room_id, rescode, info])
+          resolve([rescode, room_id, info])
         },
         json_extension
       )
@@ -471,9 +471,9 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     need_notify: boolean,
     notify_ext: string,
     cb?: TempMuteMemberCallback | null,
-    notify_tags: string,
-    json_extension: string
-  ): Promise<[number, NIMResCode, ChatRoomMemberInfo]> {
+    notify_tags?: string,
+    json_extension?: string
+  ): Promise<[NIMResCode, number, ChatRoomMemberInfo]> {
     return new Promise((resolve) => {
       this.chatroom.TempMuteMemberByTagAsync(
         room_id,
@@ -483,9 +483,9 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         notify_ext,
         (room_id: number, rescode: NIMResCode, info: ChatRoomMemberInfo) => {
           if (cb) {
-            cb(room_id, rescode, info)
+            cb(rescode, room_id,  info)
           }
-          resolve([room_id, rescode, info])
+          resolve([rescode, room_id, info])
         },
         notify_tags,
         json_extension
@@ -508,8 +508,8 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     need_notify: boolean,
     notify_ext: string,
     cb?: UpdateRoomInfoCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number,]> {
     return new Promise((resolve) => {
       this.chatroom.UpdateRoomInfoAsync(
         room_id,
@@ -520,7 +520,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
           if (cb) {
             cb(room_id, rescode)
           }
-          resolve([room_id, rescode])
+          resolve([rescode, room_id])
         },
         json_extension
       )
@@ -542,8 +542,8 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     need_notify: boolean,
     notify_ext: string,
     cb?: UpdateMyRoomRoleCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number,]> {
     return new Promise((resolve) => {
       this.chatroom.UpdateMyRoomRoleAsync(
         room_id,
@@ -554,7 +554,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
           if (cb) {
             cb(room_id, rescode)
           }
-          resolve([room_id, rescode])
+          resolve([rescode, room_id])
         },
         json_extension
       )
@@ -574,8 +574,8 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     element: ChatRoomQueueElement,
     option: ChatRoomQueueOfferOption,
     cb?: QueueOfferCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, ChatRoomQueueElement]> {
     return new Promise((resolve) => {
       this.chatroom.QueueOfferAsync(
         room_id,
@@ -583,9 +583,9 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         option,
         (room_id: number, rescode: NIMResCode, element: ChatRoomQueueElement) => {
           if (cb) {
-            cb(room_id, rescode, element)
+            cb(rescode, room_id,  element)
           }
-          resolve([room_id, rescode, element])
+          resolve([rescode, room_id, element])
         },
         json_extension
       )
@@ -603,17 +603,17 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     element_key: string,
     cb?: QueuePollCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, ChatRoomQueueElement]> {
     return new Promise((resolve) => {
       this.chatroom.QueuePollAsync(
         room_id,
         element_key,
         (room_id: number, rescode: NIMResCode, element: ChatRoomQueueElement) => {
           if (cb) {
-            cb(room_id, rescode, element)
+            cb(rescode, room_id,  element)
           }
-          resolve([room_id, rescode, element])
+          resolve([rescode, room_id, element])
         },
         json_extension
       )
@@ -626,15 +626,15 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param cb 获取队列列表回调
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  queueListAsync (room_id: number, cb?: QueueListCallback | null, json_extension: string): Promise<[number, NIMResCode, Array<ChatRoomQueueElement>]> {
+  queueListAsync (room_id: number, cb?: QueueListCallback | null, json_extension?: string): Promise<[NIMResCode, number, Array<ChatRoomQueueElement>]> {
     return new Promise((resolve) => {
       this.chatroom.QueueListAsync(
         room_id,
         (room_id: number, rescode: NIMResCode, elements: Array<ChatRoomQueueElement>) => {
           if (cb) {
-            cb(room_id, rescode, elements)
+            cb(rescode, room_id,  elements)
           }
-          resolve([room_id, rescode, elements])
+          resolve([rescode, room_id, elements])
         },
         json_extension
       )
@@ -647,15 +647,15 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param cb 获取队列头元素回调
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  queueHeaderAsync (room_id: number, cb?: QueueHeaderCallback | null, json_extension: string): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
+  queueHeaderAsync (room_id: number, cb?: QueueHeaderCallback | null, json_extension?: string): Promise<[NIMResCode, number, ChatRoomQueueElement]> {
     return new Promise((resolve) => {
       this.chatroom.QueueHeaderAsync(
         room_id,
         (room_id: number, rescode: NIMResCode, element: ChatRoomQueueElement) => {
           if (cb) {
-            cb(room_id, rescode, element)
+            cb(rescode, room_id,  element)
           }
-          resolve([room_id, rescode, element])
+          resolve([rescode, room_id, element])
         },
         json_extension
       )
@@ -668,7 +668,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
    * @param cb 删除麦序队列回调
    * @param json_extension json 扩展参数（备用，目前不需要）
    */
-  queueDropAsync (room_id: number, cb?: QueueDropCallback | null, json_extension: string): Promise<[number, NIMResCode]> {
+  queueDropAsync (room_id: number, cb?: QueueDropCallback | null, json_extension?: string): Promise<[NIMResCode, number,]> {
     return new Promise((resolve) => {
       this.chatroom.QueueDropAsync(
         room_id,
@@ -676,7 +676,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
           if (cb) {
             cb(room_id, rescode)
           }
-          resolve([room_id, rescode])
+          resolve([rescode, room_id])
         },
         json_extension
       )
@@ -698,8 +698,8 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     need_notify: boolean,
     notify_ext: string,
     cb?: QueueBatchUpdateCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode, Array<string>]> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number, Array<string>]> {
     return new Promise((resolve) => {
       this.chatroom.QueueBatchUpdateAsync(
         room_id,
@@ -708,9 +708,9 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         notify_ext,
         (room_id: number, rescode: NIMResCode, element_keys: Array<string>) => {
           if (cb) {
-            cb(room_id, rescode, element_keys)
+            cb(rescode, room_id,  element_keys)
           }
-          resolve([room_id, rescode, element_keys])
+          resolve([rescode, room_id, element_keys])
         },
         json_extension
       )
@@ -728,8 +728,8 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     location: NIMChatRoomLocation,
     cb?: UpdateLocationCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode] | null> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number,] | null> {
     return new Promise((resolve) => {
       if (
         !this.chatroom.UpdateLocation(
@@ -739,7 +739,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
             if (cb) {
               cb(room_id, rescode)
             }
-            resolve([room_id, rescode])
+            resolve([rescode, room_id])
           },
           json_extension
         )
@@ -760,8 +760,8 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     room_id: number,
     tags_info: ChatRoomUpdateTagsInfo,
     cb?: UpdateTagsCallback | null,
-    json_extension: string
-  ): Promise<[number, NIMResCode] | null> {
+    json_extension?: string
+  ): Promise<[NIMResCode, number,] | null> {
     return new Promise((resolve) => {
       if (
         !this.chatroom.UpdateTags(
@@ -771,7 +771,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
             if (cb) {
               cb(room_id, rescode)
             }
-            resolve([room_id, rescode])
+            resolve([rescode, room_id])
           },
           json_extension
         )

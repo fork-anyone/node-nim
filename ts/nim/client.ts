@@ -217,7 +217,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
    * 时的方案以减少服务端的压力，并会在回调中指明返回的时间是由本地计算的。 如果返回 code != 200,同样会返回一个本地计算结果
    * </pre>
    */
-  getServerCurrentTime (cb?: GetCurrentServerTimeCallback | null, calcLocal: boolean): Promise<[number, boolean, number]> {
+  getServerCurrentTime (cb?: GetCurrentServerTimeCallback | null, calcLocal: boolean = false): Promise<[NIMResCode, boolean, number]> {
     return new Promise((resolve) => {
       this.client.GetServerCurrentTime((rescode, calcLocal, time) => {
         if (cb) {

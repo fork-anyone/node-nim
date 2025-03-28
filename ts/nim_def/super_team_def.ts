@@ -121,30 +121,6 @@ export interface SuperTeamEvent {
 }
 
 export interface SuperTeamInfoJsonValue {
-<<<<<<< HEAD
-    tid?: string
-    name?: string
-    readonly creator: string
-    member_max_count?: number
-    prop?: string
-    readonly valid: boolean
-    readonly member_count: number
-    readonly list_timetag: number
-    readonly create_timetag: number
-    readonly update_timetag: number
-    member_valid?: number /**< 1:有效，0:无效 */
-    intro?: string
-    announcement?: string
-    join_mode?: NIMSuperTeamJoinMode
-    custom?: string
-    readonly server_custom: string
-    icon?: string
-    be_invite_mode?: NIMSuperTeamBeInviteMode
-    invite_mode?: NIMSuperTeamInviteMode
-    update_info_mode?: NIMSuperTeamUpdateInfoMode
-    update_custom_mode?: NIMSuperTeamUpdateCustomMode
-    mute_type?: NIMSuperTeamMuteType
-=======
   tid?: string
   name?: string
   readonly creator: string
@@ -166,7 +142,6 @@ export interface SuperTeamInfoJsonValue {
   update_info_mode?: NIMSuperTeamUpdateInfoMode
   update_custom_mode?: NIMSuperTeamUpdateCustomMode
   mute_type?: NIMSuperTeamMuteType
->>>>>>> 10.8.10
 }
 
 export interface SuperTeamInfo {

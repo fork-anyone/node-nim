@@ -539,20 +539,20 @@ export interface ChatRoomInfo {
   queuelevel?: number
 }
 
-export type GetMembersCallback = (room_id: number, rescode: NIMResCode, infos: Array<ChatRoomMemberInfo>) => void
-export type GetMembersCountByTagCallback = (room_id: number, rescode: NIMResCode, count: number) => void
-export type GetMsgHistoryCallback = (room_id: number, rescode: NIMResCode, msgs: Array<ChatRoomMessage>) => void
-export type SetMemberAttributeCallback = (room_id: number, rescode: NIMResCode, info: ChatRoomMemberInfo) => void
-export type GetChatRoomInfoCallback = (room_id: number, rescode: NIMResCode, info: ChatRoomInfo) => void
+export type GetMembersCallback = (rescode: NIMResCode, room_id: number, infos: Array<ChatRoomMemberInfo>) => void
+export type GetMembersCountByTagCallback = (rescode: NIMResCode, room_id: number, count: number) => void
+export type GetMsgHistoryCallback = (rescode: NIMResCode, room_id: number, msgs: Array<ChatRoomMessage>) => void
+export type SetMemberAttributeCallback = (rescode: NIMResCode, room_id: number, info: ChatRoomMemberInfo) => void
+export type GetChatRoomInfoCallback = (rescode: NIMResCode, room_id: number, info: ChatRoomInfo) => void
 export type KickMemberCallback = (room_id: number, rescode: NIMResCode) => void
-export type TempMuteMemberCallback = (room_id: number, rescode: NIMResCode, info: ChatRoomMemberInfo) => void
+export type TempMuteMemberCallback = (rescode: NIMResCode, room_id: number, info: ChatRoomMemberInfo) => void
 export type UpdateRoomInfoCallback = (room_id: number, rescode: NIMResCode) => void
 export type UpdateMyRoomRoleCallback = (room_id: number, rescode: NIMResCode) => void
 export type UpdateLocationCallback = (room_id: number, rescode: NIMResCode) => void
 export type UpdateTagsCallback = (room_id: number, rescode: NIMResCode) => void
-export type QueueOfferCallback = (room_id: number, rescode: NIMResCode, element: ChatRoomQueueElement) => void
-export type QueuePollCallback = (room_id: number, rescode: NIMResCode, element: ChatRoomQueueElement) => void
-export type QueueListCallback = (room_id: number, rescode: NIMResCode, queue: Array<ChatRoomQueueElement>) => void
+export type QueueOfferCallback = (rescode: NIMResCode, room_id: number, element: ChatRoomQueueElement) => void
+export type QueuePollCallback = (rescode: NIMResCode, room_id: number, element: ChatRoomQueueElement) => void
+export type QueueListCallback = (rescode: NIMResCode, room_id: number, queue: Array<ChatRoomQueueElement>) => void
 export type QueueDropCallback = (room_id: number, rescode: NIMResCode) => void
-export type QueueHeaderCallback = (room_id: number, rescode: NIMResCode, element: ChatRoomQueueElement) => void
-export type QueueBatchUpdateCallback = (room_id: number, rescode: NIMResCode, not_in_queue: Array<string>) => void
+export type QueueHeaderCallback = (rescode: NIMResCode, room_id: number, element: ChatRoomQueueElement) => void
+export type QueueBatchUpdateCallback = (rescode: NIMResCode, room_id: number, not_in_queue: Array<string>) => void

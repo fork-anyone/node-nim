@@ -1,4 +1,3 @@
-
 import { EventEmitter } from 'eventemitter3'
 import {
   CachedFileInfo,
@@ -25,13 +24,13 @@ export declare interface NIMGlobalEvents {
 export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
   global: NIMGlobalAPI
 
-  constructor (sdk: any) {
+  constructor(sdk: any) {
     super()
     this.global = new sdk.NIMGlobal({ emit: this.emit.bind(this) })
   }
 
   /** 注册全局回调 */
-  initEventHandlers (): void {
+  initEventHandlers(): void {
     return this.global.InitEventHandlers()
   }
 
@@ -40,7 +39,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb
    * @return void 无返回值
    */
-  setExceptionReportCallback (jsonExtension?: string, cb?: ExceptionCallback | null): Promise<[NIMSDKException, string]> {
+  setExceptionReportCallback(jsonExtension?: string, cb?: ExceptionCallback | null): Promise<[NIMSDKException, string]> {
     return new Promise((resolve) => {
       this.global.SetExceptionReportCallback(jsonExtension ?? '', (exception, log) => {
         if (cb) {
@@ -59,7 +58,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param password 代理密码
    * @return void 无返回值
    */
-  setProxy (type: NIMProxyType, host: string, port: number, user: string, password: string): void {
+  setProxy(type: NIMProxyType, host: string, port: number, user: string, password: string): void {
     return this.global.SetProxy(type, host, port, user, password)
   }
 
@@ -72,7 +71,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb 回调函数
    * @return void 无返回值
    */
-  detectProxy (
+  detectProxy(
     type: NIMProxyType,
     host: string,
     port: number,
@@ -81,7 +80,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
     cb?: DetectProxyCallback | null
   ): Promise<[boolean, NIMProxyDetectStep, string]> {
     return new Promise((resolve) => {
-      this.global.DetectProxy(type, host, port, user, password, (connect, step, jsonExtension ?? '') => {
+      this.global.DetectProxy(type, host, port, user, password, (connect, step, jsonExtension) => {
         if (cb) {
           cb(connect, step, jsonExtension ?? '')
         }
@@ -98,7 +97,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb
    * @return void 无返回值
    */
-  getSDKCachedFileInfoAsync (
+  getSDKCachedFileInfoAsync(
     loginId: string,
     fileType: NIMCachedFileType,
     endTimestamp: number,
@@ -123,7 +122,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb
    * @return void 无返回值
    */
-  deleteSDKCachedFileAsync (
+  deleteSDKCachedFileAsync(
     loginId: string,
     fileType: NIMCachedFileType,
     endTimestamp: number,
@@ -146,7 +145,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb
    * @return void 无返回值
    */
-  sdkFeedbackAsync (url: string, jsonExtension?: string, cb ?: SDKFeedbackCallback | null): Promise<[NIMResCode]> {
+  sdkFeedbackAsync(url: string, jsonExtension?: string, cb?: SDKFeedbackCallback | null): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.global.SDKFeedbackAsync(url, jsonExtension ?? '', (rescode) => {
         if (cb) {
@@ -162,7 +161,7 @@ export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
    * @param cb 操作结果的回调函数
    * @return void
    */
-  uploadSDKLog (feedbackStr: string, cb?: UploadSDKLogCallback | null): Promise<[NIMResCode]> {
+  uploadSDKLog(feedbackStr: string, cb?: UploadSDKLogCallback | null): Promise<[NIMResCode]> {
     return new Promise((resolve) => {
       this.global.UploadSDKLog(feedbackStr, (rescode) => {
         if (cb) {
