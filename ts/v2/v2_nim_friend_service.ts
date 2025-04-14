@@ -8,10 +8,10 @@ import {
   V2NIMFriendDeleteParams,
   V2NIMFriendSearchOption,
   V2NIMFriendSetParams,
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 
 import { EventEmitter } from 'eventemitter3'
-import { V2NIMFriendDeletionType } from 'ts/v2_def/v2_nim_enum_def'
+import { V2NIMFriendDeletionType } from '../v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMFriendListener {
   /** 添加好友 */

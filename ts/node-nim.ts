@@ -27,7 +27,7 @@ import { QChatMessageModule } from './qchat/message'
 import { QChatSystemNotificationModule } from './qchat/system_notification'
 import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
-import { V2NIMClient as _V2NIMClient } from './v2/v2_nim_client'
+import { V2NIMClient } from './v2/v2_nim_client'
 import {
   V2NIMMessageCreator,
   V2NIMMessageConverter,
@@ -72,7 +72,8 @@ export {
   V2NIMChatroomMessageCreator,
   V2NIMConversationIdUtil,
   V2NIMStorageUtil,
-  V2NIMMessageAttachmentCreator
+  V2NIMMessageAttachmentCreator,
+  V2NIMClient
 }
 export * from './nim_def/client_def'
 export * from './nim_def/data_sync_def'
@@ -141,12 +142,13 @@ export class NIM {
   talkEx: NIMTalkEx
   /** AI 数字人模块 */
   ai: NIMAI
+  v2Client: V2NIMClient
 
   private sdk: any;
 
   private loadSdk(binaryPath: string | any) {
     if (typeof binaryPath === 'string') {
-      return require('binary')
+      return require(binaryPath)
     }
     return binaryPath
   }
@@ -190,6 +192,8 @@ export class NIM {
     this.talkEx = new NIMTalkEx(this.sdk)
 
     this.ai = new NIMAI(this.sdk)
+
+    this.v2Client = new V2NIMClient(this.sdk)
   }
 
   /** 初始化事件处理 */
@@ -216,4 +220,3 @@ export class NIM {
   }
 }
 
-export const V2NIMClient = _V2NIMClient;

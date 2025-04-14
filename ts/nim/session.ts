@@ -163,15 +163,15 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
     msg_excluded_type_list: Array<NIMMessageType>,
     cb?: QuerySessionListCallback | null,
     jsonExtension?: string
-  ): Promise<[NIMResCode, SessionDataList]> {
+  ): Promise<[number, SessionDataList]> {
     return new Promise((resolve) => {
       this.session.QueryAllRecentSessionAsync(
         msg_excluded_type_list,
-        (rescode, result) => {
+        (unreadCount, result) => {
           if (cb) {
-            cb(rescode, result)
+            cb(unreadCount, result)
           }
-          resolve([rescode, result])
+          resolve([unreadCount, result])
         },
         jsonExtension ?? ''
       )

@@ -14,10 +14,10 @@ import {
   V2NIMTeamJoinActionInfoResult,
   V2NIMTeamJoinActionInfoQueryOption,
   V2NIMTeamMemberSearchOption
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 
 import { EventEmitter } from 'eventemitter3'
-import { V2NIMTeamChatBannedMode, V2NIMTeamMemberRole, V2NIMTeamType } from 'ts/v2_def/v2_nim_enum_def'
+import { V2NIMTeamChatBannedMode, V2NIMTeamMemberRole, V2NIMTeamType } from '../v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMTeamListener {
   /** 群组信息同步开始 */

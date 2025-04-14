@@ -1,4 +1,4 @@
-import { V2NIMInitOption, V2NIMError } from 'ts/v2_def/v2_nim_struct_def'
+import { V2NIMInitOption, V2NIMError } from '../v2_def/v2_nim_struct_def'
 
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMLoginService } from './v2_nim_login_service'
@@ -53,8 +53,9 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
 
   constructor (private sdk: any) {
     super()
+
     try {
-      this.instance = new sdk.V2NIMClient({ emit: this.emit.bind(this) })
+      this.instance = new this.sdk.V2NIMClient({ emit: this.emit.bind(this) })
     } catch (e) {
       console.error(e)
     }

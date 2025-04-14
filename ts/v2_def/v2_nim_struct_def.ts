@@ -158,7 +158,6 @@ export interface V2NIMBasicOption {
 }
 
 export interface V2NIMInitOption {
-  sdk: string | any; // node实例或者node文件的绝对路径
   /** app key */
   appkey?: string
   /** app 数据目录, 为空则使用默认目录 */

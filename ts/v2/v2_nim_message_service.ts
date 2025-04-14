@@ -30,10 +30,10 @@ import {
   V2NIMModifyMessageResult,
   V2NIMMessageSearchExParams,
   V2NIMMessageSearchResult,
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 
 import { EventEmitter } from 'eventemitter3'
-import { V2NIMProgressCallback } from 'ts/v2_def/v2_nim_callback_def'
+import { V2NIMProgressCallback } from '../v2_def/v2_nim_callback_def'
 
 export declare interface V2NIMMessageListener {
   /** 收到一条新消息 */
