@@ -27,6 +27,12 @@ if (process.env.npm_package_version) {
 if (process.env.npm_config_nimsdkversion) {
     version = process.env.npm_config_nimsdkversion
 }
+
+
+if (process.env.npm_package_config_nimsdkversion) {
+    version = process.env.npm_package_config_nimsdkversion
+}
+
 async function downloadSDK(custom_sdk_url) {
     if (custom_sdk_url) {
         downloadUrl = custom_sdk_url

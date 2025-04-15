@@ -1,6 +1,6 @@
 {
     "name": "@fork-anyone/node-nim",
-    "version": "10.8.17",
+    "version": "10.8.20",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "keywords": [
         "netease",
@@ -50,6 +50,9 @@
         "watch": "nodemon",
         "postinstall": "node ./script/download-sdk.js"
     },
+    "config": {
+        "nimsdkversion": "10.8.30-beta.232"
+    },
     "mocha": {
         "require": "test/hooks.js"
     },
@@ -74,6 +77,7 @@
         "bluebird": "^3.7.2",
         "cmake-js": "^6.3.2",
         "commander": "^13.1.0",
+        "cross-env": "^7.0.3",
         "eslint": "^8.57.0",
         "eslint-config-standard": "^17.1.0",
         "eslint-plugin-import": "^2.29.1",
