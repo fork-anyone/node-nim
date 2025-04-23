@@ -206,7 +206,9 @@ export type V2NIMMessageAttachment =
   | V2NIMMessageAudioAttachment
   | V2NIMMessageVideoAttachment
   | V2NIMMessageLocationAttachment
-  | V2NIMMessageCallAttachment
+  // | V2NIMMessageCallAttachment
+  | V2NIMMessageTeamNotificationAttachment
+  | V2NIMChatroomNotificationAttachment
 
 export interface V2NIMMessageAttachmentBase {
   // 附件类型
@@ -217,6 +219,7 @@ export interface V2NIMMessageAttachmentBase {
 
 // noreflection
 export interface V2NIMMessageFileAttachment extends V2NIMMessageAttachmentBase {
+  attachmentType: V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_FILE
   /** 文件大小 */
   size?: number
   /** 文件 md5 */
@@ -237,6 +240,23 @@ export interface V2NIMMessageFileAttachment extends V2NIMMessageAttachmentBase {
 
 // noreflection
 export interface V2NIMMessageImageAttachment extends V2NIMMessageAttachmentBase {
+  attachmentType: V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_IMAGE
+  /** 文件大小 */
+  size?: number
+  /** 文件 md5 */
+  md5?: string
+  /** 文件 url */
+  url?: string
+  /** 文件显示名称 */
+  name?: string
+  /** 文件本地路径 */
+  path?: string
+  /** 文件扩展名 */
+  ext?: string
+  /** 文件存储场景 */
+  sceneName?: string
+  /** 附件上传状态 */
+  uploadState?: V2NIMMessageAttachmentUploadState
   /** 图片宽度 */
   width?: number
   /** 图片高度 */
@@ -245,12 +265,47 @@ export interface V2NIMMessageImageAttachment extends V2NIMMessageAttachmentBase 
 
 // noreflection
 export interface V2NIMMessageAudioAttachment extends V2NIMMessageAttachmentBase {
+  attachmentType: V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_AUDIO
+  /** 文件大小 */
+  size?: number
+  /** 文件 md5 */
+  md5?: string
+  /** 文件 url */
+  url?: string
+  /** 文件显示名称 */
+  name?: string
+  /** 文件本地路径 */
+  path?: string
+  /** 文件扩展名 */
+  ext?: string
+  /** 文件存储场景 */
+  sceneName?: string
+  /** 附件上传状态 */
+  uploadState?: V2NIMMessageAttachmentUploadState
   /** 语音文件播放时长 */
   duration?: number
 }
 
 // noreflection
 export interface V2NIMMessageVideoAttachment extends V2NIMMessageAttachmentBase {
+  /** 文件大小 */
+  size?: number
+  /** 文件 md5 */
+  md5?: string
+  /** 文件 url */
+  url?: string
+  /** 文件显示名称 */
+  name?: string
+  /** 文件本地路径 */
+  path?: string
+  /** 文件扩展名 */
+  ext?: string
+  /** 文件存储场景 */
+  sceneName?: string
+  /** 附件上传状态 */
+  uploadState?: V2NIMMessageAttachmentUploadState;
+
+  attachmentType: V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_VIDEO
   /** 视频文件播放时长 */
   duration?: number
   /** 图片宽度 */
@@ -261,6 +316,7 @@ export interface V2NIMMessageVideoAttachment extends V2NIMMessageAttachmentBase 
 
 // noreflection
 export interface V2NIMMessageLocationAttachment extends V2NIMMessageAttachmentBase {
+  attachmentType: V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_LOCATION
   /** 纬度 */
   latitude?: number
   /** 经度 */
@@ -269,21 +325,23 @@ export interface V2NIMMessageLocationAttachment extends V2NIMMessageAttachmentBa
   address?: string
 }
 
-export interface V2NIMMessageCallAttachment extends V2NIMMessageAttachmentBase {
-  /** 话单类型， 业务自定义 */
-  type: number
-  /** 话单频道 ID  */
-  channelId: string
-  /** 通话状态，业务自定义状态 */
-  status: number
-  /** 通话成员时长列表 */
-  durations: Array<V2NIMMessageCallDuration>
-  /** 话单描述 */
-  text: string
-}
+// export interface V2NIMMessageCallAttachment extends V2NIMMessageAttachmentBase {
+//   attachmentType: never;
+//   /** 话单类型， 业务自定义 */
+//   type: number
+//   /** 话单频道 ID  */
+//   channelId: string
+//   /** 通话状态，业务自定义状态 */
+//   status: number
+//   /** 通话成员时长列表 */
+//   durations: Array<V2NIMMessageCallDuration>
+//   /** 话单描述 */
+//   text: string
+// }
 
 // noreflection
 export interface V2NIMMessageTeamNotificationAttachment extends V2NIMMessageAttachmentBase {
+  attachmentType: V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_TEAM_NOTIFICATION;
   /** 通知类型 */
   type?: V2NIMMessageNotificationType
   /** 扩展字段 */
@@ -298,6 +356,12 @@ export interface V2NIMMessageTeamNotificationAttachment extends V2NIMMessageAtta
 
 // noreflection
 export interface V2NIMChatroomNotificationAttachment extends V2NIMMessageAttachmentBase {
+  attachmentType:
+    | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_NOTIFICATION
+    | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_CHAT_BANNED_NOTIFICATION
+    | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_MEMBER_ENTER_NOTIFICATION
+    | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_MESSAGE_REVOKE_NOTIFICATION
+    | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_QUEUE_NOTIFICATION
   /** 通知类型 */
   type?: V2NIMChatroomMessageNotificationType
   /** 被操作的成员账号列表 */
@@ -647,6 +711,8 @@ export interface V2NIMMessage {
   threadReply?: V2NIMMessageRefer
   /** 消息发送者是否是自己 */
   isSelf?: boolean
+  /** 是否本地删除 */
+  isDeleted?: boolean;
   /** AI 数字人相关信息 */
   aiConfig?: V2NIMAIModelConfig
   /** 消息更新时间 */
