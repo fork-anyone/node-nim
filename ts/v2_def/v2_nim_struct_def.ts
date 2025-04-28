@@ -50,7 +50,9 @@ import {
   V2NIMAIModelRoleType,
   V2NIMMessageAttachmentType,
   V2NIMMessageAIStreamStatus,
-  V2NIMAIModelStreamCallStatus
+  V2NIMAIModelStreamCallStatus,
+  V2NIMMessageAIRegenOpType,
+  V2NIMMessageAIStreamStopOpType
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {

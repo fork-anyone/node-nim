@@ -558,13 +558,6 @@ export enum V2NIMAsymmetricEncryptionAlgorithm {
 }
 
 
-export enum V2NIMHandShakeType {
-  /** 支持配置多种对称与非对称加密算法 @since v10.8.30 */
-  V2NIM_HANDSHAKE_TYPE_DEFAULT = 0,
-  /** 仅支持 RSA + RC4 @since v10.8.30 */
-  V2NIM_HANDSHAKE_TYPE_RSA_RC4_ONLY = 1
-}
-
 export enum V2NIMSymmetricEncryptionAlgorithm {
   /** RC4 */
   V2NIM_SYMMETRIC_ENCRYPTION_ALGORITHM_RC4 = 1,
