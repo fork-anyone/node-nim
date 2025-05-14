@@ -815,7 +815,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
    *   804:不在群里
    * </pre>
    */
-  queryMuteListAsync (tid: string, cb: QuerySuperTeamMembersCallback | null, jsonExtension: string): Promise<[number, string, number, Array<SuperTeamMemberProperty>] | null> {
+  queryMuteListAsync (tid: string, cb?: QuerySuperTeamMembersCallback | null, jsonExtension?: string): Promise<[number, string, number, Array<SuperTeamMemberProperty>] | null> {
     return new Promise((resolve) => {
       if (!this.team.QueryMuteListAsync(
           tid,
@@ -825,7 +825,7 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
             }
             resolve([rescode, tid, count, result])
           },
-          jsonExtension
+          jsonExtension ?? ''
         )
       ) {
         resolve(null)
