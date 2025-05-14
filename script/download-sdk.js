@@ -7,9 +7,9 @@ const download = require('download')
 
 // Global variables
 const default_arch = 'universal'
+const platform = process.env.npm_config_platform || process.platform;
 const current_arch = process.env.npm_config_arch || process.arch
-const arch = process.platform === 'darwin' ? default_arch : current_arch
-const platform = process.env.npm_config_platform || process.platform
+const arch = platform === 'darwin' ? default_arch : current_arch
 const channel = 'message'
 const product = 'nim'
 const savePath = path.join(__dirname, '..', 'temporary')
