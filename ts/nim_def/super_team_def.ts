@@ -121,6 +121,7 @@ export interface SuperTeamEvent {
 }
 
 export interface SuperTeamInfoJsonValue {
+  readonly server_custom?: string;
   tid?: string
   name?: string
   readonly creator: string
