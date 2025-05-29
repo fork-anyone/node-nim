@@ -74,6 +74,26 @@ export class V2NIMSettingService extends EventEmitter<V2NIMSettingListener> {
   }
 
   /**
+   * @brief 获取我所在的所有群消息免打扰模式
+   * @param teamType 群组类型
+   * @returns Map<string, V2NIMTeamMessageMuteMode> 所有群消息免打扰模式
+   * @since v10.9.0
+   * @example
+   * ```javascript
+   * const muteModeList = await v2.settingService.getAllTeamMessageMuteMode(teamType)
+   * ```
+   */
+  getAllTeamMessageMuteMode (teamType: V2NIMTeamType): Promise<Map<string, V2NIMTeamMessageMuteMode>> {
+    return new Promise((resolve, reject) => {
+      this.instance.getAllTeamMessageMuteMode(teamType, (muteModeList: Map<string, V2NIMTeamMessageMuteMode>) => {
+        resolve(muteModeList)
+      }, (error: V2NIMError) => {
+        reject(error)
+      })
+    })
+  }
+  
+  /**
    * @brief 设置点对点消息免打扰模式
    * @param accountId 账号
    * @param muteMode 免打扰模式
