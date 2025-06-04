@@ -48,11 +48,14 @@ import {
   V2NIMSearchKeywordMathType,
   V2NIMClearHistoryMode,
   V2NIMAIModelRoleType,
-  V2NIMMessageAttachmentType,
   V2NIMMessageAIStreamStatus,
   V2NIMAIModelStreamCallStatus,
+  V2NIMMessageAIStreamStopOpType,
   V2NIMMessageAIRegenOpType,
-  V2NIMMessageAIStreamStopOpType
+  V2NIMKickedOfflineReason,
+  V2NIMSearchDirection,
+  V2NIMSearchStrategy,
+  V2NIMMessageAttachmentType
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -71,6 +74,18 @@ export interface V2NIMSize {
   height: number
 }
 
+/** @biref V2NIMTransportLayerSecurityOption TLS 配置 @since v10.9.0 */
+export interface V2NIMTransportLayerSecurityOption {
+  /** 是否启用 SSL/TLS 加密，默认启用，目前仅在使用 WebSocket 链接时使用 @since v10.9.0 */
+  sslConnection?: boolean
+  /** 是否允许自签证书，默认不允许 @since v10.9.0 */
+  allowSelfSignedCert?: boolean
+  /** 是否跳过主机证书检查，默认不跳过 @since v10.9.0 */
+  skipHostCertCheck?: boolean
+  /** 自定义 SSL CA 证书位置，pem 格式，留空使用内置默认证书 @since v10.9.0 */
+  clientCAFilePath?: string
+}
+
 export interface V2NIMLinkOption {
   /** 连接超时, 单位毫秒 */
   linkTimeout?: number
@@ -82,6 +97,8 @@ export interface V2NIMLinkOption {
   asymmetricEncryptionAlgorithm?: V2NIMAsymmetricEncryptionAlgorithm
   /** 对称加密通信加密算法 */
   symmetricEncryptionAlgorithm?: V2NIMSymmetricEncryptionAlgorithm
+  /** TLS 选项，目前仅在使用 WebSocket 链接时使用 @since v10.9.0 */
+  tlsOption?: V2NIMTransportLayerSecurityOption
 }
 
 export interface V2NIMFCSOption {
@@ -154,6 +171,8 @@ export interface V2NIMBasicOption {
   logReserveDays?: number
   /** SDK日志级别 */
   sdkLogLevel?: V2NIMSDKLogLevel
+  /** 自定义日志收集目录，当需要上报日志时可单独指定一个目录，SDK 会主动收集该目录下的所有文件 @since v10.9.0 */
+  customizeLogCollectionDirectory?: string
   /** 是否禁用 macOS 下的 App Nap 功能 */
   disableAppNap?: boolean
   /** 云信指南针数据上报开关 */
@@ -316,7 +335,7 @@ export interface V2NIMMessageVideoAttachment extends V2NIMMessageAttachmentBase 
   /** 图片宽度 */
   width?: number
   /** 图片高度 */
-  height?: number
+  height?: number;
 }
 
 // noreflection
@@ -330,19 +349,18 @@ export interface V2NIMMessageLocationAttachment extends V2NIMMessageAttachmentBa
   address?: string
 }
 
-// export interface V2NIMMessageCallAttachment extends V2NIMMessageAttachmentBase {
-//   attachmentType: never;
-//   /** 话单类型， 业务自定义 */
-//   type: number
-//   /** 话单频道 ID  */
-//   channelId: string
-//   /** 通话状态，业务自定义状态 */
-//   status: number
-//   /** 通话成员时长列表 */
-//   durations: Array<V2NIMMessageCallDuration>
-//   /** 话单描述 */
-//   text: string
-// }
+export interface V2NIMMessageCallAttachment extends V2NIMMessageAttachmentBase {
+  /** 话单类型， 业务自定义 */
+  type: number
+  /** 话单频道 ID  */
+  channelId: string
+  /** 通话状态，业务自定义状态 */
+  status: number
+  /** 通话成员时长列表 */
+  durations: Array<V2NIMMessageCallDuration>
+  /** 话单描述 */
+  text: string
+}
 
 // noreflection
 export interface V2NIMMessageTeamNotificationAttachment extends V2NIMMessageAttachmentBase {
@@ -367,6 +385,7 @@ export interface V2NIMChatroomNotificationAttachment extends V2NIMMessageAttachm
     | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_MEMBER_ENTER_NOTIFICATION
     | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_MESSAGE_REVOKE_NOTIFICATION
     | V2NIMMessageAttachmentType.V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_QUEUE_NOTIFICATION
+
   /** 通知类型 */
   type?: V2NIMChatroomMessageNotificationType
   /** 被操作的成员账号列表 */
@@ -514,7 +533,7 @@ export interface V2NIMNotificationRouteConfig {
 
 export interface V2NIMMessageStatus {
   /** 消息发送失败后的错误码信息 */
-  errorCode?: number
+  errorCode?: number,
   /** 群消息开启已读回执配置，当 V2NIMMessageConfig::readReceiptEnabled 为 true 时，其他端收到消息后需要发送已读回执请求，该字段记录是否已经发送过已读回执请求，避免重复发送 */
   readReceiptSent?: boolean
 }
@@ -723,6 +742,8 @@ export interface V2NIMMessage {
   messageType?: V2NIMMessageType
   /** 消息内容 */
   subType?: number
+  /** 音频消息状态 @since v10.9.1 */
+  audioState?: number
   /** 消息文本 */
   text?: string
   /** 消息附属附件 */
@@ -872,7 +893,7 @@ export interface V2NIMSendMessageParams {
   /** 机器人相关配置 */
   robotConfig?: V2NIMMessageRobotConfig
   /** 请求大模型的相关参数 */
-  aiConfig?: V2NIMMessageAIConfigParams
+  aiConfig?: V2NIMMessageAIConfigParams;
   /** 用以控制在发送群组消息时，消息是否发送给指定的群组成员 */
   targetConfig?: V2NIMMessageTargetConfig
   /** 是否启用本地反垃圾 */
@@ -897,6 +918,8 @@ export interface V2NIMMessageRevokeParams {
 export interface V2NIMMessageRevokeNotification {
   /** 被撤回的消息引用 */
   messageRefer?: V2NIMMessageRefer
+  /** 原始消息 @since v10.9.1 */
+  message?: V2NIMMessage
   /** 扩展信息 */
   serverExtension?: string
   /** 附言 */
@@ -1017,6 +1040,24 @@ export interface V2NIMMessageListOption {
   onlyQueryLocal?: boolean
 }
 
+/// @brief 消息查询结果 @since v10.9.1
+export interface V2NIMCloudMessageListOption {
+  /// 消息所属会话 ID
+  conversationId: string
+  /// 消息查询开始时间，小于等于 endTime
+  beginTime?: number
+  /// 消息查询结束时间
+  endTime?: number
+  /// 每次查询条数，默认 50
+  limit?: number
+  /// 消息查询方向
+  direction?: V2NIMQueryDirection
+  /// 根据消息类型查询会话，不指定或空列表，则表示查询所有消息类型
+  messageTypes?: Array<V2NIMMessageType>
+  /// 锚点消息，根据锚点消息查询，不包含该消息
+  anchorMessage?: V2NIMMessage
+}
+
 export interface V2NIMClearHistoryMessageOption {
   /** 需要清空消息的对应的会话 ID */
   conversationId?: string
@@ -1066,6 +1107,8 @@ export interface V2NIMMessageQuickCommentNotification {
 export interface V2NIMMessageDeletedNotification {
   /** 被删除的消息引用 */
   messageRefer?: V2NIMMessageRefer
+  /** 原始消息 @since v10.9.1 */
+  message?: V2NIMMessage
   /** 被删除的时间 */
   deleteTime?: number
   /** 被删除时填入的扩展字段 */
@@ -1202,7 +1245,7 @@ export interface V2NIMLoginClient {
 
 export interface V2NIMKickedOfflineDetail {
   /** 原因 */
-  reason?: V2NIMKickedOfflineDetail
+  reason?: V2NIMKickedOfflineReason
   /** 说明 */
   reasonDesc?: string
   /** 客户端类型 */
@@ -1274,6 +1317,8 @@ export interface V2NIMConversation {
   createTime?: number
   /** 会话更新时间 */
   updateTime?: number
+  /** 会话最后已读时间戳 @since v10.9.0 */
+  lastReadTime?: number
 }
 
 export interface V2NIMConversationResult {
@@ -1416,6 +1461,8 @@ export interface V2NIMTeam {
   chatBannedMode?: V2NIMTeamChatBannedMode
   /** 是否为自己所在且有效的群, 群存在且我在群组中 */
   isValidTeam?: boolean
+  /** 单纯表示群组是否有效 @since v10.9.1 */
+  isTeamEffective?: boolean
 }
 
 export interface V2NIMTeamMember {
@@ -1567,6 +1614,7 @@ export interface V2NIMTeamMemberListResult {
   memberList?: Array<V2NIMTeamMember>
 }
 
+
 export interface V2NIMTeamInviteParams {
   /** 被邀请加入群的成员账号列表, 为 Null || size 为 0, 返回参数错误 */
   inviteeAccountIds?: Array<string>
@@ -1693,7 +1741,7 @@ export interface V2NIMFriendAddApplication {
   /** 时间 */
   timestamp?: number
   /** 是否已读 */
-  read?: boolean
+  read?: boolean;
 }
 
 export interface V2NIMFriendDeleteParams {
@@ -2330,9 +2378,9 @@ export interface V2NIMSignallingRtcInfo {
 /** @brief 加入信令房间结果 */
 export interface V2NIMSignallingJoinResult {
   /** 信令房间相关信息 */
-  roomInfo: V2NIMSignallingRoomInfo
+  roomInfo: V2NIMSignallingRoomInfo;
   /** 音视频房间相关信息 */
-  rtcInfo?: V2NIMSignallingRtcInfo
+  rtcInfo?: V2NIMSignallingRtcInfo;
 }
 
 export interface V2NIMSignallingCallResult {
@@ -2501,7 +2549,7 @@ export interface V2NIMUserStatusSubscribeResult {
   /** 状态的有效期，单位秒，范围为 60s 到 30 天 */
   duration: number
   /** 用户状态发布时的时间 */
-  subscribeTime: number
+  subscribeTime: number;
 }
 
 export interface V2NIMUserStatus {
@@ -2526,7 +2574,7 @@ export interface V2NIMUserStatus {
 /** @brief HTTP 代理请求参数 */
 export interface V2NIMProxyRequest {
   /** 请求路径 */
-  path: string
+  path: string;
   /** 请求方法 */
   method: V2NIMProxyRequestMethod
   /** 映射一个请求地址，不传使用服务器默认的配置 */
@@ -2573,6 +2621,10 @@ export interface V2NIMMessageSearchExParams {
   searchStartTime: number
   /** 从起始时间点开始的过去时间范围，默认为 0（不限制时间范围）。24 x 60 x 60 x 1000 代表过去一天，单位：毫秒 */
   searchTimePeriod: number
+  /** 检索方向 {@link V2NIMSearchDirection}，默认为 V2NIM_SEARCH_DIRECTION_BACKWARD @since v10.9.0 */
+  direction?: V2NIMSearchDirection
+  /** 检索策略 {@link V2NIMSearchStrategy}，默认为 V2NIM_SEARCH_STRATEGY_FTS @since v10.9.0 */
+  strategy?: V2NIMSearchStrategy
   /** 搜索的数量限制，默认为 20，最大为 100 */
   limit: number
   /** 下一页的 token，用于分页查询 */
@@ -2611,14 +2663,14 @@ export interface V2NIMLocalConversation {
   /** 会话 ID */
   conversationId: string
   /** 会话类型 */
-  type: V2NIMConversationType
+  type: V2NIMConversationType;
   /**
    * 会话名称，根据不同的会话类型显示相应的名称
    *  - P2P：显示对方的用户名
    *  - Team：显示群名
    *  - SuperTeam：显示群名
    */
-  name?: string
+  name?: string;
   /**
    * 会话头像名称，根据不同的会话类型显示相应的名称
    *  - P2P：显示对方的用户名
@@ -2628,57 +2680,57 @@ export interface V2NIMLocalConversation {
    *  - SuperTeam：显示群名
    *    - 群名称 -> 群ID
    */
-  avatar?: string
+  avatar?: string;
   /**
    * 会话静音状态，根据不同的会话类型显示相应的状态
    *  - P2P：获取或者设置对方的静音状态
    *  - Team：获取或者设置群对的静音状态
    *  - SuperTeam：获取或者设置群对的静音状态
    */
-  mute: boolean
+  mute: boolean;
   /**  会话置顶状态 */
-  stickTop: boolean
+  stickTop: boolean;
   /** 会话本地扩展字段，不会多端同步 */
-  localExtension?: string
+  localExtension?: string;
   /** 会话所属的最近一条消息 */
-  lastMessage?: V2NIMLastMessage
+  lastMessage?: V2NIMLastMessage;
   /** 会话未读消息计数 */
-  unreadCount: number
+  unreadCount: number;
   /**
    * 会话排序字段
    *  - 置顶默认排最前，多条置顶内按默认会话创建时间排序
    */
-  sortOrder: number
+  sortOrder: number;
   /** 会话创建时间戳 */
-  createTime: number
+  createTime: number;
   /** 会话更新时间戳 */
-  updateTime: number
+  updateTime: number;
 }
 
 /** @brief 本地会话查询结果 @since v10.8.0 */
 export interface V2NIMLocalConversationResult {
   /** 下一次偏移量 */
-  offset: number
+  offset: number;
   /** 数据是否拉取完毕，true 表示拉取完毕，false 表示还有数据 */
-  finished: boolean
+  finished: boolean;
   /** 本地会话列表 */
-  conversationList: Array<V2NIMLocalConversation>
+  conversationList: Array<V2NIMLocalConversation>;
 }
 
 /** @brief 本地会话查询选项 @since v10.8.0 */
 export interface V2NIMLocalConversationOption {
   /** 查询指定会话类型，留空表示不限制会话类型 */
-  conversationTypes?: Array<V2NIMConversationType>
+  conversationTypes?: Array<V2NIMConversationType>;
   /** 是否仅返回有未读消息的会话，true 表示只返回有未读消息的会话，false 表示返回所有会话 */
-  onlyUnread: boolean
+  onlyUnread: boolean;
 }
 
 /** @brief 本地会话过滤条件 @since v10.8.0 */
 export interface V2NIMLocalConversationFilter {
   /** 过滤指定会话类型，留空表示不限制会话类型 */
-  conversationTypes?: Array<V2NIMConversationType>
+  conversationTypes?: Array<V2NIMConversationType>;
   /** 是否过滤免打扰的会话类型，true 表示过滤免打扰的会话，false 表示不过滤 */
-  ignoreMuted: boolean
+  ignoreMuted: boolean;
 }
 
 /** @brief 本地会话操作结果 @since v10.8.0 */
@@ -2765,5 +2817,28 @@ export interface V2NIMAIModelStreamCallStopParams {
 
 /** @brief 消息过滤器对象 @since v10.8.30 */
 export interface V2NIMMessageFilter {
+  [x: string]: any
   shouldIgnore: V2NIMMessageFilterProvider
+}
+
+/** @brief 消息列表结果 @since v10.9.0 */
+export interface V2NIMMessageListResult {
+  /** 消息列表 */
+  messages: Array<V2NIMMessage>
+  /** 下次查询的锚点消息 */
+  anchorMessage: V2NIMMessage
+}
+
+/** @brief 更新本地消息参数 @since v10.9.0 */
+export interface V2NIMUpdateLocalMessageParams {
+  /** 消息子类型，需要 >= 0 */
+  subType?: number
+  /** 消息内容 */
+  text?: string
+  /** 消息附属附件 */
+  attachment?: V2NIMMessageAttachment
+  /** 消息本地扩展 */
+  localExtension?: string;
+  /** 消息发送状态 @since v10.9.1 */
+  sendingState?: V2NIMMessageSendingState
 }
