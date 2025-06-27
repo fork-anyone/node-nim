@@ -24,6 +24,7 @@ import {
   V2NIMStorageUtil,
   V2NIMMessageAttachmentCreator
 } from './v2_nim_utilities'
+import { V2NIMStatisticsService } from './v2_nim_statistics_service'
 
 export declare interface V2NIMClientListener {}
 
@@ -50,6 +51,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
   signallingService: V2NIMSignallingService | null
   subscriptionService: V2NIMSubscriptionService | null
   passthroughService: V2NIMPassthroughService | null
+  statisticsService: V2NIMStatisticsService | null
 
   constructor (private sdk: any) {
     super()
@@ -80,6 +82,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.signallingService = null
     this.subscriptionService = null
     this.passthroughService = null
+     this.statisticsService = null
   }
 
 
@@ -121,6 +124,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.signallingService = new V2NIMSignallingService(this.sdk)
     this.subscriptionService = new V2NIMSubscriptionService(this.sdk)
     this.passthroughService = new V2NIMPassthroughService(this.sdk)
+    this.statisticsService = new V2NIMStatisticsService(this.sdk)
     try {
       this.conversationService = new V2NIMConversationService(this.sdk)
       this.conversationGroupService = new V2NIMConversationGroupService(this.sdk)

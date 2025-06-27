@@ -37,6 +37,7 @@ import {
   V2NIMStorageUtil,
   V2NIMMessageAttachmentCreator
 } from './v2/v2_nim_utilities'
+import { V2NIMStatisticsService } from './v2/v2_nim_statistics_service'
 
 export {
   NIMClient,
@@ -143,7 +144,7 @@ export class NIM {
   talkEx: NIMTalkEx
   /** AI 数字人模块 */
   ai: NIMAI
-  v2Client: V2NIMClient
+  v2Client: V2NIMClient;
 
   private sdk: any;
 
