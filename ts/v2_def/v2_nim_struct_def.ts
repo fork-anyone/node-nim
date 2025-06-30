@@ -55,7 +55,8 @@ import {
   V2NIMKickedOfflineReason,
   V2NIMSearchDirection,
   V2NIMSearchStrategy,
-  V2NIMMessageAttachmentType
+  V2NIMMessageAttachmentType,
+  V2NIMMessageStreamStatus
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -131,6 +132,8 @@ export interface V2NIMPrivateServerOption {
   nosAccelerateHosts?: Array<string>
   /** nos 加速地址拼接模板, 用于获得加速后的下载地址 */
   nosAccelerateAddress?: string
+  /** nos 默认上传分片大小，单位字节。如您想设置分片大小为 5MB，则应设置为 5 * 1024 * 1024 @since v10.9.10 */
+  nosMaxUploadPartSize?: number
   /** 探测 ipv4 地址类型使用的 url */
   probeIpv4Url?: string
   /** 探测 ipv6 地址类型使用的 url */
@@ -181,6 +184,8 @@ export interface V2NIMBasicOption {
   teamNotificationBadge?: boolean
   /** 收到撤回消息通知时是否减少指定会话的未读计数 */
   reduceUnreadOnMessageRecall?: boolean
+  /** 查询会话时是否仅返回会话快照信息。设置为 true 有助于加快会话查询速度，减少构建完整会话信息耗时 @since  v10.9.20 */
+  conversationSnapshot?: boolean
   /** 云信指南针数据上报地址，为空则使用默认地址 */
   compassDataEndpoint?: string
 }
@@ -721,6 +726,28 @@ export interface V2NIMMessageAIConfig {
   aiStreamLastChunk?: V2NIMMessageAIStreamChunk;
 }
 
+/** @brief 消息流式消息分片信息 @since v10.9.10 */
+export interface V2NIMMessageStreamChunk {
+  /** 流式消息回复分片文本 */
+  content: string
+  /** 流式消息时间，即占位消息时间 */
+  messageTime: number
+  /** 流式消息当前分片时间，chunkTime >= messageTime */
+  chunkTime: number
+  /** 类型，当前仅支持 0 表示文本 */
+  type: number
+  /** 分片序号，从 0 开始 */
+  index: number
+}
+
+/** @brief 消息体当中的流式相关配置字段 @since v10.9.10 */
+export interface V2NIMMessageStreamConfig {
+  /** 流式消息状态 */
+  status: V2NIMMessageStreamStatus;
+  /** 流式消息最近一个分片，流式过程中才有该字段，最终完整消息无此字段 */
+  lastChunk?: V2NIMMessageStreamChunk;
+};
+
 export interface V2NIMMessage {
   /** 客户端消息 id */
   messageClientId?: string
@@ -780,6 +807,8 @@ export interface V2NIMMessage {
   isDeleted?: boolean
   /** AI 数字人相关信息 */
   aiConfig?: V2NIMMessageAIConfig
+  /** 消息流式相关配置 @since v10.9.10 */
+  streamConfig?: V2NIMMessageStreamConfig
   /** 消息更新时间 */
   modifyTime?: number
   /** 消息更新者账号 */
@@ -1040,21 +1069,21 @@ export interface V2NIMMessageListOption {
   onlyQueryLocal?: boolean
 }
 
-/// @brief 消息查询结果 @since v10.9.1
+/** @brief 消息查询结果 @since v10.9.1 */
 export interface V2NIMCloudMessageListOption {
-  /// 消息所属会话 ID
+  /** 消息所属会话 ID */
   conversationId: string
-  /// 消息查询开始时间，小于等于 endTime
+  /** 消息查询开始时间，小于等于 endTime */
   beginTime?: number
-  /// 消息查询结束时间
+  /** 消息查询结束时间 */
   endTime?: number
-  /// 每次查询条数，默认 50
+  /** 每次查询条数，默认 50 */
   limit?: number
-  /// 消息查询方向
+  /** 消息查询方向 */
   direction?: V2NIMQueryDirection
-  /// 根据消息类型查询会话，不指定或空列表，则表示查询所有消息类型
+  /** 根据消息类型查询会话，不指定或空列表，则表示查询所有消息类型 */
   messageTypes?: Array<V2NIMMessageType>
-  /// 锚点消息，根据锚点消息查询，不包含该消息
+  /** 锚点消息，根据锚点消息查询，不包含该消息 */
   anchorMessage?: V2NIMMessage
 }
 
@@ -1792,7 +1821,9 @@ export interface V2NIMTeamMemberSearchOption {
   teamType: V2NIMTeamType
   /** 群组ID，如果不传则检索所有群，如果需要检索特定的群，则需要同时传入 teamId + teamType */
   teamId?: string
-  // 起始位置，首次传空， 后续传上次返回的 nextToken
+  /** 是否按账号 ID 查询 @since v10.9.1 */
+  searchAccountId?: boolean
+  /** 起始位置，首次传空， 后续传上次返回的 nextToken */
   nextToken: string
   /** 按照 joinTime 排序，默认时间降序排列 */
   order: V2NIMSortOrder
@@ -2453,6 +2484,8 @@ export interface V2NIMSignallingCancelInviteParams {
   serverExtension?: string
   /** 是否存离线，true 表示存离线，false 表示不存离线 */
   offlineEnabled?: boolean
+  /** 推送相关配置 @since v10.9.10 */
+  pushConfig?: V2NIMSignallingPushConfig
 }
 
 export interface V2NIMSignallingRejectInviteParams {

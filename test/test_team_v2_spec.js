@@ -191,4 +191,10 @@ describe('******************** Team v2 ********************', function () {
       await v2.teamService.dismissTeam(teamId, 1)
     })
   })
+  describe('#getJoinedTeamMembers', async function () {
+    it('Get joined team members should return success', async function () {
+      const result = await v2.teamService.getJoinedTeamMembers([1, 2])
+      assert.ok(result.length > 0)
+    })
+  })
 })

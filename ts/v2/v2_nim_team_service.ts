@@ -893,7 +893,6 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
     })
   }
 
-
   /**
    * @brief 获取自己所有加入的群的自己群成员信息
    * @param teamTypes 群组类型列表, 为空表示查询所有群类型
@@ -914,6 +913,25 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
           reject(error)
         }
       )
+    })
+  }
+
+  /**
+   * @brief 获取群申请/邀请未读数量
+   * @returns Promise<number>
+   * @since v10.9.20
+   * @example
+   * ```javascript
+   * const count = await v2.teamService.getTeamJoinActionInfoUnreadCount()
+   * ```
+   */
+  getTeamJoinActionInfoUnreadCount(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.instance.getTeamJoinActionInfoUnreadCount((count: number) => {
+        resolve(count)
+      }, (error: V2NIMError) => {
+        reject(error)
+      })
     })
   }
 }

@@ -865,6 +865,7 @@ export enum V2NIMLoginStatus {
   /** 登录中 */
   V2NIM_LOGIN_STATUS_LOGINING = 2,
   /** 处在退避间隔中 注：这是一个中间状态，SDK 将会在这个状态下等待一段时间后再次尝试登录 */
+  /** 未登录 */
   V2NIM_LOGIN_STATUS_UNLOGIN = 3,
 }
 
@@ -1254,7 +1255,9 @@ export enum V2NIMSignallingEventType {
   /** 离开信令频道房间 */
   V2NIM_SIGNALLING_EVENT_TYPE_LEAVE,
   /** 自定义控制命令 */
-  V2NIM_SIGNALLING_EVENT_TYPE_CONTROL
+  V2NIM_SIGNALLING_EVENT_TYPE_CONTROL,
+  /** 被服务器踢出 @since v10.9.10 */
+  V2NIM_SIGNALLING_EVENT_TYPE_KICK
 }
 
 export enum V2NIMUserStatusType {
@@ -1345,7 +1348,7 @@ export enum V2NIMAIModelStreamCallStatus {
   V2NIM_AI_MODEL_STREAM_CALL_STATUS_ABORTED
 }
 
-/// @brief 消息查询方向 @since v10.9.0
+/** @brief 消息查询方向 @since v10.9.0 */
 export enum V2NIMSearchDirection {
   /** 表示时间从新到旧查询 */
   V2NIM_SEARCH_DIRECTION_BACKWARD,
@@ -1353,10 +1356,28 @@ export enum V2NIMSearchDirection {
   V2NIM_SEARCH_DIRECTION_FORWARD
 }
 
-/// @brief 消息检索策略 @since v10.9.0
+/** @brief 消息检索策略 @since v10.9.0 */
 export enum V2NIMSearchStrategy {
   /** 表示使用 SQL LIKE 语句进行检索 */
   V2NIM_SEARCH_STRATEGY_SQL_LIKE,
   /** 表示使用 FTS 进行检索 */
   V2NIM_SEARCH_STRATEGY_FTS
+}
+
+/** @brief 流式消息状态 @since v10.9.10 */
+export enum V2NIMMessageStreamStatus {
+  /** 流式过程中（本地状态，其他为服务器状态） */
+  V2NIM_MESSAGE_STREAM_STATUS_STREAMING = -1,
+  /** 非流式状态 */
+  V2NIM_MESSAGE_STREAM_STATUS_NONE,
+  /** 占位 */
+  V2NIM_MESSAGE_STREAM_STATUS_PLACEHOLDER,
+  /** 停止输出 */
+  V2NIM_MESSAGE_STREAM_STATUS_STOPPED,
+  /** 停止并更新 */
+  V2NIM_MESSAGE_STREAM_STATUS_UPDATED,
+  /** 输出完成 */
+  V2NIM_MESSAGE_STREAM_STATUS_GENERATED,
+  /** 服务器异常终止 */
+  V2NIM_MESSAGE_STREAM_STATUS_ABORTED
 }

@@ -3,7 +3,6 @@ import {
 } from 'ts/v2_def/v2_nim_struct_def'
 import { EventEmitter } from 'eventemitter3'
 
-
 export declare interface V2NIMStatisticsListener {
   /** 数据库异常 */
   databaseException: [V2NIMError]
