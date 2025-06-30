@@ -82,7 +82,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.signallingService = null
     this.subscriptionService = null
     this.passthroughService = null
-     this.statisticsService = null
+    this.statisticsService = null
   }
 
 
