@@ -51,7 +51,7 @@
         "postinstall": "node ./script/download-sdk.js"
     },
     "config": {
-        "nimsdkversion": "10.8.30-beta.232"
+        "nimsdkversion": "10.9.13"
     },
     "mocha": {
         "require": "test/hooks.js"
