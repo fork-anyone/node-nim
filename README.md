@@ -1,8 +1,7 @@
 # NetEase Electron IM SDK
 
 [![codecov](https://codecov.io/gh/netease-im/node-nim/branch/master/graph/badge.svg?token=YUP8T7ZG6U)](https://codecov.io/gh/netease-im/node-nim) [![GitHub all releases](https://img.shields.io/github/downloads/netease-im/node-nim/total)](https://github.com/netease-im/node-nim/releases)  
-[中文](README_CN.md)  
-[API Document](https://github.com/netease-im/node-nim/wiki)
+[中文](README_CN.md) | [API Document](https://doc.yunxin.163.com/messaging2/client-apis?platform=client)
 
 ## Table of Contents
 
@@ -34,9 +33,9 @@ For comprehensive documentation, changelog, and technical support, please visit 
 ## System Requirements
 
 | System  | Requirements  |
-| ------- | ------------- |
+| ------- |---------------|
 | Windows | >= Windows 7  |
-| macOS   | >= 10.14.0    |
+| macOS   | >= 10.13.0    |
 | Linux   | glibc >= 2.23 |
 
 ## Supported Platforms
@@ -56,7 +55,7 @@ For comprehensive documentation, changelog, and technical support, please visit 
 It will automatically download the prebuilt binary file that fits your current platform.
 
 ```bash
-npm install node-nim --save-dev
+npm install node-nim
 ```
 
 Maybe you need to build ia32 app on x64 platform or something like that, you can use `--arch` and `--platform` to specify the platform you want to build.
@@ -64,42 +63,42 @@ Maybe you need to build ia32 app on x64 platform or something like that, you can
 -   Windows x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=win32
+npm install node-nim --arch=x64 --platform=win32
 ```
 
 -   Windows x86
 
 ```bash
-npm install node-nim --save-dev --arch=ia32 --platform=win32
+npm install node-nim --arch=ia32 --platform=win32
 ```
 
 -   macOS x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=darwin
+npm install node-nim --arch=x64 --platform=darwin
 ```
 
 -   macOS arm64
 
 ```bash
-npm install node-nim --save-dev --arch=arm64 --platform=darwin
+npm install node-nim --arch=arm64 --platform=darwin
 ```
 
 -   Linux x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=linux
+npm install node-nim --arch=x64 --platform=linux
 ```
 
 -   Linux arm64
 
 ```bash
-npm install node-nim --save-dev --arch=arm64 --platform=linux
+npm install node-nim --arch=arm64 --platform=linux
 ```
 
 ## Build From Source
 
-Technically, native nim sdk is shipped with a prebuilt node-nim.node binary file, so `there is no need to build it yourself.`.  
+Technically, native NIM SDK is shipped with a prebuilt node-nim.node binary file, so `there is no need to build it yourself.`.  
 But if you want to add personal features or simply prefer to do so, feel free to build it!  
 Build Requirements:
 
@@ -111,59 +110,73 @@ Build Requirements:
 Now you are all set to build, run following commands in the root directory of the project:
 
 ```cmake
-cmake -S . -B build
+cmake -Bbuild
 cmake --build build --config Release
 ```
 
-And voilà, you now have your own node-nim binary file in the `build` directory.
+Now, you have your own node-nim binary file in the `build` directory.
 
 ## Quick Start
 
-```ts
-import * as node_nim from 'node-nim'
-```
-
-### Initialize SDK
+First, you need to import the `node-nim` module:
 
 ```ts
-const result = node_nim.nim.client.init('appkey', '', '', {
-    database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345'
-})
-if (result) {
-    node_nim.nim.initEventHandlers() // init event handlers
-    node_nim.nim.talk.on('receiveMsg', (result) => {
-        console.log('receiveMsg', result)
-    })
-    node_nim.nim.talk.on('sendMsg', (message: node_nim.IMMessage) => {
-        console.log('sendMsg: ', message)
-    })
-    // add more event handlers here
-    // ...
-}
-return result
+// ES6 Module
+import * as NIM from 'node-nim'
+// CommonJS
+const NIM = require('node-nim')
 ```
 
-### Login
+After importing the module, you can directly use the three types of objects we have instantiated for you, such as IM, chatroom, and qchat. Here is an example:
 
-```ts
-let [loginResult] = await node_nim.nim.client.login('appkey', 'account', 'password', null, '')
-if (loginResult.res_code_ == node_nim.NIMResCode.kNIMResSuccess) {
-    console.log('login succeeded')
-} else {
-    console.log('login failed')
-}
+```javascript
+// IM related functions
+NIM.nim.client.init('', '', '', {})
+NIM.nim.client.cleanup('')
+
+// Chatroom related functions
+NIM.chatroom.init('', '')
+NIM.chatroom.cleanup()
+
+// QChat related functions
+NIM.qchat.instance.init({ appkey: 'your appkey', app_data_path: 'qchat' })
+NIM.qchat.instance.cleanup({})
 ```
 
-### Send Message
+The objects that can be directly accessed through `NIM.nim` are:
 
-```ts
-node_nim.nim.talk.sendMsg(
-    {
-        session_type_: node_nim.NIMSessionType.kNIMSessionTypeP2P,
-        receiver_accid_: 'receiver',
-        type_: node_nim.NIMMessageType.kNIMMessageTypeText,
-        content_: 'Send from NIM node quick start.'
-    },
-    ''
-)
-```
+| Object Name        | Description                                                         |
+|--------------------|---------------------------------------------------------------------|
+| `client`           | Client module                                                       |
+| `dataSync`         | Data sync module                                                    |
+| `friend`           | Friend module                                                       |
+| `global`           | Global module                                                       |
+| `msgLog`           | Message log module                                                  |
+| `nos`              | Object storage module                                               |
+| `onlineSession`    | Online session module                                               |
+| `passThroughProxy` | Pass-through proxy module                                           |
+| `session`          | Local session module                                                |
+| `subscribeEvent`   | Event subscription module                                           |
+| `superTeam`        | Super team module                                                   |
+| `sysMsg`           | System message module                                               |
+| `talk`             | Talk module                                                         |
+| `team`             | Team module                                                         |
+| `tool`             | Tool module                                                         |
+| `user`             | User module                                                         |
+| `plugin`           | Plugin module                                                       |
+| `talkEx`           | Message extension module, PIN messages, quick comments, collections |
+
+The object that can be directly accessed through `NIM.chatroom` corresponds to `ChatRoomModule`, and you can directly access the member functions under this object.
+
+The objects that can be directly accessed through `NIM.qchat` are:
+
+| Object Name          | Description                      |
+|----------------------|----------------------------------|
+| `instance`           | QChat instance module            |
+| `server`             | QChat server module              |
+| `channel`            | QChat channel module             |
+| `channelCategory`    | QChat channel category module    |
+| `message`            | QChat message module             |
+| `systemNotification` | QChat system notification module |
+| `attachment`         | QChat attachment module          |
+| `role`               | QChat role module                |

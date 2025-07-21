@@ -441,6 +441,25 @@ describe('********************Msglog********************', function () {
       })
     })
   })
+  describe('#regHistoryMessageFilterCb', async function () {
+    it('regHistoryMessageFilterCb should return with 200', async function () {
+      NIM.nim.msgLog.regHistoryMessageFilterCb((message) => {
+        console.log('message filter running, messageID: ', message.client_msg_id_)
+        return message.client_msg_id_ === '9f9beab8-4486-7217-81ce-075716038eeb'
+      })
+      const [code, account, toType, result] = await NIM.nim.msgLog.queryMsgOnlineAsync({
+        id_: 'jiajia02',
+        to_type_: 0,
+        limit_count_: 10,
+        from_time_: 0,
+        end_time_: new Date().getTime(),
+        reverse_: false,
+        need_save_to_local_: true,
+        auto_download_attachment_: false
+      })
+      console.log(result)
+    })
+  })
 })
 
 describe('******************** Msglog thread ********************', function () {
@@ -493,29 +512,29 @@ describe('******************** Msglog thread ********************', function () 
     })
   })
   describe('#queryMessagesByKeywordAsync', () => {
-  it('Query messages by keyword should return with query keyword', async () => {
+    it('Query messages by keyword should return with query keyword', async () => {
       const result = await NIM.nim.msgLog.queryMessagesByKeywordAsync({
-          keyword_: '测试',
-          type_: [0],
-          limit_count_: 1000,
+        keyword_: '测试',
+        type_: [0],
+        limit_count_: 1000,
       })
       assert.strictEqual(result[3].msglogs_.length, 1000)
-  })
-  it('Query messages by option with content should return with query keyword', async () => {
-    const result = await NIM.nim.msgLog.queryMsgByOptionsAsync({
-      query_range_: 100,
-      ids: [],
-      from_time_: 0,
-      end_time_: 0,
-      limit_count_: 1000,
-      msg_sub_type_: 0,
-      msg_type_: 0,
-      reverse_: true,
-      search_content_: '测试',
     })
-    assert.strictEqual(result[3].msglogs_.length, 1000)
+    it('Query messages by option with content should return with query keyword', async () => {
+      const result = await NIM.nim.msgLog.queryMsgByOptionsAsync({
+        query_range_: 100,
+        ids: [],
+        from_time_: 0,
+        end_time_: 0,
+        limit_count_: 1000,
+        msg_sub_type_: 0,
+        msg_type_: 0,
+        reverse_: true,
+        search_content_: '测试',
+      })
+      assert.strictEqual(result[3].msglogs_.length, 1000)
+    })
   })
-  });
   describe('#queryMessagesByKeywordAsync', () => {
     before(async function () {
       for (let i = 0; i < 10; i++) {
@@ -541,11 +560,11 @@ describe('******************** Msglog thread ********************', function () 
         assert.strictEqual(message.content_.includes('Test message'), true)
       })
     })
-  });
+  })
   describe('#buildMsglogIndexes', () => {
     it('buildMsglogIndexes should return with complete', async function () {
       const [reason, message] = await NIM.nim.msgLog.buildMsglogIndexes(5000, (total, built) => {
-          console.log(`Total: ${total}, Built: ${built}`)
+        console.log(`Total: ${total}, Built: ${built}`)
       })
       console.log('reason', reason, message)
       assert.strictEqual(reason, 0)
