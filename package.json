@@ -50,9 +50,6 @@
         "watch": "nodemon",
         "postinstall": "node ./script/download-sdk.js"
     },
-    "config": {
-        "nimsdkversion": "10.9.14"
-    },
     "mocha": {
         "require": "test/hooks.js"
     },
