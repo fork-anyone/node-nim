@@ -1,6 +1,6 @@
 {
     "name": "@fork-anyone/node-nim",
-    "version": "10.9.31",
+    "version": "10.9.32",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "keywords": [
         "netease",
@@ -32,23 +32,26 @@
     "scripts": {
         "build": "npm run build_ts",
         "build_html_doc": "typedoc --plugin typedoc-github-theme",
-        "install": "npm run download_sdk",
-        "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
-        "publish_to_npmjs": "node script/publish-to-netease-npm.js https://registry.npmjs.org",
-        "test": "npx cross-env BABEL_ENV=test mocha",
         "build_markdown_doc": "typedoc --plugin typedoc-plugin-markdown --theme markdown --out markdown_doc",
         "build_ts": "rimraf ./dist && rimraf ./types && tsc",
         "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --theme github-wiki --out wiki_doc",
         "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
+        "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
         "download_sdk_mac": "cross-env npm_config_arch=x64 npm_config_platform=darwin node ./script/download-sdk.js",
         "download_sdk_win": "cross-env npm_config_arch=ia32 npm_config_platform=win32 node ./script/download-sdk.js",
         "download_sdk_win_x64": "cross-env npm_config_arch=x64 npm_config_platform=win32 node ./script/download-sdk.js",
+        "install": "npm run download_sdk",
+        "postinstall": "node ./script/download-sdk.js",
         "prepublishOnly": "yarn run build_ts",
         "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
         "publish_to_npm": "yarn build_ts && yarn publish --registry=https://registry.npmjs.org/",
+        "publish_to_npmjs": "node script/publish-to-netease-npm.js https://registry.npmjs.org",
         "publish_to_sfnpm": "yarn build_ts && yarn publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
-        "watch": "nodemon",
-        "postinstall": "node ./script/download-sdk.js"
+        "test": "npx cross-env BABEL_ENV=test mocha",
+        "watch": "nodemon"
+    },
+    "config": {
+        "nimsdkversion": "10.9.32"
     },
     "mocha": {
         "require": "test/hooks.js"
