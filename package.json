@@ -1,6 +1,6 @@
 {
     "name": "@fork-anyone/node-nim",
-    "version": "10.9.32",
+    "version": "10.9.40",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "keywords": [
         "netease",
@@ -51,7 +51,7 @@
         "watch": "nodemon"
     },
     "config": {
-        "nimsdkversion": "10.9.32"
+        "nimsdkversion": "10.9.40"
     },
     "mocha": {
         "require": "test/hooks.js"
