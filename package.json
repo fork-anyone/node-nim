@@ -1,6 +1,6 @@
 {
     "name": "@fork-anyone/node-nim",
-    "version": "10.9.40",
+    "version": "10.9.51",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "keywords": [
         "netease",
@@ -36,7 +36,7 @@
         "build_ts": "rimraf ./dist && rimraf ./types && tsc",
         "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --theme github-wiki --out wiki_doc",
         "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
-        "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
+        "download_sdk_mac_arm64": "cross-env npm_config_arch=arm64 npm_config_platform=darwin node ./script/download-sdk.js",
         "download_sdk_mac": "cross-env npm_config_arch=x64 npm_config_platform=darwin node ./script/download-sdk.js",
         "download_sdk_win": "cross-env npm_config_arch=ia32 npm_config_platform=win32 node ./script/download-sdk.js",
         "download_sdk_win_x64": "cross-env npm_config_arch=x64 npm_config_platform=win32 node ./script/download-sdk.js",
@@ -51,7 +51,7 @@
         "watch": "nodemon"
     },
     "config": {
-        "nimsdkversion": "10.9.40"
+        "nimsdkversion": "10.9.50"
     },
     "mocha": {
         "require": "test/hooks.js"
