@@ -51,7 +51,7 @@
         "watch": "nodemon"
     },
     "config": {
-        "nimsdkversion": "10.9.50"
+        "nimsdkversion": "10.9.60"
     },
     "mocha": {
         "require": "test/hooks.js"
