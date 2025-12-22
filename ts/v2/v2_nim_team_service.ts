@@ -16,7 +16,8 @@ import {
   V2NIMTeamMemberSearchOption,
   V2NIMUpdateMemberNickParams,
   V2NIMTeamSearchParams,
-  V2NIMSearchTeamMemberParams, V2NIMTeamRefer
+  V2NIMSearchTeamMemberParams, V2NIMTeamRefer,
+  type V2NIMTeamClearJoinActionInfoOption
 } from '../v2_def/v2_nim_struct_def'
 
 

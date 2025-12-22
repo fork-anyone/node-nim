@@ -36,6 +36,7 @@ import {
   V2NIMUpdateLocalMessageParams,
   V2NIMCloudMessageListOption,
   V2NIMMessageListResult,
+  type V2NIMClearLocalMessageParams,
 } from '../v2_def/v2_nim_struct_def'
 
 
