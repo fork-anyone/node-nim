@@ -5,7 +5,6 @@ import {
   V2NIMError,
   V2NIMConversationOperationResult
 } from '../v2_def/v2_nim_struct_def'
-
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface V2NIMConversationGroupListener {

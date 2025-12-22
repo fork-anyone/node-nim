@@ -5,7 +5,6 @@ import {
   V2NIMLoginClient,
   V2NIMLoginOption
 } from '../v2_def/v2_nim_struct_def'
-
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMReconnectDelayProvider } from '../v2_def/v2_nim_callback_def'
 import {

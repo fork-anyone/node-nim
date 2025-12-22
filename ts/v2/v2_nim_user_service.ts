@@ -1,5 +1,4 @@
 import { V2NIMUser, V2NIMError, V2NIMUserUpdateParams, V2NIMUserSearchOption } from '../v2_def/v2_nim_struct_def'
-
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface V2NIMUserListener {

@@ -15,7 +15,6 @@ import {
   V2NIMError,
 } from '../v2_def/v2_nim_struct_def'
 import { V2NIMSignallingChannelType } from '../v2_def/v2_nim_enum_def'
-
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface V2NIMSignallingListener {

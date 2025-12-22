@@ -402,7 +402,7 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
    * const team = await v2.teamService.applyJoinTeam(teamId, teamType, postscript)
    * ```
    */
-  applyJoinTeam (teamId: string, teamType: V2NIMTeamType, postscript: string): Promise<V2NIMTeam> {
+  applyJoinTeam (teamId: string, teamType: V2NIMTeamType, postscript: string | null): Promise<V2NIMTeam> {
     return new Promise((resolve, reject) => {
       this.instance.applyJoinTeam(
         teamId,
@@ -1026,6 +1026,28 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
           reject(error)
         }
       )
+    })
+  }
+
+  /**
+  * @brief 按条件清空请申请通知
+  * @param option 清空条件
+  * @returns Promise<void>
+  * @example
+  * ```javascript
+  * await v2.teamService.clearAllTeamJoinActionInfoEx({}})
+  * ```
+  * @since v10.9.70
+  *
+  */
+  clearAllTeamJoinActionInfoEx(option: V2NIMTeamClearJoinActionInfoOption): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.clearAllTeamJoinActionInfoEx(option, () => {
+        resolve()
+      },
+      (error: V2NIMError) => {
+        reject(error)
+      })
     })
   }
 

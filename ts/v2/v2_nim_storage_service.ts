@@ -8,7 +8,6 @@ import {
   V2NIMGetMediaResourceInfoResult,
   V2NIMSize
 } from '../v2_def/v2_nim_struct_def'
-
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMProgressCallback } from '../v2_def/v2_nim_callback_def'
 

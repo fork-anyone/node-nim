@@ -1,5 +1,4 @@
 import { V2NIMInitOption, V2NIMError } from '../v2_def/v2_nim_struct_def'
-
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMLoginService } from './v2_nim_login_service'
 import { V2NIMConversationGroupService } from './v2_nim_conversation_group_service'

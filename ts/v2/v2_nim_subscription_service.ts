@@ -7,7 +7,6 @@ import {
   V2NIMUserStatusSubscribeResult,
   V2NIMUserStatus,
 } from '../v2_def/v2_nim_struct_def'
-
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface V2NIMSubscriptionListener {

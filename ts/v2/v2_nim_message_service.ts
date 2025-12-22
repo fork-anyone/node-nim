@@ -448,6 +448,29 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
   }
 
   /**
+   * @brief 清空本地消息
+   * @param params 清空本地消息配置选项
+   * @returns void
+   * @example
+   * ```javascript
+   * await v2.messageService.clearLocalMessage(params)
+   * ```
+   */
+  clearLocalMessage (params: V2NIMClearLocalMessageParams): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.clearLocalMessage(
+          params,
+          () => {
+            resolve()
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
+      )
+    })
+  }
+
+  /**
    * @brief 更新消息本地扩展
    * @param message 要更新的消息
    * @param localExtension 本地扩展字段

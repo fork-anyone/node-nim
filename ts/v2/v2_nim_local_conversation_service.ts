@@ -6,7 +6,6 @@ import {
   V2NIMLocalConversationResult,
   V2NIMLocalConversationOption,
 } from '../v2_def/v2_nim_struct_def'
-
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMConversationType } from '../v2_def/v2_nim_enum_def'
 
