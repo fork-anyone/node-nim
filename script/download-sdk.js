@@ -5,9 +5,7 @@ const compareVersions = require('compare-versions')
 const decompress = require('decompress')
 
 // Global variables
-const default_arch = 'universal'
-const current_arch = process.env.npm_config_arch || process.arch
-const arch = process.platform === 'darwin' ? default_arch : current_arch
+const arch = process.env.npm_config_arch || (process.platform === 'darwin' ? 'universal' :  process.arch)
 const platform = process.env.npm_config_platform || process.platform
 const channel = 'message'
 const product = 'nim'
@@ -200,6 +198,7 @@ async function downloadSDK(customPackageUrl) {
         const res = await axios.get('https://admin.netease.im/public-service/free/publish/list')
         const publishData = res.data.data[channel]
         // Find package URL for specified version or latest
+        console.info(` 🌿 Resolving package for version: ${version || 'latest'} platform: ${platform} arch: ${arch}`)
         downloadUrl = findPackageUrl(publishData, version, platform, arch, product)
         if (!downloadUrl) {
             log(` ❌ ERROR: Package not found for ${platform} (${arch})`)
