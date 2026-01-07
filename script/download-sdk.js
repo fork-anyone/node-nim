@@ -4,16 +4,14 @@ const path = require('path')
 const compareVersions = require('compare-versions')
 const decompress = require('decompress')
 
-
 // Global variables
 const default_arch = 'universal'
-const platform = process.env.npm_config_platform || process.platform;
 const current_arch = process.env.npm_config_arch || process.arch
-const arch = platform === 'darwin' ? default_arch : current_arch
+const arch = process.platform === 'darwin' ? default_arch : current_arch
+const platform = process.env.npm_config_platform || process.platform
 const channel = 'message'
 const product = 'nim'
 const savePath = path.join(__dirname, '..', 'temporary')
-
 
 if (process.env.npm_config_ignoredownloadsdk) {
     console.log('[node-nim] Ignore download product')
@@ -24,14 +22,6 @@ if (process.env.npm_package_version) {
     version = process.env.npm_package_version.split('-')[0]
 }
 if (process.env.npm_config_nimsdkversion) {
-    version = process.env.npm_config_nimsdkversion
-}
-
-if (process.env.npm_package_config_nimsdkversion) {
-    version = process.env.npm_package_config_nimsdkversion
-}
-
-if (process.env.nimsdkversion) {
     version = process.env.npm_config_nimsdkversion
 }
 
@@ -511,6 +501,3 @@ if (require.main === module) {
     })()
 }
 exports.downloadSDK = downloadSDK
-
-
-downloadSDK()
