@@ -1,6 +1,6 @@
 {
     "name": "@fork-anyone/node-nim",
-    "version": "10.9.71",
+   "version": "10.9.72",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "keywords": [
         "netease",
@@ -62,10 +62,10 @@
         ]
     },
     "dependencies": {
+        "axios": "^1.6.2",
         "compare-versions": "^4.1.4",
-        "download": "^8.0.0",
-        "eventemitter3": "^4.0.7",
-        "node-fetch": "^2.6.9"
+        "decompress": "^4.2.1",
+        "eventemitter3": "^4.0.7"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.24.0",
